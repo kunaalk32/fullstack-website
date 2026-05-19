@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fullstack Lending — Private Real Estate Finance</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ink:      '#0b0b09',
+            'ink-2':  '#111110',
+            gold:     '#c9a96e',
+            'gold-lt':'#dfc28e',
+            'gold-dk':'#9a7a45',
+            cream:    '#f2ead8',
+            'warm-wh':'#faf7f2',
+            muted:    '#7a7060',
+          },
+          fontFamily: {
+            serif: ['Playfair Display', 'Georgia', 'serif'],
+            sans:  ['Inter', 'system-ui', 'sans-serif'],
+          },
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+      opacity: .035;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+      background-repeat: repeat;
+      background-size: 200px 200px;
+    }
+
+    .bg-glow {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      background:
+        radial-gradient(ellipse 60% 50% at 70% 20%, rgba(180,130,60,.07) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 35% at 20% 85%, rgba(140,100,40,.05) 0%, transparent 60%);
+    }
+
+    .rule        { border-color: rgba(201,169,110,.22); }
+    .card-border { border-color: rgba(201,169,110,.15); }
+    .card-bg     { background: rgba(255,255,255,.03); }
+  </style>
+</head>
+
+<body class="bg-ink text-cream font-sans overflow-x-hidden">
+<div class="bg-glow"></div>
+
+<div class="relative z-10">
+
+  <!-- ── Nav ── -->
+  <header class="max-w-6xl mx-auto px-6 lg:px-10">
+    <nav class="flex items-center justify-between py-8 border-b rule">
+      <a href="#" class="flex items-baseline gap-2.5 no-underline">
+        <span class="font-serif text-xl text-gold tracking-wide">Fullstack</span>
+        <span class="font-sans text-xs tracking-[0.2em] text-muted uppercase">Lending</span>
+      </a>
+
+      <div class="hidden md:flex items-center gap-9 text-sm text-muted">
+        <a href="#products" class="hover:text-cream transition-colors duration-200">Products</a>
+        <a href="#why"      class="hover:text-cream transition-colors duration-200">Why Us</a>
+        <a href="#process"  class="hover:text-cream transition-colors duration-200">Process</a>
+        <a href="#contact"  class="hover:text-cream transition-colors duration-200">Contact</a>
+      </div>
+
+      <a href="#contact"
+         class="text-xs px-5 py-2.5 border border-gold text-gold hover:bg-gold hover:text-ink transition-colors duration-200 tracking-widest uppercase font-medium">
+        Apply Now
+      </a>
+    </nav>
+  </header>
+
+
+  <!-- ── Hero ── -->
+  <section class="max-w-6xl mx-auto px-6 lg:px-10 pt-28 pb-32">
+    <p class="text-xs text-gold tracking-[0.22em] uppercase mb-8">Private Real Estate Finance</p>
+
+    <h1 class="font-serif text-5xl md:text-[4.25rem] lg:text-7xl leading-[1.04] mb-8 text-warm-wh max-w-3xl">
+      Capital Built for<br />
+      <em class="text-gold not-italic">Serious Investors.</em>
+    </h1>
+
+    <p class="text-base md:text-lg text-muted leading-relaxed max-w-xl mb-12">
+      Fullstack Lending provides institutional-grade financing for professional real estate investors —
+      without the friction of traditional banks. Bridge, DSCR, fix-and-flip, and ground-up construction.
+    </p>
+
+    <div class="flex flex-wrap gap-4">
+      <a href="#contact"
+         class="px-8 py-3.5 bg-gold text-ink font-semibold text-sm tracking-wide hover:bg-gold-lt transition-colors duration-200">
+        Get a Term Sheet
+      </a>
+      <a href="#products"
+         class="px-8 py-3.5 border text-cream text-sm tracking-wide hover:border-gold/60 transition-colors duration-200"
+         style="border-color: rgba(201,169,110,.3)">
+        Explore Products
+      </a>
+    </div>
+  </section>
+
+
+  <!-- ── Stats bar ── -->
+  <section class="border-y rule">
+    <div class="max-w-6xl mx-auto px-6 lg:px-10 py-12">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-10 md:gap-6">
+        <div class="text-center">
+          <p class="font-serif text-4xl text-gold mb-2">$2.1B+</p>
+          <p class="text-xs text-muted uppercase tracking-widest">Loans Funded</p>
+        </div>
+        <div class="text-center">
+          <p class="font-serif text-4xl text-gold mb-2">10 days</p>
+          <p class="text-xs text-muted uppercase tracking-widest">Avg. Close Time</p>
+        </div>
+        <div class="text-center">
+          <p class="font-serif text-4xl text-gold mb-2">30+</p>
+          <p class="text-xs text-muted uppercase tracking-widest">States Active</p>
+        </div>
+        <div class="text-center">
+          <p class="font-serif text-4xl text-gold mb-2">98%</p>
+          <p class="text-xs text-muted uppercase tracking-widest">Repeat Borrowers</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ── Loan Products ── -->
+  <section id="products" class="max-w-6xl mx-auto px-6 lg:px-10 py-28">
+    <div class="mb-16">
+      <p class="text-xs text-gold tracking-[0.22em] uppercase mb-4">Loan Products</p>
+      <h2 class="font-serif text-4xl md:text-5xl text-warm-wh leading-tight">
+        Financing for Every<br />Investment Strategy
+      </h2>
+    </div>
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+
+      <div class="card-bg card-border border p-8 hover:border-gold/40 transition-colors duration-300 group cursor-default">
+        <div class="w-8 h-px bg-gold mb-8"></div>
+        <h3 class="font-serif text-xl text-warm-wh mb-3">Bridge Loans</h3>
+        <p class="text-sm text-muted leading-relaxed mb-8">
+          Short-term capital to acquire and reposition assets fast — without missing a deal window.
+        </p>
+        <ul class="space-y-1.5 text-xs text-muted">
+          <li>Up to 80% LTV</li>
+          <li>6–24 month terms</li>
+          <li>Close in 5–7 days</li>
+        </ul>
+      </div>
+
+      <div class="card-bg card-border border p-8 hover:border-gold/40 transition-colors duration-300 group cursor-default">
+        <div class="w-8 h-px bg-gold mb-8"></div>
+        <h3 class="font-serif text-xl text-warm-wh mb-3">DSCR Loans</h3>
+        <p class="text-sm text-muted leading-relaxed mb-8">
+          Qualify on property cash flow — not personal income. Built for buy-and-hold portfolio builders.
+        </p>
+        <ul class="space-y-1.5 text-xs text-muted">
+          <li>Up to 80% LTV</li>
+          <li>30-year fixed available</li>
+          <li>No income docs required</li>
+        </ul>
+      </div>
+
+      <div class="card-bg card-border border p-8 hover:border-gold/40 transition-colors duration-300 group cursor-default">
+        <div class="w-8 h-px bg-gold mb-8"></div>
+        <h3 class="font-serif text-xl text-warm-wh mb-3">Fix &amp; Flip</h3>
+        <p class="text-sm text-muted leading-relaxed mb-8">
+          Acquisition plus rehab financing drawn down as work progresses. Maximise leverage on every project.
+        </p>
+        <ul class="space-y-1.5 text-xs text-muted">
+          <li>Up to 90% of total cost</li>
+          <li>100% of rehab funded</li>
+          <li>ARV-based underwriting</li>
+        </ul>
+      </div>
+
+      <div class="card-bg card-border border p-8 hover:border-gold/40 transition-colors duration-300 group cursor-default">
+        <div class="w-8 h-px bg-gold mb-8"></div>
+        <h3 class="font-serif text-xl text-warm-wh mb-3">Ground-Up Construction</h3>
+        <p class="text-sm text-muted leading-relaxed mb-8">
+          Land acquisition and vertical construction loans for residential and light commercial builds.
+        </p>
+        <ul class="space-y-1.5 text-xs text-muted">
+          <li>Up to 75% LTC</li>
+          <li>Flexible draw schedules</li>
+          <li>Interest reserve options</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+
+  <div class="max-w-6xl mx-auto px-6 lg:px-10">
+    <div class="border-t rule"></div>
+  </div>
+
+
+  <!-- ── Why Fullstack ── -->
+  <section id="why" class="max-w-6xl mx-auto px-6 lg:px-10 py-28">
+    <div class="grid lg:grid-cols-2 gap-16 lg:gap-24 items-start">
+
+      <div class="lg:sticky lg:top-20">
+        <p class="text-xs text-gold tracking-[0.22em] uppercase mb-5">Why Fullstack</p>
+        <h2 class="font-serif text-4xl md:text-5xl text-warm-wh leading-[1.1]">
+          The Lender That<br />Moves Like You Do.
+        </h2>
+        <p class="text-sm text-muted leading-relaxed mt-6 max-w-sm">
+          Most private lenders promise speed. We're built for it — from our underwriting process to our capital stack.
+        </p>
+      </div>
+
+      <div class="space-y-10">
+
+        <div class="flex gap-7">
+          <div class="w-px flex-shrink-0 mt-1" style="background:rgba(201,169,110,.35)"></div>
+          <div>
+            <h3 class="text-warm-wh font-medium mb-2">Decisions in 24 Hours</h3>
+            <p class="text-sm text-muted leading-relaxed">
+              Our underwriting team gives you a clear answer — not a maybe — within one business day of a complete file.
+            </p>
+          </div>
+        </div>
+
+        <div class="flex gap-7">
+          <div class="w-px flex-shrink-0 mt-1" style="background:rgba(201,169,110,.35)"></div>
+          <div>
+            <h3 class="text-warm-wh font-medium mb-2">Relationship, Not Just Transactions</h3>
+            <p class="text-sm text-muted leading-relaxed">
+              You get a dedicated loan officer who knows your portfolio, your markets, and your preferred structure — deal after deal.
+            </p>
+          </div>
+        </div>
+
+        <div class="flex gap-7">
+          <div class="w-px flex-shrink-0 mt-1" style="background:rgba(201,169,110,.35)"></div>
+          <div>
+            <h3 class="text-warm-wh font-medium mb-2">Flexible Structures</h3>
+            <p class="text-sm text-muted leading-relaxed">
+              We structure around the deal, not a rate sheet. Cross-collateralisation, blanket loans, and portfolio lines are all on the table.
+            </p>
+          </div>
+        </div>
+
+        <div class="flex gap-7">
+          <div class="w-px flex-shrink-0 mt-1" style="background:rgba(201,169,110,.35)"></div>
+          <div>
+            <h3 class="text-warm-wh font-medium mb-2">Institutional Capital, Private Speed</h3>
+            <p class="text-sm text-muted leading-relaxed">
+              Backed by a deep institutional capital pool — so we close with certainty and no last-minute funding gaps.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <div class="max-w-6xl mx-auto px-6 lg:px-10">
+    <div class="border-t rule"></div>
+  </div>
+
+
+  <!-- ── Process ── -->
+  <section id="process" class="max-w-6xl mx-auto px-6 lg:px-10 py-28">
+    <div class="mb-16 text-center">
+      <p class="text-xs text-gold tracking-[0.22em] uppercase mb-4">The Process</p>
+      <h2 class="font-serif text-4xl md:text-5xl text-warm-wh">From Intro to Close</h2>
+    </div>
+
+    <div class="grid md:grid-cols-3 divide-y md:divide-y-0 md:divide-x" style="border-color: rgba(201,169,110,.12)">
+      <div class="p-10 md:pr-14">
+        <p class="font-serif text-5xl mb-6" style="color:rgba(201,169,110,.25)">01</p>
+        <h3 class="font-serif text-xl text-warm-wh mb-3">Submit Your Deal</h3>
+        <p class="text-sm text-muted leading-relaxed">
+          Share deal details via our intake form or call a loan officer directly. No lengthy applications upfront.
+        </p>
+      </div>
+      <div class="p-10 md:px-14">
+        <p class="font-serif text-5xl mb-6" style="color:rgba(201,169,110,.25)">02</p>
+        <h3 class="font-serif text-xl text-warm-wh mb-3">Receive a Term Sheet</h3>
+        <p class="text-sm text-muted leading-relaxed">
+          Within 24 hours, a detailed term sheet lands in your inbox — rate, LTV, fees, and structure. No surprises.
+        </p>
+      </div>
+      <div class="p-10 md:pl-14">
+        <p class="font-serif text-5xl mb-6" style="color:rgba(201,169,110,.25)">03</p>
+        <h3 class="font-serif text-xl text-warm-wh mb-3">Close &amp; Fund</h3>
+        <p class="text-sm text-muted leading-relaxed">
+          Our in-house processing team coordinates title, appraisal, and legal to close in as few as 5 business days.
+        </p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ── Testimonials ── -->
+  <section class="border-y rule">
+    <div class="max-w-6xl mx-auto px-6 lg:px-10 py-24">
+      <div class="grid md:grid-cols-3 gap-12">
+
+        <div>
+          <p class="text-sm text-cream leading-relaxed mb-7">
+            "Fullstack closed a complex bridge deal in 6 days when two other lenders backed out at the table.
+            They've funded eight of our acquisitions since."
+          </p>
+          <div class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded-full card-bg card-border border flex-shrink-0"></div>
+            <div>
+              <p class="text-sm text-warm-wh font-medium">Marcus T.</p>
+              <p class="text-xs text-muted">50+ Unit Portfolio · Atlanta, GA</p>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <p class="text-sm text-cream leading-relaxed mb-7">
+            "DSCR loans with no income verification changed how I scale. I went from 4 doors to 22 in under a year
+            using Fullstack's portfolio program."
+          </p>
+          <div class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded-full card-bg card-border border flex-shrink-0"></div>
+            <div>
+              <p class="text-sm text-warm-wh font-medium">Priya M.</p>
+              <p class="text-xs text-muted">Buy-and-Hold Investor · Phoenix, AZ</p>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <p class="text-sm text-cream leading-relaxed mb-7">
+            "The team actually understands construction draws. No delays, no micromanaging.
+            My GC specifically requests Fullstack deals now."
+          </p>
+          <div class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded-full card-bg card-border border flex-shrink-0"></div>
+            <div>
+              <p class="text-sm text-warm-wh font-medium">Derek O.</p>
+              <p class="text-xs text-muted">Ground-Up Builder · Dallas, TX</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ── CTA ── -->
+  <section id="contact" class="max-w-6xl mx-auto px-6 lg:px-10 py-36 text-center">
+    <p class="text-xs text-gold tracking-[0.22em] uppercase mb-6">Get Started</p>
+    <h2 class="font-serif text-4xl md:text-6xl text-warm-wh mb-6 leading-[1.07]">
+      Let's Talk About<br />Your Next Deal.
+    </h2>
+    <p class="text-muted max-w-sm mx-auto mb-12 leading-relaxed text-sm">
+      Loans from $500K to $50M+. Residential, multifamily, and light commercial.
+      Term sheet in 24 hours.
+    </p>
+    <div class="flex flex-wrap justify-center gap-4">
+      <a href="mailto:lending@fullstacklending.com"
+         class="px-10 py-4 bg-gold text-ink font-semibold text-sm tracking-wide hover:bg-gold-lt transition-colors duration-200">
+        Start an Application
+      </a>
+      <a href="tel:+18005551234"
+         class="px-10 py-4 border text-cream text-sm tracking-wide hover:border-gold/60 transition-colors duration-200"
+         style="border-color: rgba(201,169,110,.3)">
+        (800) 555-1234
+      </a>
+    </div>
+  </section>
+
+
+  <!-- ── Footer ── -->
+  <footer class="border-t rule">
+    <div class="max-w-6xl mx-auto px-6 lg:px-10 py-12">
+      <div class="flex flex-col md:flex-row justify-between items-start gap-10 mb-10">
+        <a href="#" class="flex items-baseline gap-2.5">
+          <span class="font-serif text-lg text-gold">Fullstack</span>
+          <span class="font-sans text-xs tracking-[0.2em] text-muted uppercase">Lending</span>
+        </a>
+        <div class="flex flex-wrap gap-x-8 gap-y-3 text-xs text-muted">
+          <a href="#products" class="hover:text-cream transition-colors">Products</a>
+          <a href="#why"      class="hover:text-cream transition-colors">Why Us</a>
+          <a href="#process"  class="hover:text-cream transition-colors">Process</a>
+          <a href="#contact"  class="hover:text-cream transition-colors">Contact</a>
+          <a href="#"         class="hover:text-cream transition-colors">Privacy Policy</a>
+          <a href="#"         class="hover:text-cream transition-colors">NMLS #XXXXXXX</a>
+        </div>
+      </div>
+      <div class="border-t rule pt-8">
+        <p class="text-xs leading-relaxed max-w-2xl" style="color:rgba(122,112,96,.55)">
+          Fullstack Lending LLC is a private mortgage lender. All loans are subject to credit approval and
+          property eligibility. This is not a commitment to lend. Rates and terms vary by borrower and property.
+          Equal Housing Lender.
+        </p>
+      </div>
+    </div>
+  </footer>
+
+</div><!-- /z-10 -->
+</body>
+</html>
