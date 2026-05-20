@@ -83,12 +83,16 @@ class SiteFooter extends HTMLElement {
               <a href="#"                   class="hover:text-cream transition-colors">NMLS #1716495</a>
             </div>
           </div>
-          <div class="border-t rule-dark pt-8">
+          <div class="border-t rule-dark pt-8 flex flex-col md:flex-row justify-between gap-6">
             <p class="text-xs leading-relaxed max-w-2xl" style="color:rgba(242,234,216,.45)">
               Fullstack Lending LLC is a private mortgage lender. All loans are subject to credit approval and
               property eligibility. This is not a commitment to lend. Rates and terms vary by borrower and property.
               Equal Housing Lender.
             </p>
+            <address class="text-xs not-italic shrink-0" style="color:rgba(242,234,216,.45)">
+              30 N Gould St, Ste N<br />
+              Sheridan, WY 82801
+            </address>
           </div>
         </div>
       </footer>
