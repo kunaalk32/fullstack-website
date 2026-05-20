@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Terms of Service — Fullstack Lending</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ink:       '#0b0b09',
+            'ink-2':   '#111110',
+            gold:      '#c9a96e',
+            'gold-lt': '#dfc28e',
+            'gold-dk': '#9a7a45',
+            cream:     '#f2ead8',
+            'warm-wh': '#faf7f2',
+            muted:     '#7a7060',
+          },
+          fontFamily: {
+            serif: ['Playfair Display', 'Georgia', 'serif'],
+            sans:  ['Inter', 'system-ui', 'sans-serif'],
+          },
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+      opacity: .025;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+      background-repeat: repeat;
+      background-size: 200px 200px;
+    }
+
+    .rule-light { border-color: rgba(201,169,110,.30); }
+    .rule-dark  { border-color: rgba(201,169,110,.22); }
+
+    /* ── Policy prose ── */
+    .policy-body h2 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 1.3rem;
+      color: #0b0b09;
+      margin-top: 2.75rem;
+      margin-bottom: 0.65rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid rgba(201,169,110,.25);
+    }
+    .policy-body h3 {
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #0b0b09;
+      margin-top: 1.75rem;
+      margin-bottom: 0.5rem;
+    }
+    .policy-body p {
+      color: rgba(11,11,9,.70);
+      line-height: 1.8;
+      margin-bottom: 1rem;
+      font-size: 0.9375rem;
+    }
+    .policy-body ul, .policy-body ol {
+      padding-left: 1.4rem;
+      margin-bottom: 1rem;
+    }
+    .policy-body ul { list-style: disc; }
+    .policy-body ol { list-style-type: lower-alpha; }
+    .policy-body ul li, .policy-body ol li {
+      color: rgba(11,11,9,.70);
+      line-height: 1.8;
+      font-size: 0.9375rem;
+      margin-bottom: 0.4rem;
+    }
+    .policy-body a {
+      color: #9a7a45;
+      text-decoration: underline;
+    }
+    .policy-body a:hover { color: #0b0b09; }
+    .policy-body address {
+      font-style: normal;
+      color: rgba(11,11,9,.70);
+      font-size: 0.9375rem;
+      line-height: 1.8;
+      margin-bottom: 1rem;
+    }
+
+    /* ── Table ── */
+    .policy-body table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.25rem 0 1.5rem;
+      font-size: 0.875rem;
+    }
+    .policy-body th {
+      text-align: left;
+      padding: 0.7rem 1rem;
+      background: rgba(201,169,110,.10);
+      color: #0b0b09;
+      font-weight: 600;
+      border-bottom: 1px solid rgba(201,169,110,.30);
+    }
+    .policy-body td {
+      padding: 0.7rem 1rem;
+      color: rgba(11,11,9,.70);
+      border-bottom: 1px solid rgba(201,169,110,.12);
+      vertical-align: top;
+    }
+    .policy-body tr:last-child td { border-bottom: none; }
+  </style>
+</head>
+
+<body class="bg-warm-wh font-sans overflow-x-hidden">
+
+<site-nav></site-nav>
+
+<!-- Page header -->
+<div class="max-w-6xl mx-auto px-6 lg:px-10 pt-16 pb-10 border-b rule-light relative z-10">
+  <p class="text-xs text-gold-dk tracking-[0.22em] uppercase mb-4">Legal</p>
+  <h1 class="font-serif text-4xl md:text-5xl text-ink">Terms of Service</h1>
+  <p class="text-sm mt-4" style="color:rgba(11,11,9,.45)">Effective Date / Last Updated: May 19, 2026</p>
+</div>
+
+<!-- Terms content -->
+<main class="max-w-3xl mx-auto px-6 lg:px-10 py-16 relative z-10">
+  <div class="policy-body">
+
+    <p>These Terms of Use ("Terms") govern your access to and use of our websites made available to you by Fullstack Lending LLC ("Company," "we," "us," or "our"), including but not limited to the borrower portal made available to you through those websites ("Sites"), whether or not you complete a transaction with Company or through the Sites.</p>
+
+    <p><strong>BY ACCESSING OR USING THE SITES, OR BY CLICKING TO AFFIRM YOUR CONSENT, YOU AGREE TO THESE TERMS, AND OUR USE OF PERSONAL INFORMATION IN ACCORDANCE WITH OUR <a href="privacy-policy.html">PRIVACY POLICY</a>. IF YOU DO NOT AGREE WITH THESE TERMS OR OUR PRIVACY POLICY, DO NOT ACCESS OR USE THE SITES.</strong></p>
+
+    <p><strong>THESE TERMS CONTAIN AN AGREEMENT BY YOU TO RESOLVE DISPUTES THROUGH BINDING ARBITRATION ON AN INDIVIDUAL BASIS. PLEASE REVIEW SECTION 29 BELOW SINCE YOU ARE GIVING UP CERTAIN RIGHTS, SUCH AS THE RIGHT TO A JURY TRIAL AND THE RIGHT TO SUE COMPANY IN A CLASS ACTION LAWSUIT.</strong></p>
+
+    <p>We may modify these Terms at any time. All changes will be effective immediately upon posting to the Sites. Material changes will be conspicuously posted on the Sites or otherwise communicated to you. By using the Sites after changes are posted, you agree to those changes.</p>
+
+
+    <h2>Personal Information and Privacy Policy</h2>
+
+    <p>We may collect certain Personal Information (any information relating to an identified or reasonably identifiable person) about you and about your use of the Sites as described in our <a href="privacy-policy.html">Privacy Policy</a>. The Privacy Policy describes our information collection, use, and sharing practices. If you do not agree to our collection, use, or disclosure of your Personal Information as set forth in the Privacy Policy, do not access or use the Sites or provide us with Personal Information. Please note that our Sites may incorporate third-party technologies for tracking, including website analytics and targeted advertising. The Personal Information we collect as you use our Services may be shared with the providers of these technologies. By using our Services, you consent to this data sharing.</p>
+
+
+    <h2>Creating an Account</h2>
+
+    <p>You have the option to create and use an account to access the borrower portal made available through the Sites ("Account"). You are responsible for all activities that occur under your Account. You are responsible for keeping your password and any other verification information used to sign in to your Account confidential. Do not share your Account or passwords with any other person. Each person using an Account must use their own separate log-in information. Do not access or attempt to access any Account that is not yours. If you believe that your Account has been compromised, you must immediately contact us. We may disable any Account at any time in our sole discretion, for any or no reason, including if, in our opinion, you have violated any provision of these Terms. Be careful when accessing your Account on a shared computer, public computer, or over an unsecured connection because that increases the risk of fraudulent activity.</p>
+
+
+    <h2>Content</h2>
+
+    <p>The Sites, including their text, audio, video, graphics, charts, photographs, interfaces, icons, software, computer code, data, trademarks, logos, slogans, documentation, other components and content, and the design, selection, and arrangement of content, and all intellectual property rights in the foregoing (collectively, the "Content") are exclusively the property of Company or, as applicable, its vendors or licensors. Except for the rights expressly granted to you in the next section, Company reserves all other rights in and to the Sites and Content, including all intellectual property rights.</p>
+
+
+    <h2>Use Rights</h2>
+
+    <p>You may only use your Account, the Sites, and Content for your personal, non-exclusive use in the United States, so long as you comply with these Terms, the Privacy Policy, all other terms posted throughout the Sites that are applicable to you, and all applicable laws. You may only use your Account, the Sites, and the Content for their intended purposes for which they are made available to you by Company. You agree that you will not use or attempt to use the Sites for any purpose other than conducting mortgage banking related business with Company as a bona fide client of Company.</p>
+
+
+    <h2>Use of Marks</h2>
+
+    <p>Company owns certain trademarks, names, logos, insignia, and service marks ("Marks"). You do not have the right to use any of Company's Marks except as expressly agreed to in writing by Company. In addition, the Sites may contain third-party Marks and third-party copyrighted materials, which are the property of their respective owners. Nothing in these Terms grants you any rights to those third-party Marks or materials without such third-party's consent.</p>
+
+
+    <h2>Intellectual Property Rights</h2>
+
+    <p>The Sites and the Content are protected by copyright, trademark, trade dress, and other intellectual property laws. Any unauthorized use of any trademarks, trade dress, copyrighted materials, or any other intellectual property belonging to Company or any third party is strictly prohibited and may be prosecuted to the fullest extent of the law.</p>
+
+
+    <h2>Career Opportunities</h2>
+
+    <p>The Sites may allow you to apply for career opportunities posted by Company. You must not upload or submit a resume or any other materials for any person other than yourself. You warrant that all information contained in any resume or other materials you provide is current, accurate, and complete. Your submission of a resume or other materials does not in any way require Company to review those materials or consider you for employment. Career opportunity descriptions on the Sites are subject to change at our sole discretion without notice. Company may use a third-party service provider for its job applications portal, and your use of that portal may be governed by that third party's terms in addition to these Terms.</p>
+
+
+    <h2>Advertised Products, Services and Applications</h2>
+
+    <p>Advertised products, services, and applications available and offered by Company on its Sites may change at any time without notice to you. Some advertised services, products, and applications may not be available in certain areas. Nothing on the Sites constitutes an offer, but an invitation for you to review and understand the services and products offered by Company. Additional terms may apply with respect to your application for or use of our products and services. All loan products are business-purpose only and are not available for owner-occupied residential properties.</p>
+
+
+    <h2>Compliance with Laws</h2>
+
+    <p>In connection with your access to and use of the Sites, you are responsible for complying with all applicable laws, regulations, and rules of all relevant jurisdictions, including all applicable rules regarding online conduct. If you submit any payment information to the Sites, you warrant and represent that such information corresponds to your own accounts or accounts you are legally authorized to use and that such information is true and correct to the best of your knowledge. You agree to indemnify, defend, and hold us harmless with regard to any third-party claims alleging you have improperly provided payment information to us.</p>
+
+
+    <h2>Children's Information</h2>
+
+    <p>These Sites are not directed at children under the age of majority in the legal jurisdiction in which they reside. If you have not attained that age, you must immediately stop using these Sites. If you believe that your child has provided us with their Personal Information, please provide us with the relevant information (e.g., what information was provided, when, etc.), and we will make commercially reasonable efforts to delete such Personal Information from our records.</p>
+
+
+    <h2>Viruses</h2>
+
+    <p>You must use up-to-date, commercially standard, anti-virus software on any computer or device used by you to access the Sites. WE ARE NOT LIABLE FOR ANY VIRUS YOU MIGHT RECEIVE FROM OUR SITES OR LINKS ON OUR SITES, AND YOU ACCESS OUR SITES AT YOUR SOLE RISK.</p>
+
+
+    <h2>Restrictions on Your Use of the Sites</h2>
+
+    <ol>
+      <li>You will not copy, duplicate, sell, publish, post, license, rent, distribute, modify, translate, adapt, reverse-engineer, decompile, or create derivative works of the Sites or Content without Company's prior written consent.</li>
+      <li>You will not use the Sites for unlawful purposes.</li>
+      <li>You will not interfere with or induce a breach of the contractual relationships between Company and its employees.</li>
+      <li>You will not submit inaccurate, incomplete, or out-of-date information via your Account or the Sites, commit fraud or falsify information in connection with your use of your Account or the Sites.</li>
+      <li>You will not engage in data mining or similar data gathering or extraction activities from the Sites. You will not use the Sites to harvest email addresses, names, or other information of the users of the Sites or to spam other users of the Sites.</li>
+      <li>You will not access, use, or copy any portion of the Sites or Content, through the use of indexing agents, spiders, scrapers, bots, web crawlers, deep-link, or other automated devices or mechanisms.</li>
+      <li>You will not use the Sites to post, transmit, input, upload, or otherwise provide any information or material that contains any viruses, worms, Trojan horses, malware, ransomware, adware, or other harmful computer code that may disable, damage, impair, or otherwise interfere with the Sites, the servers used to make the Sites available, or any other network, computers, hardware, software or systems.</li>
+      <li>You shall not access any Account of which you are not the authorized user.</li>
+      <li>You will not engage in activities that aim to render the Sites or associated services inoperable or to make their use more difficult.</li>
+      <li>You may not frame, mirror, or circumvent the navigational structure of any part of the Sites.</li>
+      <li>You may not upload, distribute, transmit, or post anything to or through the Sites that: (i) is fraudulent, libelous, obscene, pornographic, indecent, violent, offensive, hate speech, harassing, threatening, defamatory, harms another person, or the like; (ii) invades the privacy of another or includes the confidential or proprietary information of another; or (iii) is protected by intellectual property rights without the express prior written consent of the owner of such intellectual property rights.</li>
+      <li>You may not engage in any conduct while using the Sites that Company considers inappropriate, unauthorized, or contrary to the intended purpose of the Sites.</li>
+    </ol>
+
+    <p>We reserve the right to prohibit access, use, conduct, communications, or content that we, in our sole discretion, deem to be harmful to the Sites, the Content, us, our mission, or any other person or entity, or that violates these Terms and/or applicable law.</p>
+
+
+    <h2>Financial Information</h2>
+
+    <p>Information about our collection and use of financial information is described in our <a href="privacy-policy.html">Privacy Policy</a> and in any contract we have with you regarding your application. If you decide to provide us with access to your bank statements or bank account, you confirm that you have all rights necessary to do so, such information is accurate and complete, and you are not submitting financial or other personal information on behalf of a third party.</p>
+
+
+    <h2>Feedback and Other Content Submitted By You</h2>
+
+    <p>If you submit comments or feedback to us regarding the Sites or its Content, or any other comments, questions, requests, content or information that is not Personal Information ("Feedback"), we may use any comments and feedback that you send us in our discretion and without attribution or compensation to you.</p>
+
+
+    <h2>You Consent To Receive Texts</h2>
+
+    <p>You expressly agree that Company may send you recurring account-related and marketing-related e-mail messages. You also expressly agree that Company may send you recurring account-related text messages to any mobile phone number you provide, whether manually or using an automated telephone dialing system. And, if you opt-in to receiving marketing-related text messages, you expressly agree to receive such messages, whether manually or using an automated telephone dialing system. You confirm that the email account and mobile phone number you provided is owned and used solely by you (or the company you work for). You agree to promptly notify and update Company when your mobile phone number changes. You are not required to consent to receiving marketing-related messages as described in this section in order to receive products or services from Company and you can opt-out at any time. To opt out of marketing-related email communications, use the unsubscribe link in the email or contact us at <a href="mailto:privacy@fullstacklending.com">privacy@fullstacklending.com</a> with "Unsubscribe" in the subject line. To opt out of text messages, text "STOP" to stop and "HELP" for help to the number you received the message from at any time. Message and data rates may apply. For more information, you can contact us at <a href="mailto:info@fullstacklending.com">info@fullstacklending.com</a>.</p>
+
+
+    <h2>Our Posts on Social Media</h2>
+
+    <p>Links to Company's social media pages (e.g., LinkedIn and Instagram) may be included on the Sites ("Social Media Pages"). Because anyone may post or tag on Social Media Pages, posts do not necessarily reflect Company's views. We reserve the right to remove anything from our Social Media Pages at our sole discretion. We may also take steps to block users from access to our Social Media Pages who violate these Terms. If we follow, like, favorite, share, or re-post an individual's content on our Social Media Pages, that is not an endorsement of that third party or any service or company they represent.</p>
+
+
+    <h2>Your Posts on Social Media</h2>
+
+    <p>We may or may not review content you and other third parties post on our Social Media Pages. We may remove anything that we deem offensive, inappropriate or inconsistent with the vision of Company posted on our Social Media Pages. We may work with third-party service providers of the Social Media Pages to block users who are being offensive, abusive, disruptive, or otherwise violating these Terms or applicable laws. We will treat all information posted to our Social Media pages as non-confidential.</p>
+
+
+    <h2>NO WARRANTY</h2>
+
+    <p>THE SITES AND CONTENT, AND ALL SERVICES PROVIDED THROUGH THE SITES, ARE PROVIDED "AS IS," "AS AVAILABLE," AND WITHOUT ANY WARRANTY OR CONDITION OF ANY KIND. TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, COMPANY EXPRESSLY DISCLAIMS ALL WARRANTIES, COVENANTS OR CONDITIONS OF ANY KIND WITH RESPECT TO THE SITES AND CONTENT, AND ALL SERVICES PROVIDED THROUGH THE SITES, EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION THE IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, TITLE, NON-INFRINGEMENT, AND ANY WARRANTIES OR CONDITIONS ARISING FROM STATUTE, SUCH AS COURSE OF PERFORMANCE, COURSE OF DEALING OR USAGE IN TRADE. WITHOUT LIMITING THE GENERALITY OF THE FOREGOING, WE DO NOT WARRANT OR ENDORSE ANY THIRD-PARTY CONTENT.</p>
+
+    <p>COMPANY MAKES COMMERCIALLY REASONABLE EFFORTS TO ENSURE THAT ALL CONTENT ON THE SITES IS ACCURATE AND RELIABLE, BUT NEITHER ACCURACY NOR RELIABILITY ARE GUARANTEED. COMPANY DOES NOT WARRANT OR GUARANTEE THE QUALITY, COMPLETENESS, TIMELINESS, OR AVAILABILITY OF THE SITES OR CONTENT. COMPANY DOES NOT WARRANT OR GUARANTEE THAT THE SITES OR CONTENT WILL BE UNINTERRUPTED OR ERROR-FREE, THAT ANY DEFECTS IN THE SITES OR CONTENT WILL BE CORRECTED, OR THAT THE SITES OR THE SERVERS THAT MAKE THE SITES AVAILABLE ARE FREE OF VIRUSES OR OTHER HARMFUL CONDITIONS OR COMPONENTS.</p>
+
+    <p>THE LAWS OF CERTAIN JURISDICTIONS MAY NOT ALLOW THE DISCLAIMER OF CERTAIN WARRANTIES. IF THESE LAWS APPLY TO YOU, SOME OR ALL OF THE ABOVE DISCLAIMERS MAY NOT APPLY TO YOU AND YOU MAY HAVE ADDITIONAL RIGHTS.</p>
+
+
+    <h2>LIMITATION OF LIABILITY</h2>
+
+    <p>TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, IN NO EVENT WILL COMPANY OR ITS DIRECTORS, OFFICERS, OWNERS, EMPLOYEES, CONTRACTORS, REPRESENTATIVES, CONSULTANTS, AGENTS, SUPPLIERS, ATTORNEYS OR LICENSORS, OR ITS OR THEIR SUCCESSORS AND ASSIGNS (TOGETHER, "COMPANY PARTY(IES)") BE LIABLE FOR ANY DIRECT, INDIRECT, SPECIAL, INCIDENTAL, EXEMPLARY, PUNITIVE, OR CONSEQUENTIAL LOSS OR DAMAGE, LOSS OF DATA, LOSS OF USE, LOST PROFITS, OR LOST REVENUE, ARISING OUT OF OR IN CONNECTION WITH THE SITE OR CONTENT, OR YOUR ACCESS TO OR USE OF, OR INABILITY TO ACCESS OR USE, THE SITE OR CONTENT, REGARDLESS OF THE FORM OF ACTION, WHETHER THE CLAIM IS BASED IN CONTRACT, TORT (INCLUDING NEGLIGENCE), STRICT LIABILITY, WARRANTY, OR OTHERWISE, AND EVEN IF A COMPANY PARTY HAS EXPRESS KNOWLEDGE OF THE POSSIBILITY OF THE LOSS OR DAMAGE. YOUR SOLE AND EXCLUSIVE REMEDY IS TO STOP ACCESSING AND USING THE SITE OR CONTENT.</p>
+
+    <p>WITHOUT LIMITING THE FOREGOING, IN NO EVENT WILL THE AGGREGATE LIABILITY OF THE COMPANY PARTIES ARISING OUT OF OR IN CONNECTION WITH THE SITE OR CONTENT, OR YOUR ACCESS TO OR USE OF, OR INABILITY TO ACCESS OR USE, THE SITE OR CONTENT EXCEED $100 U.S.D., EVEN IF ANY REMEDY PROVIDED FAILS OF ITS ESSENTIAL PURPOSE.</p>
+
+    <p>THE LAWS OF CERTAIN JURISDICTIONS DO NOT ALLOW THE LIMITATION OR EXCLUSION OF LIABILITY OR CERTAIN DAMAGES. IF THESE LAWS APPLY TO YOU, SOME OR ALL OF THE ABOVE LIMITATIONS MAY NOT APPLY TO YOU, AND YOU MAY HAVE ADDITIONAL RIGHTS.</p>
+
+
+    <h2>INDEMNIFICATION</h2>
+
+    <p>YOU SHALL INDEMNIFY, DEFEND AND HOLD HARMLESS THE COMPANY PARTIES FROM AND AGAINST ALL LOSSES, CLAIMS, LIABILITIES, DEMANDS, COMPLAINTS, ACTIONS, DAMAGES, JUDGMENTS, SETTLEMENTS, FINES, PENALTIES, EXPENSES, AND COSTS (INCLUDING WITHOUT LIMITATION REASONABLE ATTORNEYS' FEES AND OTHER LEGAL FEES) THAT ARISE OUT OF OR IN CONNECTION WITH (A) YOUR VIOLATION OF APPLICABLE LAWS, (B) YOUR MISUSE OF THE SITE OR ANY CONTENT, (C) YOUR BREACH OF THESE TERMS OR ANY OTHER TERMS ON THE SITE; AND (D) YOUR INFRINGEMENT OR MISAPPROPRIATION OF COMPANY'S OR ANY THIRD PARTY'S INTELLECTUAL PROPERTY. WE RESERVE, AND YOU GRANT TO US, THE EXCLUSIVE RIGHT TO ASSUME THE DEFENSE AND CONTROL OF ANY SUCH MATTER (SUBJECT TO YOUR CONTINUING INDEMNIFICATION OBLIGATIONS HEREIN).</p>
+
+
+    <h2>Third-Party Websites and Content</h2>
+
+    <p>The Sites may link to, or be linked from, websites not maintained or controlled by Company. Those links are provided as a convenience to the visitors of our Sites. Company is not responsible for examining or evaluating the content or accuracy of third-party websites linked through the Sites. Company does not warrant or endorse any third-party website or any products or services made available through those websites. When leaving the Sites, the terms and privacy policy of the third party govern your use of the third-party site (and such third-party's use of your Personal Information), not these Terms.</p>
+
+    <p>The Sites also contain certain third-party Content. We provide third-party content for your convenience, not as an endorsement. The presence of third-party Content does not mean that Company has reviewed the third-party Content or that there is any association between Company and any third party. You access third-party Content at your sole risk. Company has no responsibility for any third-party Content. Nothing in these Terms grants you any rights to any third-party Content.</p>
+
+
+    <h2>Linking to the Sites</h2>
+
+    <p>You are prohibited from linking to these Sites on your website or elsewhere without the prior express written consent of Company. If Company grants you a right to link to these Sites, certain terms may apply, and Company reserves the right to revoke such consent at any time. You are responsible for any costs incurred by Company in enforcing its rights under this section.</p>
+
+
+    <h2>Use in the United States</h2>
+
+    <p>The Sites are intended for use in the United States only. We do not guarantee that use of the Sites will be available or permitted in any location other than the United States. If you choose to access the Sites from a location other than the United States, you do so at your own risk.</p>
+
+    <p>THE EXISTENCE OF THIS SITE OR ANY CONTENT SHALL NOT BE CONSTRUED AS COMPANY OR THE COMPANY PARTIES OFFERING SUCH SITE OR CONTENT TO PERSONS IN JURISDICTIONS WHERE THE PROVISION OF SUCH SITE OR CONTENT IS PROHIBITED BY LAW.</p>
+
+
+    <h2>Termination</h2>
+
+    <p>If you violate applicable laws or these Terms, you are immediately prohibited from further use of the Sites or Content, and we may restrict your access to the Sites or Content (including terminating access to your Account). Company may suspend or terminate the Sites or any Content, in whole or in part, at any time in its sole discretion for any reason. In addition, Company may suspend or terminate your Account, in whole or in part, temporarily or permanently. Company shall not be liable to you or anyone else for any damages arising from or related to Company's suspension or termination of your access to your Account, the Sites or the Content, or in the event Company modifies, discontinues or restricts the availability of your Account, the Sites or the Content (in whole or in part).</p>
+
+
+    <h2>Sites Unavailability</h2>
+
+    <p>Without limiting the generality of the previous section, the Sites (including your Account) or Content may be unavailable or limited for various reasons, and we shall not be liable to you for any such unavailability, including without limitation (a) hardware, software, server, network, or telecommunications failures, (b) severe weather, war, riot, act of God, fire, earthquake, strike, labor shortage, pandemic, quarantine (or similar orders), (c) regulatory restrictions and other acts of government, (d) interruptions due to utility and power companies, and (e) interruptions due to hacking or other malicious intrusion.</p>
+
+
+    <h2>Cooperation with Law Enforcement</h2>
+
+    <p>Company will cooperate with law enforcement if you are suspected of having violated applicable laws. YOU WAIVE AND HOLD COMPANY AND THE COMPANY PARTIES HARMLESS FOR ANY COOPERATION WITH, OR DISCLOSURE OF YOUR INFORMATION TO, LAW ENFORCEMENT RELATING TO YOUR SUSPECTED VIOLATION OF APPLICABLE LAWS.</p>
+
+
+    <h2>Governing Law</h2>
+
+    <p>Unless otherwise required by applicable law, these Terms, and your access to and use of the Sites, are governed by the laws of the State of Washington, without regard to its conflict of laws principles. Unless otherwise required by applicable law, and except as provided in the following section, venue is exclusively in the state or federal courts, as applicable, located in King County, Washington. The parties expressly agree to the exclusive jurisdiction of those courts. Any cause of action or other claim brought by you with respect to the Sites or Content must be commenced within one year after the cause of action or claim arises.</p>
+
+
+    <h2>BINDING ARBITRATION</h2>
+
+    <p>YOU AGREE TO RESOLVE ANY DISPUTES ARISING UNDER THESE TERMS OR RELATING TO THIS SITE THROUGH BINDING ARBITRATION, ON AN INDIVIDUAL BASIS, AS SET FORTH BELOW.</p>
+
+    <p><strong>(a.) WAIVER.</strong> YOU UNDERSTAND THAT BY AGREEING TO BINDING ARBITRATION ON AN INDIVIDUAL BASIS, (I) YOU ARE GIVING UP YOUR RIGHT TO A TRIAL BY JURY AND (II) YOU MAY NOT BRING A CLAIM AGAINST COMPANY IN A CLASS ACTION LAWSUIT, AND THE ARBITRATOR MAY NOT CONSOLIDATE OR JOIN ONE OR MORE PARTY'S CLAIMS IN A CLASS OR PROCEEDING. In the event a court determines that the foregoing is unenforceable, then such claim must be severed from the arbitration and brought in court, subject to Company's right to appeal.</p>
+
+    <p><strong>(b.) Good Faith Discussions.</strong> You and Company must first attempt to resolve any dispute by good faith discussions or email. If the parties cannot resolve a dispute with good faith discussions, then either party may submit the dispute to binding arbitration as set forth in these Terms.</p>
+
+    <p><strong>(c.) Rules.</strong> You and Company agree that arbitration will be conducted by the American Arbitration Association ("AAA") in accordance with its Consumer Arbitration Rules, then in effect and as amended herein (the "Rules"). The Rules can be found at: <a href="https://www.adr.org/Rules" target="_blank" rel="noopener">https://www.adr.org/Rules</a>. You and Company agree that this agreement to arbitrate involves a transaction of interstate commerce and therefore the Federal Arbitration Act will govern the interpretation and enforceability of this agreement to arbitrate.</p>
+
+    <p><strong>(d.) Arbitrator.</strong> Arbitration shall be before one (1) arbitrator who shall have exclusive authority to resolve any disputes arising under these Terms or with regard to the Sites, including as to the enforceability and/or formation of this agreement to arbitrate made between you and Company.</p>
+
+    <p><strong>(e.) Location.</strong> You agree that arbitration shall take place exclusively in King County, Washington. However, where the disclosed claims or counterclaims do not exceed $25,000, the dispute may be resolved by the submission of documents only/desk arbitration (see the Rules for more details). Either party may, however, ask for a hearing, or the arbitrator may decide a hearing is necessary.</p>
+
+    <p><strong>(f.) Time Limit.</strong> Any claim by you arising in connection with the Sites must be commenced by you within one year of the dispute giving rise to the claim.</p>
+
+    <p><strong>(g.) Confidentiality.</strong> The arbitration and information disclosed during arbitration may not be disclosed to any third party except as required by law. The parties will not make any comments or announcements to the public about the subject matter or outcome of any arbitration.</p>
+
+    <p><strong>(h.) Changes to this Agreement to Arbitrate.</strong> If Company modifies this arbitration provision, you may reject that change by sending Company written notice within thirty (30) days of our posting of the change, in which case we will terminate your Account and you may no longer access or use the Sites or its Content.</p>
+
+    <p><strong>(i.) The Arbitrator's Decision.</strong> The arbitrator's decisions and judgement will be final and binding on the parties but will have no precedential effect. The arbitrator shall not have the authority to award damages outside of those set forth in these Terms.</p>
+
+    <p><strong>(j.) Costs and Expenses.</strong> Each party shall pay their own expenses and fees, including their own attorneys' fees, arising from arbitration, unless the arbitrator determines that your claims were improper or frivolous, in which case the arbitrator may require you to reimburse us for certain fees and expenses in accordance with the Rules.</p>
+
+    <p><strong>(k.) Exceptions.</strong> Notwithstanding anything to the contrary in this section, you and Company each retain the right to bring an individual action in small claims court and the right to seek injunctive or other equitable relief in a court of competent jurisdiction to prevent the actual or threatened infringement, misappropriation or violation of a party's intellectual property rights.</p>
+
+
+    <h2>Terms Applicable to New Jersey Customers</h2>
+
+    <p>No provision in these Terms shall apply to any consumer in New Jersey if the provision limits remedies for (i) negligence, (ii) products liability claims, (iii) the punitive damages laws, (iv) the New Jersey Uniform Commercial Code, or (v) failure to reasonably protect against harm arising from certain criminal acts of third parties (e.g., computer hacking and identity theft). The provisions of these Terms concerning the exclusion or limitation of certain damages are not applicable in New Jersey with respect to statutory damages, punitive damages, loss of data, and loss of or damage to property. Company reserves all rights, defenses, and permissible limitations under the laws of New Jersey and under the laws of your state of residence.</p>
+
+
+    <h2>Assignment</h2>
+
+    <p>We may assign our rights and delegate our duties under these Terms at any time to any party without notice to you. You may not assign your rights or delegate your duties under these Terms without our prior written consent. These Terms inure to the benefit of Company's successors and assigns.</p>
+
+
+    <h2>Entire Agreement</h2>
+
+    <p>These Terms, the <a href="privacy-policy.html">Privacy Policy</a>, and any terms posted throughout the Sites (if any) are the entire agreement between you and Company with respect to your access to and use of the Sites and its Content. In the event of a conflict between these Terms and our Privacy Policy, our Privacy Policy will control.</p>
+
+
+    <h2>Waiver</h2>
+
+    <p>Company's failure to enforce any provision of these Terms will not constitute a waiver of that provision or any other provision. Any waiver of any provision of these Terms will be effective only if in writing and signed by Company.</p>
+
+
+    <h2>Severability</h2>
+
+    <p>If any provision of these Terms is held invalid, void, or unenforceable, that provision will be severed from the remaining provisions and the remaining provisions will remain in full force and effect. The headings in these Terms are for convenience only and do not affect the interpretation of these Terms.</p>
+
+
+    <h2>Electronic Communications</h2>
+
+    <p>These Terms and any other documentation, agreements, notices, or communications between you and Company may be provided to you electronically to the extent permissible by law. Please print or otherwise save a copy of all documentation, agreements, notices, and other communications for your reference.</p>
+
+
+    <h2>Contact Us</h2>
+
+    <p>Please direct any questions and concerns regarding these Terms to us at:</p>
+
+    <address>
+      Fullstack Lending LLC<br />
+      Attn: Legal Department<br />
+      30 N Gould St, Ste N<br />
+      Sheridan, WY 82801<br />
+      <a href="mailto:info@fullstacklending.com">info@fullstacklending.com</a>
+    </address>
+
+  </div>
+</main>
+
+<site-footer></site-footer>
+
+<script src="components.js"></script>
+
+</body>
+</html>
