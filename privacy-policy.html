@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Privacy Policy — Fullstack Lending</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ink:       '#0b0b09',
+            'ink-2':   '#111110',
+            gold:      '#c9a96e',
+            'gold-lt': '#dfc28e',
+            'gold-dk': '#9a7a45',
+            cream:     '#f2ead8',
+            'warm-wh': '#faf7f2',
+            muted:     '#7a7060',
+          },
+          fontFamily: {
+            serif: ['Playfair Display', 'Georgia', 'serif'],
+            sans:  ['Inter', 'system-ui', 'sans-serif'],
+          },
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+      opacity: .025;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+      background-repeat: repeat;
+      background-size: 200px 200px;
+    }
+
+    .rule-light { border-color: rgba(201,169,110,.30); }
+    .rule-dark  { border-color: rgba(201,169,110,.22); }
+
+    /* Prose styles for policy body */
+    .policy-body h2 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 1.35rem;
+      color: #0b0b09;
+      margin-top: 2.5rem;
+      margin-bottom: 0.6rem;
+    }
+    .policy-body p {
+      color: rgba(11,11,9,.70);
+      line-height: 1.75;
+      margin-bottom: 1rem;
+      font-size: 0.9375rem;
+    }
+    .policy-body ul {
+      list-style: disc;
+      padding-left: 1.4rem;
+      margin-bottom: 1rem;
+    }
+    .policy-body ul li {
+      color: rgba(11,11,9,.70);
+      line-height: 1.75;
+      font-size: 0.9375rem;
+      margin-bottom: 0.25rem;
+    }
+    .policy-body a {
+      color: #9a7a45;
+      text-decoration: underline;
+    }
+    .policy-body a:hover {
+      color: #0b0b09;
+    }
+  </style>
+</head>
+
+<body class="bg-warm-wh font-sans overflow-x-hidden">
+
+<!-- Nav -->
+<header class="max-w-6xl mx-auto px-6 lg:px-10 relative z-10">
+  <nav class="flex items-center justify-between py-8 border-b rule-light">
+    <a href="index.html" class="flex items-baseline gap-2.5 no-underline">
+      <span class="font-serif text-xl text-gold tracking-wide">Fullstack</span>
+      <span class="font-sans text-xs tracking-[0.2em] text-muted uppercase">Lending</span>
+    </a>
+
+    <div class="hidden md:flex items-center gap-9 text-sm text-muted">
+      <a href="index.html#products" class="hover:text-ink transition-colors duration-200">Products</a>
+      <a href="index.html#why"      class="hover:text-ink transition-colors duration-200">Why Us</a>
+      <a href="index.html#process"  class="hover:text-ink transition-colors duration-200">Process</a>
+      <a href="index.html#contact"  class="hover:text-ink transition-colors duration-200">Contact</a>
+    </div>
+
+    <a href="https://loans.fullstacklending.com"
+       class="text-xs px-5 py-2.5 border border-gold text-gold hover:bg-gold hover:text-ink transition-colors duration-200 tracking-widest uppercase font-medium">
+      Apply Now
+    </a>
+  </nav>
+</header>
+
+<!-- Page header -->
+<div class="max-w-6xl mx-auto px-6 lg:px-10 pt-16 pb-10 border-b rule-light relative z-10">
+  <h1 class="font-serif text-4xl md:text-5xl text-ink">Privacy Policy</h1>
+  <p class="text-sm text-ink/50 mt-4">Last updated: <span id="last-updated"></span></p>
+</div>
+
+<!-- Policy content -->
+<main class="max-w-3xl mx-auto px-6 lg:px-10 py-16 relative z-10">
+  <div class="policy-body">
+    <!-- PASTE PRIVACY POLICY CONTENT HERE -->
+  </div>
+</main>
+
+<!-- Footer -->
+<footer class="bg-ink border-t rule-dark relative z-10">
+  <div class="max-w-6xl mx-auto px-6 lg:px-10 py-12">
+    <div class="flex flex-col md:flex-row justify-between items-start gap-10 mb-10">
+      <a href="index.html" class="flex items-baseline gap-2.5">
+        <span class="font-serif text-lg text-gold">Fullstack</span>
+        <span class="font-sans text-xs tracking-[0.2em] text-cream/60 uppercase">Lending</span>
+      </a>
+      <div class="flex flex-wrap gap-x-8 gap-y-3 text-xs text-cream/60">
+        <a href="index.html#products" class="hover:text-cream transition-colors">Products</a>
+        <a href="index.html#why"      class="hover:text-cream transition-colors">Why Us</a>
+        <a href="index.html#process"  class="hover:text-cream transition-colors">Process</a>
+        <a href="index.html#contact"  class="hover:text-cream transition-colors">Contact</a>
+        <a href="privacy-policy.html" class="hover:text-cream transition-colors">Privacy Policy</a>
+        <!-- TODO: Confirm Vontive's NMLS number from NMLS Consumer Access before publishing -->
+        <a href="#"                   class="hover:text-cream transition-colors">NMLS #1716495</a>
+      </div>
+    </div>
+    <div class="border-t rule-dark pt-8">
+      <p class="text-xs leading-relaxed max-w-2xl" style="color:rgba(242,234,216,.45)">
+        Fullstack Lending LLC is a private mortgage lender. All loans are subject to credit approval and
+        property eligibility. This is not a commitment to lend. Rates and terms vary by borrower and property.
+        Equal Housing Lender.
+      </p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('last-updated').textContent =
+    new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+</script>
+
+</body>
+</html>
