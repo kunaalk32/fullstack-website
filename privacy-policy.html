@@ -49,17 +49,29 @@
     .rule-light { border-color: rgba(201,169,110,.30); }
     .rule-dark  { border-color: rgba(201,169,110,.22); }
 
-    /* Prose styles for policy body */
+    /* ── Policy prose ── */
     .policy-body h2 {
       font-family: 'Playfair Display', Georgia, serif;
-      font-size: 1.35rem;
+      font-size: 1.3rem;
       color: #0b0b09;
-      margin-top: 2.5rem;
-      margin-bottom: 0.6rem;
+      margin-top: 2.75rem;
+      margin-bottom: 0.65rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid rgba(201,169,110,.25);
+    }
+    .policy-body h3 {
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #0b0b09;
+      margin-top: 1.75rem;
+      margin-bottom: 0.5rem;
     }
     .policy-body p {
       color: rgba(11,11,9,.70);
-      line-height: 1.75;
+      line-height: 1.8;
       margin-bottom: 1rem;
       font-size: 0.9375rem;
     }
@@ -70,9 +82,9 @@
     }
     .policy-body ul li {
       color: rgba(11,11,9,.70);
-      line-height: 1.75;
+      line-height: 1.8;
       font-size: 0.9375rem;
-      margin-bottom: 0.25rem;
+      margin-bottom: 0.2rem;
     }
     .policy-body a {
       color: #9a7a45;
@@ -81,78 +93,224 @@
     .policy-body a:hover {
       color: #0b0b09;
     }
+    .policy-body address {
+      font-style: normal;
+      color: rgba(11,11,9,.70);
+      font-size: 0.9375rem;
+      line-height: 1.8;
+      margin-bottom: 1rem;
+    }
+
+    /* ── Table ── */
+    .policy-body table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.25rem 0 1.5rem;
+      font-size: 0.875rem;
+    }
+    .policy-body th {
+      text-align: left;
+      padding: 0.7rem 1rem;
+      background: rgba(201,169,110,.10);
+      color: #0b0b09;
+      font-weight: 600;
+      border-bottom: 1px solid rgba(201,169,110,.30);
+    }
+    .policy-body td {
+      padding: 0.7rem 1rem;
+      color: rgba(11,11,9,.70);
+      border-bottom: 1px solid rgba(201,169,110,.12);
+      vertical-align: top;
+    }
+    .policy-body tr:last-child td {
+      border-bottom: none;
+    }
   </style>
 </head>
 
 <body class="bg-warm-wh font-sans overflow-x-hidden">
 
-<!-- Nav -->
-<header class="max-w-6xl mx-auto px-6 lg:px-10 relative z-10">
-  <nav class="flex items-center justify-between py-8 border-b rule-light">
-    <a href="index.html" class="flex items-baseline gap-2.5 no-underline">
-      <span class="font-serif text-xl text-gold tracking-wide">Fullstack</span>
-      <span class="font-sans text-xs tracking-[0.2em] text-muted uppercase">Lending</span>
-    </a>
-
-    <div class="hidden md:flex items-center gap-9 text-sm text-muted">
-      <a href="index.html#products" class="hover:text-ink transition-colors duration-200">Products</a>
-      <a href="index.html#why"      class="hover:text-ink transition-colors duration-200">Why Us</a>
-      <a href="index.html#process"  class="hover:text-ink transition-colors duration-200">Process</a>
-      <a href="index.html#contact"  class="hover:text-ink transition-colors duration-200">Contact</a>
-    </div>
-
-    <a href="https://loans.fullstacklending.com"
-       class="text-xs px-5 py-2.5 border border-gold text-gold hover:bg-gold hover:text-ink transition-colors duration-200 tracking-widest uppercase font-medium">
-      Apply Now
-    </a>
-  </nav>
-</header>
+<site-nav></site-nav>
 
 <!-- Page header -->
 <div class="max-w-6xl mx-auto px-6 lg:px-10 pt-16 pb-10 border-b rule-light relative z-10">
+  <p class="text-xs text-gold-dk tracking-[0.22em] uppercase mb-4">Legal</p>
   <h1 class="font-serif text-4xl md:text-5xl text-ink">Privacy Policy</h1>
-  <p class="text-sm text-ink/50 mt-4">Last updated: <span id="last-updated"></span></p>
+  <p class="text-sm mt-4" style="color:rgba(11,11,9,.45)">Effective Date: May 19, 2026</p>
 </div>
 
 <!-- Policy content -->
 <main class="max-w-3xl mx-auto px-6 lg:px-10 py-16 relative z-10">
   <div class="policy-body">
-    <!-- PASTE PRIVACY POLICY CONTENT HERE -->
+
+    <p>This Privacy Policy ("Policy") describes the Personal Information collected by or on behalf of Fullstack Lending LLC ("Company," "we," "us," or "our") from you and through our websites, including our borrower portal and any website that links to this Privacy Policy (collectively "Sites"), and how we use, share, and protect that Personal Information. We will modify this Policy to reflect changes we make in our processing of Personal Information, and all such modifications will be effective immediately upon posting to the Sites.</p>
+
+    <p>If you use our Sites, you must comply with our <a href="terms-of-service.html">Terms of Use</a>.</p>
+
+    <p>When you or your business contracts with us for the purchase of our products or services, or applies for a loan, the collection, use, and sharing of any information collected is governed by the contracts between Company and you or your business. Those agreements will control if they conflict with this Policy.</p>
+
+
+    <h2>1. Personal Information We Collect</h2>
+
+    <p>This section describes the categories of Personal Information we collect and the categories of third parties with which we share the Personal Information.</p>
+
+    <p><strong>Prospective Customers:</strong> We may collect interest and demographic information for marketing purposes, using third parties who supply information about prospective customers, such as lead buy partners and data brokers.</p>
+
+    <p><strong>All Users of the Sites ("Users"):</strong> We may collect device, usage, and activity information, as well as non-precise location information for security, system administration, marketing, and improvement purposes, in order to provide the Sites to Users. Data is collected by analytics providers and indirectly by observing Users' activities and behavior while using the Sites, and may be stored by third-party analytics providers.</p>
+
+    <p><strong>Users Whose Activities Express Interest in Our Products or Services:</strong> We may collect interest and demographic information for marketing purposes. Data is collected by analytics providers and indirectly by observing Users' activities and behavior while using the Sites.</p>
+
+    <p><strong>Users and Other Individuals Who Apply for a Financial Product or Service, Including a Mortgage:</strong> We collect the following information: name and contact information, user-selected credentials (email address and password), business affiliation and information for affiliated business, application information including purpose of application, guarantor information, residency information, asset information, and liquidity information, financial information such as bank statements or other banking information, credit information, and identification. We do so to determine your eligibility for the requested financial product or service, to verify your identity and business affiliation, and for customer service purposes. Data is collected directly from Users, indirectly from agents of individuals seeking to apply for financial products or services on such individuals' behalf, from third parties that provide information about creditworthiness, and from third parties that verify User-provided information. This information may be shared with third parties that provide and/or compile information about creditworthiness, such as credit bureaus and consumer reporting agencies, and with our institutional lending partners.</p>
+
+    <p><strong>Users Who Pay an Appraisal Deposit in Connection With Their Application for a Financial Product or Service:</strong> We collect information about the payment transaction to confirm receipt of the deposit from our payment processing partner.</p>
+
+    <p><strong>Users Who Provide Feedback or Send Us a Message Using the Sites:</strong> Names and contact information, along with the contents of messages, may be collected in order to review, respond, and take responsive action, to improve our business and the Sites. This is collected directly from Users.</p>
+
+    <p><strong>Users Who Apply for Employment With Us:</strong> We collect the following information: name and contact information, professional qualification information including work experience, educational credentials, licenses, certifications, and references, work eligibility information, and equal employment information, in order to evaluate the application for employment. This information may be collected directly from Users and from third parties who verify professional qualification information.</p>
+
+
+    <h2>2. Disclosure of Personal Information</h2>
+
+    <p>In addition to the sharing described above, we may also share your personal information with:</p>
+
+    <p><strong>Employees and Professional Advisors.</strong> We may share Personal Information with our employees and professional advisors, such as our attorneys, accountants, financial advisors, and business advisors, in their capacity as advisors to us.</p>
+
+    <p><strong>Processors/Service Providers.</strong> We share your personal information with third parties that provide services to us. We engage these third parties with contracts that require them to use your personal information only to deliver the services for which we have engaged them, and as required by law. These third parties provide business, professional, administrative, or technical support functions, such as payment processing, billing, data storage, quality assurance, and marketing.</p>
+
+    <p><strong>Institutional Lending Partners.</strong> As a correspondent lender, we may share your personal information with institutional partners involved in the funding, purchase, or servicing of your loan, as necessary to complete your loan transaction.</p>
+
+    <p><strong>Legal Compliance Recipients.</strong> We disclose personal information to courts, government agencies, law enforcement, litigants, and similar recipients when required by law.</p>
+
+    <p><strong>Affiliates.</strong> We may disclose personal information to our affiliates.</p>
+
+    <p><strong>Successors.</strong> We may disclose personal information associated with a part of our business to a buyer, potential buyer, or other successor to our business.</p>
+
+    <p>We also may disclose personal information to third parties with your consent or at your direction.</p>
+
+
+    <h2>3. Children's Information</h2>
+
+    <p>The Sites are not directed at children under 18 years of age. We do not knowingly collect, use, or share Personal Information from children under 18. If a parent or legal guardian learns that their child provided us with Personal Information without their consent, we invite them to contact us so we can delete such Personal Information.</p>
+
+
+    <h2>4. Personal Information Security and Retention</h2>
+
+    <p>We use commercially reasonable technical and organizational security measures appropriate for the type of Personal Information processed to help secure Personal Information against loss, misuse, and alteration. If a breach of your Personal Information occurs, we will notify you of the breach if required under applicable law.</p>
+
+    <p>You understand that no data transmission over the internet or device can be guaranteed to be 100% secure. While we strive to protect Personal Information, we do not guarantee its security, and you provide Personal Information at your own risk.</p>
+
+    <p>We retain personal information for as long as necessary for the purposes for which we use it, or longer if required by law. We generally consider the following factors when determining how long to retain personal information: retention periods established under applicable law; industry best practices; whether the purpose of processing is reasonably likely to justify further processing; risks to individual privacy in continued processing; information systems design considerations and limitations; and costs associated with continued processing, retention, and deletion.</p>
+
+
+    <h2>5. Access from Outside the United States</h2>
+
+    <p>If you access the Sites from outside the United States, please be aware that Personal Information will be processed in the United States. If we transfer information to the United States, we will do so in accordance with applicable law.</p>
+
+
+    <h2>6. Analytics and Advertising Technologies</h2>
+
+    <p>We may use third-party tools to analyze how Users interact with our Sites and to reach prospective customers. These tools may include website traffic analytics services and, in the future, advertising measurement technologies. Any third-party analytics or advertising tools we deploy will be identified in updates to this Policy at the time they are implemented.</p>
+
+    <p><strong>Website Traffic Analytics.</strong> We may use analytics services to monitor site performance through the use of cookies and similar tracking technologies. This data is used in an aggregated, de-identified manner to understand broad user trends.</p>
+
+    <p><strong>Your Options.</strong> You can limit data collection through the privacy settings within your respective third-party accounts and through your browser settings.</p>
+
+
+    <h2>7. Third-Party Websites and Services</h2>
+
+    <p>The Sites may incorporate, link to, or be linked to third-party websites or services that we do not control. This Policy does not apply to any third-party websites or to any data that you provide to third parties. You should read the privacy policy for each website that you visit.</p>
+
+    <p><strong>Online Behavioral Advertising.</strong> We may in the future use third parties for interest-based behavioral advertising services. Any such use will be reflected in an updated version of this Policy. To learn more about opting out of interest-based advertising generally, visit the <a href="https://optout.networkadvertising.org/" target="_blank" rel="noopener">National Advertising Initiative Consumer opt-out page</a> or the <a href="https://optout.aboutads.info/" target="_blank" rel="noopener">Digital Advertising Alliance Self-Regulatory Program</a>.</p>
+
+
+    <h2>8. Corrections &amp; Update Your Personal Information</h2>
+
+    <p>To correct or update your Personal Information as it exists in our records, please contact us using the contact information in Section 11 of this Policy.</p>
+
+
+    <h2>9. E-mail and Text Messages</h2>
+
+    <p>If you provide your email address to us, you understand that we may send you emails, including marketing emails. You may opt out of marketing emails by using the unsubscribe link in the email or by contacting us at <a href="mailto:privacy@fullstacklending.com">privacy@fullstacklending.com</a> with "Unsubscribe" in the subject line. Similarly, if you provide your mobile phone number to us, you agree to receive account-related text messages. To opt out of text messages, text "STOP" in reply to any such message. Opting out of marketing communications does not opt you out of all communications from us, such as account-related communications. Message and data rates may apply to any text messages that you agree to receive.</p>
+
+
+    <h2>10. California Residents</h2>
+
+    <p>This section describes the rights available to California residents under the CCPA. Fullstack Lending LLC extends these same rights and protections to all our U.S. customers.</p>
+
+    <h3>10.1 Information We Collect and Share</h3>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Category</th>
+          <th>Examples</th>
+          <th>Purpose</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Sensitive Personal Information (SPI)</td>
+          <td>SSN, Driver's license number</td>
+          <td>Identity verification, KYC compliance, and underwriting</td>
+        </tr>
+        <tr>
+          <td>Identifiers</td>
+          <td>Name, email address</td>
+          <td>Identity verification, KYC compliance, and underwriting</td>
+        </tr>
+        <tr>
+          <td>Financial Info</td>
+          <td>Bank statements, credit scores</td>
+          <td>Assessing creditworthiness and loan eligibility</td>
+        </tr>
+        <tr>
+          <td>Internet Activity</td>
+          <td>Browser type, device ID, portal interaction, IP address</td>
+          <td>Fraud prevention and platform optimization</td>
+        </tr>
+        <tr>
+          <td>Exempt Entity Data</td>
+          <td>Business EINs, LLC documents, property records</td>
+          <td>Non-PII: Information pertaining to legal entities</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>10.2 Your Rights and Choices</h3>
+
+    <p>You have the right to request that we disclose what personal information we collect, use, and share, and the right to request the deletion or correction of your personal information. We will use commercially reasonable efforts to correct inaccurate information once verified.</p>
+
+    <p>To exercise these rights, email <a href="mailto:privacy@fullstacklending.com">privacy@fullstacklending.com</a>. We will verify your identity and aim to complete verified requests within 30 days, or as otherwise required by applicable law.</p>
+
+    <p><strong>Financial Service Exemptions:</strong> As a financial services provider, Fullstack Lending LLC may be exempt from deletion requests regarding information necessary to complete your loan transaction, comply with legal record-keeping obligations, or protect against fraud (Cal. Civ. Code § 1798.105(d)).</p>
+
+    <h3>10.3 "Sale" or "Sharing" of Personal Information</h3>
+
+    <p>Fullstack Lending LLC does not sell your personal information for money. To the extent we use analytics or advertising technologies that may constitute "sharing" under California law, we will update this section accordingly. To submit a privacy inquiry or opt-out request, email <a href="mailto:privacy@fullstacklending.com">privacy@fullstacklending.com</a> with the subject line "Opt-Out of Sharing."</p>
+
+    <h3>10.4 Non-Discrimination</h3>
+
+    <p>We will not discriminate against you for exercising any of your CCPA rights.</p>
+
+
+    <h2>11. Contact Us</h2>
+
+    <p>If you have questions or concerns regarding this Privacy Policy or our processing of Personal Information, or if you wish to make any request to exercise legal rights associated with your Personal Information, contact us at:</p>
+
+    <address>
+      Fullstack Lending LLC<br />
+      Attn: Legal Department<br />
+      30 N Gould St, Ste N<br />
+      Sheridan, WY 82801<br />
+      <a href="mailto:privacy@fullstacklending.com">privacy@fullstacklending.com</a>
+    </address>
+
   </div>
 </main>
 
-<!-- Footer -->
-<footer class="bg-ink border-t rule-dark relative z-10">
-  <div class="max-w-6xl mx-auto px-6 lg:px-10 py-12">
-    <div class="flex flex-col md:flex-row justify-between items-start gap-10 mb-10">
-      <a href="index.html" class="flex items-baseline gap-2.5">
-        <span class="font-serif text-lg text-gold">Fullstack</span>
-        <span class="font-sans text-xs tracking-[0.2em] text-cream/60 uppercase">Lending</span>
-      </a>
-      <div class="flex flex-wrap gap-x-8 gap-y-3 text-xs text-cream/60">
-        <a href="index.html#products" class="hover:text-cream transition-colors">Products</a>
-        <a href="index.html#why"      class="hover:text-cream transition-colors">Why Us</a>
-        <a href="index.html#process"  class="hover:text-cream transition-colors">Process</a>
-        <a href="index.html#contact"  class="hover:text-cream transition-colors">Contact</a>
-        <a href="privacy-policy.html" class="hover:text-cream transition-colors">Privacy Policy</a>
-        <!-- TODO: Confirm Vontive's NMLS number from NMLS Consumer Access before publishing -->
-        <a href="#"                   class="hover:text-cream transition-colors">NMLS #1716495</a>
-      </div>
-    </div>
-    <div class="border-t rule-dark pt-8">
-      <p class="text-xs leading-relaxed max-w-2xl" style="color:rgba(242,234,216,.45)">
-        Fullstack Lending LLC is a private mortgage lender. All loans are subject to credit approval and
-        property eligibility. This is not a commitment to lend. Rates and terms vary by borrower and property.
-        Equal Housing Lender.
-      </p>
-    </div>
-  </div>
-</footer>
+<site-footer></site-footer>
 
-<script>
-  document.getElementById('last-updated').textContent =
-    new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
-</script>
+<script src="components.js"></script>
 
 </body>
 </html>
