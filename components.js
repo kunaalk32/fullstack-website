@@ -44,6 +44,27 @@ customElements.define('site-nav', SiteNav);
 // ── <site-footer> ──────────────────────────────────────────
 class SiteFooter extends HTMLElement {
   connectedCallback() {
+    // ── Google Analytics ──────────────────────────────────
+    // Injected here so it loads automatically on every page.
+    // Using createElement rather than innerHTML — browsers don't
+    // execute scripts inserted via innerHTML.
+    if (!document.getElementById('gtag-js')) {
+      const gtagSrc = document.createElement('script');
+      gtagSrc.id    = 'gtag-js';
+      gtagSrc.async = true;
+      gtagSrc.src   = 'https://www.googletagmanager.com/gtag/js?id=G-P2R5NRW1WV';
+      document.head.appendChild(gtagSrc);
+
+      const gtagCfg = document.createElement('script');
+      gtagCfg.textContent = `
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-P2R5NRW1WV');
+      `;
+      document.head.appendChild(gtagCfg);
+    }
+
     this.innerHTML = `
       <footer class="bg-ink border-t rule-dark">
         <div class="max-w-6xl mx-auto px-6 lg:px-10 py-12">
