@@ -63,27 +63,7 @@
 ════════════════════════════════════════════ -->
 <div class="bg-warm-wh relative z-10">
 
-  <!-- Nav -->
-  <header class="max-w-6xl mx-auto px-6 lg:px-10">
-    <nav class="flex items-center justify-between py-8 border-b rule-light">
-      <a href="#" class="flex items-baseline gap-2.5 no-underline">
-        <span class="font-serif text-xl text-gold tracking-wide">Fullstack</span>
-        <span class="font-sans text-xs tracking-[0.2em] text-muted uppercase">Lending</span>
-      </a>
-
-      <div class="hidden md:flex items-center gap-9 text-sm text-muted">
-        <a href="#products" class="hover:text-ink transition-colors duration-200">Products</a>
-        <a href="#why"      class="hover:text-ink transition-colors duration-200">Why Us</a>
-        <a href="#process"  class="hover:text-ink transition-colors duration-200">Process</a>
-        <a href="#contact"  class="hover:text-ink transition-colors duration-200">Contact</a>
-      </div>
-
-      <a href="https://loans.fullstacklending.com"
-         class="text-xs px-5 py-2.5 border border-gold text-gold hover:bg-gold hover:text-ink transition-colors duration-200 tracking-widest uppercase font-medium">
-        Apply Now
-      </a>
-    </nav>
-  </header>
+  <site-nav></site-nav>
 
   <!-- Hero -->
   <section class="max-w-6xl mx-auto px-6 lg:px-10 pt-28 pb-32">
@@ -394,42 +374,19 @@
     </div>
   </section>
 
-  <!-- Footer -->
-  <footer class="border-t rule-dark">
-    <div class="max-w-6xl mx-auto px-6 lg:px-10 py-12">
-      <div class="flex flex-col md:flex-row justify-between items-start gap-10 mb-10">
-        <a href="#" class="flex items-baseline gap-2.5">
-          <span class="font-serif text-lg text-gold">Fullstack</span>
-          <span class="font-sans text-xs tracking-[0.2em] text-cream/60 uppercase">Lending</span>
-        </a>
-        <div class="flex flex-wrap gap-x-8 gap-y-3 text-xs text-cream/60">
-          <a href="#products" class="hover:text-cream transition-colors">Products</a>
-          <a href="#why"      class="hover:text-cream transition-colors">Why Us</a>
-          <a href="#process"  class="hover:text-cream transition-colors">Process</a>
-          <a href="#contact"  class="hover:text-cream transition-colors">Contact</a>
-          <a href="#"         class="hover:text-cream transition-colors">Privacy Policy</a>
-          <!-- TODO: Confirm Vontive's NMLS number from NMLS Consumer Access before publishing -->
-          <a href="#"         class="hover:text-cream transition-colors">NMLS #1716495</a>
-        </div>
-      </div>
-      <div class="border-t rule-dark pt-8">
-        <p class="text-xs leading-relaxed max-w-2xl" style="color:rgba(242,234,216,.45)">
-          Fullstack Lending LLC is a private mortgage lender. All loans are subject to credit approval and
-          property eligibility. This is not a commitment to lend. Rates and terms vary by borrower and property.
-          Equal Housing Lender.
-        </p>
-      </div>
-    </div>
-  </footer>
-
 </div><!-- /dark testimonials+cta+footer -->
 
+<site-footer></site-footer>
+
+<script src="components.js"></script>
 <script>
-  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  // Smooth scroll for bare anchors (#section) and same-page index.html#section links
+  document.querySelectorAll('a[href^="#"], a[href^="index.html#"]').forEach(anchor => {
     anchor.addEventListener('click', function(e) {
       const href = this.getAttribute('href');
-      if (href === '#') return;
-      const target = document.querySelector(href);
+      const hash = '#' + href.split('#')[1];
+      if (!hash || hash === '#') return;
+      const target = document.querySelector(hash);
       if (target) {
         e.preventDefault();
         target.scrollIntoView({ behavior: 'smooth' });
