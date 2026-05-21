@@ -89,9 +89,10 @@ class SiteFooter extends HTMLElement {
               property eligibility. This is not a commitment to lend. Rates and terms vary by borrower and property.
               Equal Housing Lender.
             </p>
-            <address class="text-xs not-italic shrink-0" style="color:rgba(242,234,216,.45)">
+            <address class="text-xs not-italic shrink-0 text-right" style="color:rgba(242,234,216,.45)">
               30 N Gould St, Ste N<br />
-              Sheridan, WY 82801
+              Sheridan, WY 82801<br />
+              <a href="mailto:info@fullstacklending.com" style="color:rgba(242,234,216,.45)">info@fullstacklending.com</a>
             </address>
           </div>
         </div>
