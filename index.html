@@ -66,7 +66,7 @@
   <site-nav></site-nav>
 
   <!-- Hero -->
-  <section class="max-w-6xl mx-auto px-6 lg:px-10 pt-28 pb-32">
+  <section class="max-w-6xl mx-auto px-6 lg:px-10 pt-28 pb-32" data-parallax>
     <h1 class="font-serif text-5xl md:text-[4.25rem] lg:text-7xl leading-[1.04] mb-8 text-ink max-w-3xl">
       Lending Built for <br />
       <em class="text-gold not-italic">Professional Investors.</em>
@@ -126,7 +126,7 @@
      LIGHT — Loan Products
 ════════════════════════════════════════════ -->
 <div id="products" class="bg-cream relative z-10">
-  <section class="max-w-6xl mx-auto px-6 lg:px-10 py-28">
+  <section class="max-w-6xl mx-auto px-6 lg:px-10 py-28" data-parallax="center">
 
     <div class="mb-16">
       <h2 class="font-serif text-4xl md:text-5xl text-ink leading-tight">
@@ -261,7 +261,7 @@
      LIGHT — Process
 ════════════════════════════════════════════ -->
 <div id="process" class="bg-warm-wh relative z-10">
-  <section class="max-w-6xl mx-auto px-6 lg:px-10 py-28">
+  <section class="max-w-6xl mx-auto px-6 lg:px-10 py-28" data-parallax="center">
 
     <div class="mb-16 text-center">
       <p class="text-xs text-gold-dk tracking-[0.22em] uppercase mb-4">The Process</p>
@@ -432,6 +432,58 @@
       }
     });
   });
+</script>
+<script>
+  // Subtle parallax on marked sections — translateY by 20% of scroll offset.
+  //
+  // data-parallax        → hero mode: offset=0 on page load, drifts as user scrolls
+  // data-parallax="center" → center mode: offset=0 when section center == viewport
+  //                          center, so content is always naturally placed at the
+  //                          moment it's most in focus.
+  (function () {
+    const sections = Array.from(document.querySelectorAll('[data-parallax]'));
+    if (!sections.length) return;
+
+    const vh = window.innerHeight;
+
+    // Pre-compute the scrollY value at which each section's offset should be 0.
+    sections.forEach(function (el) {
+      const docTop = el.getBoundingClientRect().top + window.scrollY;
+      if (el.dataset.parallax === 'center') {
+        // Zero-point = when section center aligns with viewport center
+        el._parallaxZero = docTop + el.offsetHeight / 2 - vh / 2;
+      } else {
+        // Hero: zero-point = page top (scrollY 0)
+        el._parallaxZero = 0;
+      }
+    });
+
+    let ticking = false;
+
+    function applyParallax() {
+      const scrollY  = window.scrollY;
+      const isMobile = window.innerWidth < 768;
+      sections.forEach(function (el) {
+        const rect = el.getBoundingClientRect();
+        if (rect.bottom < 0) return; // fully scrolled past — skip
+        // Disable center-mode parallax on mobile to preserve readability
+        if (isMobile && el.dataset.parallax === 'center') {
+          el.style.transform = '';
+          return;
+        }
+        const offset = (scrollY - el._parallaxZero) * 0.1;
+        el.style.transform = 'translateY(' + offset + 'px)';
+      });
+      ticking = false;
+    }
+
+    window.addEventListener('scroll', function () {
+      if (!ticking) {
+        requestAnimationFrame(applyParallax);
+        ticking = true;
+      }
+    }, { passive: true });
+  })();
 </script>
 </body>
 </html>
