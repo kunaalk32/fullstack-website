@@ -53,6 +53,10 @@
     /* Card styles per context */
     .card-dark  { background: rgba(255,255,255,.03); border-color: rgba(201,169,110,.15); }
     .card-light { background: #ffffff;               border-color: rgba(201,169,110,.30); }
+
+    /* Hero image responsive sizing */
+    #hero-img { width: 42%; }
+    @media (max-width: 1130px) { #hero-img { width: 35%; } }
   </style>
 </head>
 
@@ -66,28 +70,45 @@
   <site-nav></site-nav>
 
   <!-- Hero -->
-  <section class="max-w-6xl mx-auto px-6 lg:px-10 pt-28 pb-32" data-parallax>
-    <h1 class="font-serif text-5xl md:text-[4.25rem] lg:text-7xl leading-[1.04] mb-8 text-ink max-w-3xl">
-      Lending Built for <br />
-      <em class="text-gold not-italic">Professional Investors.</em>
-    </h1>
+  <section class="relative overflow-hidden max-w-6xl mx-auto px-6 lg:px-10 pt-28 pb-32" data-parallax>
 
-    <p class="text-base md:text-lg text-ink/70 leading-relaxed max-w-xl mb-12">
-      Fullstack Lending offers institutional-grade financing powered by a software-driven process built for speed. 
-      Apply online, get your term sheet in <em class="text-gold not-italic">24 hours</em>, and close in as little as <em class="text-gold not-italic">5 business days</em>. Bridge, DSCR, fix-and-flip, and ground-up construction.
-    </p>
-
-    <div class="flex flex-wrap gap-4">
-      <a href="https://loans.fullstacklending.com/signup"
-         class="px-8 py-3.5 bg-gold text-ink font-semibold text-sm tracking-wide hover:bg-gold-lt transition-colors duration-200">
-        Start an Application
-      </a>
-      <a href="#products"
-         class="px-8 py-3.5 border text-ink font-semibold text-sm tracking-wide hover:bg-gold hover:border-gold hover:text-ink transition-colors duration-200"
-         style="border-color: rgba(201,169,110,.45)">
-        Explore Products
-      </a>
+    <!-- Building image — behind text, pinned to bottom-right -->
+    <div id="hero-img" class="absolute top-32 bottom-0 right-0 hidden lg:block">
+      <img src="building.png" alt=""
+           class="w-full h-full object-cover object-bottom" />
+      <!-- Fade left edge into section background -->
+      <div class="absolute inset-y-0 left-0 w-72"
+           style="background: linear-gradient(to right, #faf7f2 20%, transparent)"></div>
+      <!-- Fade bottom edge into section background -->
+      <div class="absolute bottom-0 inset-x-0 h-40"
+           style="background: linear-gradient(to top, #faf7f2 20%, transparent)"></div>
     </div>
+
+    <!-- Text — sits above the image -->
+    <div class="relative z-10">
+      <h1 class="font-serif text-5xl md:text-[4.25rem] lg:text-7xl leading-[1.04] mb-8 text-ink max-w-3xl">
+        Lending Built for <br />
+        <em class="text-gold not-italic">Professional Investors</em>
+      </h1>
+
+      <p class="text-base md:text-lg text-ink/70 leading-relaxed max-w-xl mb-12">
+        Fullstack Lending offers institutional-grade financing powered by a software-driven process built for speed.
+        Apply online, get your term sheet in <em class="text-gold not-italic">24 hours</em>, and close in as little as <em class="text-gold not-italic">5 business days</em>. Bridge, DSCR, fix-and-flip, and ground-up construction.
+      </p>
+
+      <div class="flex flex-wrap gap-4">
+        <a href="https://loans.fullstacklending.com/signup"
+           class="px-8 py-3.5 bg-gold text-ink font-semibold text-sm tracking-wide hover:bg-gold-lt transition-colors duration-200">
+          Start an Application
+        </a>
+        <a href="#products"
+           class="px-8 py-3.5 border text-ink font-semibold text-sm tracking-wide hover:bg-gold hover:border-gold hover:text-ink transition-colors duration-200"
+           style="border-color: rgba(201,169,110,.45)">
+          Explore Products
+        </a>
+      </div>
+    </div>
+
   </section>
 
 </div><!-- /light hero -->
