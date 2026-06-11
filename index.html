@@ -66,7 +66,7 @@
   <site-nav></site-nav>
 
   <!-- Hero -->
-  <section class="max-w-6xl mx-auto px-6 lg:px-10 pt-28 pb-32">
+  <section class="max-w-6xl mx-auto px-6 lg:px-10 pt-28 pb-32" data-parallax>
     <h1 class="font-serif text-5xl md:text-[4.25rem] lg:text-7xl leading-[1.04] mb-8 text-ink max-w-3xl">
       Lending Built for <br />
       <em class="text-gold not-italic">Professional Investors.</em>
@@ -97,24 +97,23 @@
      DARK — Stats bar
 ════════════════════════════════════════════ -->
 <div class="bg-ink relative z-10">
-  <section class="border-y rule-dark">
+  <section class="border-y rule-dark" data-stats>
     <div class="max-w-6xl mx-auto px-6 lg:px-10 py-14">
       <div class="grid grid-cols-2 md:grid-cols-4 gap-10 md:gap-6">
-      <!-- <div class="grid grid-cols-2 md:grid-cols-4 gap-10 md:gap-6"></div> -->
         <div class="text-center">
-          <p class="font-serif text-4xl text-gold mb-2">$2B+</p>
-          <p class="text-xs text-cream/60 uppercase tracking-widest">Loans Funded By The FullstackTeam</p>
+          <p class="font-serif text-4xl text-gold mb-2" data-counter data-prefix="$" data-target="2" data-suffix="B+">$2B+</p>
+          <p class="text-xs text-cream/60 uppercase tracking-widest">Loans Funded By The Fullstack Team</p>
         </div>
         <div class="text-center">
-          <p class="font-serif text-4xl text-gold mb-2">10 days</p>
+          <p class="font-serif text-4xl text-gold mb-2" data-counter data-target="10" data-suffix=" days">10 days</p>
           <p class="text-xs text-cream/60 uppercase tracking-widest">Avg. Close Time</p>
         </div>
         <div class="text-center">
-          <p class="font-serif text-4xl text-gold mb-2">100%</p>
+          <p class="font-serif text-4xl text-gold mb-2" data-counter data-target="100" data-suffix="%">100%</p>
           <p class="text-xs text-cream/60 uppercase tracking-widest">Max LTC For Qualified Borrowers</p>
         </div>
         <div class="text-center">
-          <p class="font-serif text-4xl text-gold mb-2">40+</p>
+          <p class="font-serif text-4xl text-gold mb-2" data-counter data-target="40" data-suffix="+">40+</p>
           <p class="text-xs text-cream/60 uppercase tracking-widest">States Active</p>
         </div>
       </div>
@@ -127,7 +126,7 @@
      LIGHT — Loan Products
 ════════════════════════════════════════════ -->
 <div id="products" class="bg-cream relative z-10">
-  <section class="max-w-6xl mx-auto px-6 lg:px-10 py-28">
+  <section class="max-w-6xl mx-auto px-6 lg:px-10 py-28" data-parallax="center">
 
     <div class="mb-16">
       <h2 class="font-serif text-4xl md:text-5xl text-ink leading-tight">
@@ -262,7 +261,7 @@
      LIGHT — Process
 ════════════════════════════════════════════ -->
 <div id="process" class="bg-warm-wh relative z-10">
-  <section class="max-w-6xl mx-auto px-6 lg:px-10 py-28">
+  <section class="max-w-6xl mx-auto px-6 lg:px-10 py-28" data-parallax="center">
 
     <div class="mb-16 text-center">
       <p class="text-xs text-gold-dk tracking-[0.22em] uppercase mb-4">The Process</p>
@@ -381,6 +380,45 @@
 
 <script src="components.js"></script>
 <script>
+  // ── Stat counter animation ────────────────────────────────
+  (function () {
+    const DURATION = 1600; // ms
+
+    function easeOutCubic(t) {
+      return 1 - Math.pow(1 - t, 3);
+    }
+
+    function animateCounters() {
+      document.querySelectorAll('[data-counter]').forEach(el => {
+        const target  = parseFloat(el.dataset.target);
+        const prefix  = el.dataset.prefix || '';
+        const suffix  = el.dataset.suffix || '';
+        let startTime = null;
+
+        function step(ts) {
+          if (!startTime) startTime = ts;
+          const progress = Math.min((ts - startTime) / DURATION, 1);
+          const value    = Math.round(easeOutCubic(progress) * target);
+          el.textContent = prefix + value + suffix;
+          if (progress < 1) requestAnimationFrame(step);
+        }
+
+        requestAnimationFrame(step);
+      });
+    }
+
+    const statsSection = document.querySelector('[data-stats]');
+    if (statsSection) {
+      new IntersectionObserver((entries, obs) => {
+        if (entries[0].isIntersecting) {
+          animateCounters();
+          obs.disconnect();
+        }
+      }, { threshold: 0.4 }).observe(statsSection);
+    }
+  })();
+</script>
+<script>
   // Smooth scroll for bare anchors (#section) and same-page index.html#section links
   document.querySelectorAll('a[href^="#"], a[href^="index.html#"]').forEach(anchor => {
     anchor.addEventListener('click', function(e) {
@@ -394,6 +432,58 @@
       }
     });
   });
+</script>
+<script>
+  // Subtle parallax on marked sections — translateY by 20% of scroll offset.
+  //
+  // data-parallax        → hero mode: offset=0 on page load, drifts as user scrolls
+  // data-parallax="center" → center mode: offset=0 when section center == viewport
+  //                          center, so content is always naturally placed at the
+  //                          moment it's most in focus.
+  (function () {
+    const sections = Array.from(document.querySelectorAll('[data-parallax]'));
+    if (!sections.length) return;
+
+    const vh = window.innerHeight;
+
+    // Pre-compute the scrollY value at which each section's offset should be 0.
+    sections.forEach(function (el) {
+      const docTop = el.getBoundingClientRect().top + window.scrollY;
+      if (el.dataset.parallax === 'center') {
+        // Zero-point = when section center aligns with viewport center
+        el._parallaxZero = docTop + el.offsetHeight / 2 - vh / 2;
+      } else {
+        // Hero: zero-point = page top (scrollY 0)
+        el._parallaxZero = 0;
+      }
+    });
+
+    let ticking = false;
+
+    function applyParallax() {
+      const scrollY  = window.scrollY;
+      const isMobile = window.innerWidth < 768;
+      sections.forEach(function (el) {
+        const rect = el.getBoundingClientRect();
+        if (rect.bottom < 0) return; // fully scrolled past — skip
+        // Disable center-mode parallax on mobile to preserve readability
+        if (isMobile && el.dataset.parallax === 'center') {
+          el.style.transform = '';
+          return;
+        }
+        const offset = (scrollY - el._parallaxZero) * 0.1;
+        el.style.transform = 'translateY(' + offset + 'px)';
+      });
+      ticking = false;
+    }
+
+    window.addEventListener('scroll', function () {
+      if (!ticking) {
+        requestAnimationFrame(applyParallax);
+        ticking = true;
+      }
+    }, { passive: true });
+  })();
 </script>
 </body>
 </html>
