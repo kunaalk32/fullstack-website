@@ -1,7 +1,18 @@
-// Make custom elements block-level so they don't affect layout
+// Make custom elements block-level; handle nav responsiveness outside Tailwind
+// so the Play CDN doesn't need to scan JS template literals for these rules.
 (function injectBaseStyles() {
   const s = document.createElement('style');
-  s.textContent = 'site-nav, site-footer { display: block; }';
+  s.textContent = `
+    site-nav, site-footer { display: block; }
+
+    /* Hamburger: visible on mobile, hidden on md+ */
+    #nav-hamburger { display: flex; }
+    @media (min-width: 768px) { #nav-hamburger { display: none; } }
+
+    /* Mobile menu: hidden by default, shown when .open is added */
+    #nav-mobile-menu          { display: none; }
+    #nav-mobile-menu.open     { display: block; }
+  `;
   document.head.appendChild(s);
 })();
 
@@ -29,13 +40,62 @@ class SiteNav extends HTMLElement {
             <a href="${p}#contact"  class="hover:text-ink transition-colors duration-200">Contact</a>
           </div>
 
-          <a href="https://loans.fullstacklending.com"
-             class="text-xs px-5 py-2.5 border border-gold text-gold hover:bg-gold hover:text-ink transition-colors duration-200 tracking-widest uppercase font-medium">
-            Apply Now
-          </a>
+          <div class="flex items-center gap-3">
+            <a href="https://loans.fullstacklending.com"
+               class="text-xs px-5 py-2.5 border border-gold text-gold hover:bg-gold hover:text-ink transition-colors duration-200 tracking-widest uppercase font-medium">
+              Apply Now
+            </a>
+
+            <!-- Hamburger — mobile only -->
+            <button id="nav-hamburger" aria-label="Toggle menu"
+                    class="flex-col justify-center items-center w-8 h-8 gap-[6px]">
+              <span class="block w-5 h-px bg-ink transition-all duration-200 origin-center"></span>
+              <span class="block w-5 h-px bg-ink transition-all duration-200"></span>
+              <span class="block w-5 h-px bg-ink transition-all duration-200 origin-center"></span>
+            </button>
+          </div>
         </nav>
+
+        <!-- Mobile dropdown menu -->
+        <div id="nav-mobile-menu">
+          <div class="flex flex-col gap-5 py-7 text-sm text-muted border-b rule-light">
+            <a href="${p}#products" class="hover:text-ink transition-colors duration-200">Products</a>
+            <a href="${p}#why"      class="hover:text-ink transition-colors duration-200">Why Us</a>
+            <a href="${p}#process"  class="hover:text-ink transition-colors duration-200">Process</a>
+            <a href="${p}#contact"  class="hover:text-ink transition-colors duration-200">Contact</a>
+          </div>
+        </div>
       </header>
     `;
+
+    const btn  = this.querySelector('#nav-hamburger');
+    const menu = this.querySelector('#nav-mobile-menu');
+    const bars = btn.querySelectorAll('span');
+
+    function openMenu() {
+      menu.classList.add('open');
+      // Animate into X
+      bars[0].style.transform = 'translateY(7px) rotate(45deg)';
+      bars[1].style.opacity   = '0';
+      bars[2].style.transform = 'translateY(-7px) rotate(-45deg)';
+    }
+
+    function closeMenu() {
+      menu.classList.remove('open');
+      // Animate back to hamburger
+      bars[0].style.transform = '';
+      bars[1].style.opacity   = '';
+      bars[2].style.transform = '';
+    }
+
+    btn.addEventListener('click', function () {
+      menu.classList.contains('open') ? closeMenu() : openMenu();
+    });
+
+    // Close menu when a nav link is clicked (handy for same-page anchor links)
+    menu.querySelectorAll('a').forEach(function (link) {
+      link.addEventListener('click', closeMenu);
+    });
   }
 }
 customElements.define('site-nav', SiteNav);
