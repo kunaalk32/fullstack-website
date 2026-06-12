@@ -57,6 +57,10 @@
     /* Hero image responsive sizing */
     #hero-img { width: 42%; }
     @media (max-width: 1130px) { #hero-img { width: 35%; } }
+
+    /* Hero image fade-in on load */
+    #hero-img img { opacity: 0; transition: opacity 1s ease; }
+    #hero-img img.loaded { opacity: 1; }
   </style>
 </head>
 
@@ -504,6 +508,18 @@
         ticking = true;
       }
     }, { passive: true });
+  })();
+</script>
+<script>
+  // Fade in hero image once loaded; handle cached images via img.complete
+  (function () {
+    const img = document.querySelector('#hero-img img');
+    if (!img) return;
+    if (img.complete) {
+      img.classList.add('loaded');
+    } else {
+      img.addEventListener('load', function () { img.classList.add('loaded'); });
+    }
   })();
 </script>
 </body>
