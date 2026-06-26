@@ -38,6 +38,7 @@ class SiteNav extends HTMLElement {
             <a href="${p}#why"      class="hover:text-ink transition-colors duration-200">Why Us</a>
             <a href="${p}#process"  class="hover:text-ink transition-colors duration-200">Process</a>
             <a href="${p}#contact"  class="hover:text-ink transition-colors duration-200">Contact</a>
+            <a href="${p}#invest"   class="hover:text-ink transition-colors duration-200">Invest</a>
           </div>
 
           <div class="flex items-center gap-3">
@@ -63,6 +64,7 @@ class SiteNav extends HTMLElement {
             <a href="${p}#why"      class="hover:text-ink transition-colors duration-200">Why Us</a>
             <a href="${p}#process"  class="hover:text-ink transition-colors duration-200">Process</a>
             <a href="${p}#contact"  class="hover:text-ink transition-colors duration-200">Contact</a>
+            <a href="${p}#invest"   class="hover:text-ink transition-colors duration-200">Invest</a>
           </div>
         </div>
       </header>
