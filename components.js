@@ -129,9 +129,12 @@ class SiteFooter extends HTMLElement {
       <footer class="bg-ink border-t rule-dark">
         <div class="max-w-6xl mx-auto px-6 lg:px-10 py-12">
           <div class="flex flex-col md:flex-row justify-between items-start gap-10 mb-10">
-            <a href="index.html" class="flex items-baseline gap-2.5">
-              <span class="font-serif text-lg text-gold">Fullstack</span>
-              <span class="font-sans text-xs tracking-[0.2em] text-cream/60 uppercase">Lending</span>
+            <a href="index.html" class="flex items-center gap-3">
+              <img src="logo-mark.svg" alt="" class="h-10 w-10 shrink-0" />
+              <span class="flex items-baseline gap-2.5">
+                <span class="font-serif text-lg text-gold">Fullstack</span>
+                <span class="font-sans text-xs tracking-[0.2em] text-cream/60 uppercase">Lending</span>
+              </span>
             </a>
             <div class="flex flex-wrap gap-x-8 gap-y-3 text-xs text-cream/60">
               <a href="index.html#products" class="hover:text-cream transition-colors">Products</a>
