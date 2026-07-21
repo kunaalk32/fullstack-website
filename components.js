@@ -143,7 +143,6 @@ class SiteFooter extends HTMLElement {
               <a href="index.html#contact"  class="hover:text-cream transition-colors">Contact</a>
               <a href="privacy-policy.html" class="hover:text-cream transition-colors">Privacy Policy</a>
               <a href="terms-of-service.html" class="hover:text-cream transition-colors">Terms of Service</a>
-              <a href="#"                   class="hover:text-cream transition-colors">NMLS #1716495</a>
             </div>
           </div>
           <div class="border-t rule-dark pt-8 grid md:grid-cols-2 gap-6">
