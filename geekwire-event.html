@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Where AI Meets Real Estate — Fullstack Lending × GeekWire</title>
-  <meta name="description" content="Join Fullstack Lending and GeekWire for Where AI Meets Real Estate — an evening with Nicholas Stevens, Head of AI at Zillow, on September 16 in Seattle. Register on Luma." />
+  <meta name="description" content="Join Fullstack Lending and GeekWire for Where AI Meets Real Estate — an evening with Nicholas Stevens, Zillow's Head of AI & Data, on September 16 in Seattle. Register on Luma." />
   <meta name="robots" content="noindex" />
 
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
@@ -19,14 +19,17 @@
       theme: {
         extend: {
           colors: {
-            ink:       '#0b0b09',
-            'ink-2':   '#111110',
-            gold:      '#c9a96e',
-            'gold-lt': '#dfc28e',
-            'gold-dk': '#9a7a45',
-            cream:     '#f2ead8',
-            'warm-wh': '#faf7f2',
-            muted:     '#7a7060',
+            /* Event palette — matched to the "Where AI Meets Real Estate" flyer:
+               deep indigo/violet gradient, periwinkle accents, GeekWire orange */
+            ink:       '#14112f',
+            'ink-2':   '#1a1740',
+            gold:      '#7b80e8',
+            'gold-lt': '#9da1f2',
+            'gold-dk': '#4d52c0',
+            cream:     '#e6e7fa',
+            'warm-wh': '#f7f7fc',
+            muted:     '#6d6c8a',
+            'gw-orange': '#e0532f',
           },
           fontFamily: {
             serif: ['Playfair Display', 'Georgia', 'serif'],
@@ -51,16 +54,19 @@
       background-size: 200px 200px;
     }
 
-    .rule-dark  { border-color: rgba(201,169,110,.22); }
-    .rule-light { border-color: rgba(201,169,110,.30); }
+    .rule-dark  { border-color: rgba(123,128,232,.22); }
+    .rule-light { border-color: rgba(123,128,232,.30); }
 
-    .card-dark  { background: rgba(255,255,255,.03); border-color: rgba(201,169,110,.15); }
-    .card-light { background: #ffffff;               border-color: rgba(201,169,110,.30); }
+    /* Flyer-style indigo → violet gradient on dark sections */
+    .bg-ink { background-image: linear-gradient(150deg, #16133a 0%, #241d5e 55%, #33246e 100%); }
+
+    .card-dark  { background: rgba(255,255,255,.03); border-color: rgba(123,128,232,.15); }
+    .card-light { background: #ffffff;               border-color: rgba(123,128,232,.30); }
 
     /* Speaker photo placeholder */
     .speaker-photo {
-      background: linear-gradient(160deg, rgba(201,169,110,.18), rgba(201,169,110,.05));
-      border: 1px solid rgba(201,169,110,.25);
+      background: linear-gradient(160deg, rgba(123,128,232,.18), rgba(123,128,232,.05));
+      border: 1px solid rgba(123,128,232,.25);
     }
   </style>
 </head>
@@ -81,7 +87,7 @@
       </span>
       <span class="flex items-center gap-3 text-sm text-muted">
         <span class="hidden sm:inline text-xs tracking-[0.18em] uppercase">In partnership with</span>
-        <span class="font-semibold text-ink">GeekWire</span>
+        <span class="font-semibold text-gw-orange">GeekWire</span>
       </span>
     </div>
   </header>
@@ -96,9 +102,9 @@
     </h1>
 
     <p class="text-base md:text-lg text-ink/70 leading-relaxed max-w-2xl mx-auto mb-10">
-      An exclusive evening exploring how artificial intelligence is transforming real estate — changing the home
-      buying and selling experience, empowering agents and investors, and shaping the future of the industry.
-      Featuring Nicholas Stevens, Head of AI at Zillow, plus networking with Seattle's technology and real estate leaders.
+      An exclusive evening exploring how artificial intelligence is transforming real estate — featuring a fireside
+      chat with Nicholas Stevens, Zillow's Head of AI &amp; Data, plus networking with Seattle's leaders in technology,
+      startups, venture capital, real estate, and investing.
     </p>
 
     <!-- Date / time / location strip -->
@@ -124,7 +130,7 @@
       </a>
       <a href="#speakers"
          class="px-10 py-4 border text-ink font-semibold text-sm tracking-wide hover:bg-gold hover:border-gold transition-colors duration-200"
-         style="border-color: rgba(201,169,110,.45)">
+         style="border-color: rgba(123,128,232,.45)">
         Meet the Speakers
       </a>
     </div>
@@ -181,7 +187,7 @@
         </div>
         <div>
           <h3 class="font-serif text-2xl md:text-3xl text-ink mb-1.5">Nicholas Stevens</h3>
-          <p class="text-xs text-gold-dk uppercase tracking-widest mb-5">Head of AI, Zillow</p>
+          <p class="text-xs text-gold-dk uppercase tracking-widest mb-5">Head of AI &amp; Data, Zillow</p>
           <p class="text-sm md:text-base text-ink/70 leading-relaxed max-w-2xl">
             [Placeholder bio — two or three sentences about Nicholas's work leading AI at Zillow,
             how AI is reshaping the home buying and selling experience, and what's ahead for the industry.]
@@ -257,7 +263,7 @@
       <div class="space-y-10">
 
         <div class="flex gap-7">
-          <div class="w-px flex-shrink-0 mt-1" style="background:rgba(201,169,110,.35)"></div>
+          <div class="w-px flex-shrink-0 mt-1" style="background:rgba(123,128,232,.35)"></div>
           <div>
             <p class="text-xs text-gold tracking-widest uppercase mb-2">4:00 PM</p>
             <h3 class="text-warm-wh font-medium mb-2">Doors Open &amp; Networking</h3>
@@ -268,7 +274,7 @@
         </div>
 
         <div class="flex gap-7">
-          <div class="w-px flex-shrink-0 mt-1" style="background:rgba(201,169,110,.35)"></div>
+          <div class="w-px flex-shrink-0 mt-1" style="background:rgba(123,128,232,.35)"></div>
           <div>
             <p class="text-xs text-gold tracking-widest uppercase mb-2">[5:00 PM]</p>
             <h3 class="text-warm-wh font-medium mb-2">Welcome Remarks</h3>
@@ -279,19 +285,19 @@
         </div>
 
         <div class="flex gap-7">
-          <div class="w-px flex-shrink-0 mt-1" style="background:rgba(201,169,110,.35)"></div>
+          <div class="w-px flex-shrink-0 mt-1" style="background:rgba(123,128,232,.35)"></div>
           <div>
             <p class="text-xs text-gold tracking-widest uppercase mb-2">[5:15 PM]</p>
-            <h3 class="text-warm-wh font-medium mb-2">Where AI Meets Real Estate — with Nicholas Stevens</h3>
+            <h3 class="text-warm-wh font-medium mb-2">Fireside Chat with Nicholas Stevens</h3>
             <p class="text-sm text-cream/80 leading-relaxed">
-              [Placeholder — a conversation with Zillow's Head of AI on how artificial intelligence is
+              [Placeholder — a conversation with Zillow's Head of AI &amp; Data on how artificial intelligence is
               transforming the industry, followed by audience Q&amp;A.]
             </p>
           </div>
         </div>
 
         <div class="flex gap-7">
-          <div class="w-px flex-shrink-0 mt-1" style="background:rgba(201,169,110,.35)"></div>
+          <div class="w-px flex-shrink-0 mt-1" style="background:rgba(123,128,232,.35)"></div>
           <div>
             <p class="text-xs text-gold tracking-widest uppercase mb-2">[6:00 PM]</p>
             <h3 class="text-warm-wh font-medium mb-2">Networking &amp; Reception</h3>
@@ -329,7 +335,7 @@
         </p>
         <a href="https://maps.google.com/?q=Atmosphere+Seattle+Event+Venue,+1607+Dexter+Ave+N+Ste+400,+Seattle,+WA+98109" target="_blank" rel="noopener"
            class="inline-block px-8 py-3.5 border text-ink font-semibold text-sm tracking-wide hover:bg-gold hover:border-gold transition-colors duration-200"
-           style="border-color: rgba(201,169,110,.45)">
+           style="border-color: rgba(123,128,232,.45)">
           Get Directions
         </a>
       </div>
@@ -371,7 +377,7 @@
           <p class="text-xs text-cream/60 uppercase tracking-widest">Presenting Sponsor</p>
         </div>
         <div class="card-dark border p-12 flex flex-col items-center justify-center text-center">
-          <span class="font-sans font-semibold text-2xl text-warm-wh mb-3">GeekWire</span>
+          <span class="font-sans font-semibold text-2xl text-gw-orange mb-3">GeekWire</span>
           <p class="text-xs text-cream/60 uppercase tracking-widest">Media Partner</p>
         </div>
       </div>
@@ -415,10 +421,10 @@
   <!-- Minimal footer -->
   <footer class="border-t rule-dark">
     <div class="max-w-6xl mx-auto px-6 lg:px-10 py-10 flex flex-col md:flex-row items-center justify-between gap-4">
-      <p class="text-xs" style="color:rgba(242,234,216,.45)">
+      <p class="text-xs" style="color:rgba(230,231,250,.45)">
         © 2026 Fullstack Lending LLC. All rights reserved.
       </p>
-      <p class="text-xs" style="color:rgba(242,234,216,.45)">
+      <p class="text-xs" style="color:rgba(230,231,250,.45)">
         Questions? <a href="mailto:info@fullstacklending.com" class="hover:text-cream transition-colors">info@fullstacklending.com</a>
       </p>
     </div>
