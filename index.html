@@ -1,521 +1,531 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Fullstack Lending — Lending Built for Professional Investors</title>
-
-  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
-
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet" />
-
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            ink:       '#0b0b09',
-            'ink-2':   '#111110',
-            gold:      '#c9a96e',
-            'gold-lt': '#dfc28e',
-            'gold-dk': '#9a7a45',
-            cream:     '#f2ead8',
-            'warm-wh': '#faf7f2',
-            muted:     '#7a7060',
-          },
-          fontFamily: {
-            serif: ['Playfair Display', 'Georgia', 'serif'],
-            sans:  ['Inter', 'system-ui', 'sans-serif'],
-          },
-        }
-      }
-    }
-  </script>
-
-  <style>
-    /* Grain texture — subtle over both light and dark */
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: 1;
-      opacity: .025;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
-      background-repeat: repeat;
-      background-size: 200px 200px;
-    }
-
-    .rule-dark  { border-color: rgba(201,169,110,.22); }
-    .rule-light { border-color: rgba(201,169,110,.30); }
-
-    /* Card styles per context */
-    .card-dark  { background: rgba(255,255,255,.03); border-color: rgba(201,169,110,.15); }
-    .card-light { background: #ffffff;               border-color: rgba(201,169,110,.30); }
-
-    /* Hero image responsive sizing */
-    #hero-img { width: 42%; }
-    @media (max-width: 1130px) { #hero-img { width: 35%; } }
-
-    /* Hero image fade-in on load */
-    #hero-img img { opacity: 0; transition: opacity 1s ease; }
-    #hero-img img.loaded { opacity: 1; }
-  </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fullstack Lending — Financing that closes like cash</title>
+  <meta name="description" content="Fix & flip, construction, bridge, and rental loans for residential real estate investors. Apply in 5 minutes, quote within 24 hours, close in about 10 business days.">
+  <link rel="canonical" href="https://fullstacklending.com/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Fullstack Lending — Financing that closes like cash">
+  <meta property="og:description" content="Investor loans from $100K to $1.5M. Apply in 5 minutes, quote within 24 hours, close in about 10 business days.">
+  <meta property="og:url" content="https://fullstacklending.com/">
+  <meta property="og:image" content="https://fullstacklending.com/assets/og-card.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicons/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/favicons/favicon-16.png">
+  <link rel="apple-touch-icon" href="assets/favicons/favicon-180.png">
+  <meta name="theme-color" content="#0B0C0E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <script>document.documentElement.classList.add('js');</script>
 </head>
+<body>
 
-<body class="font-sans overflow-x-hidden">
+<header class="nav" id="nav">
+  <div class="nav-inner">
+    <a class="nav-logo" href="#top" aria-label="Fullstack Lending — home">
+      <img src="assets/logo/fullstack-horizontal-color-dark.svg" alt="Fullstack Lending" width="150" height="44">
+    </a>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="#programs">Programs</a>
+      <a href="#how-it-works">How it works</a>
+      <a href="#portal">Portal</a>
+      <a href="#about">About</a>
+      <a href="brokers.html">Brokers</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <div class="nav-actions">
+      <a class="btn btn--ghost" href="https://loans.fullstacklending.com/login">Log in</a>
+      <a class="btn btn--paper" href="https://loans.fullstacklending.com/signup">Get a quote</a>
+    </div>
+    <button class="nav-burger" id="navBurger" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
+      <span></span><span></span>
+    </button>
+  </div>
+</header>
 
-<!-- ═══════════════════════════════════════════
-     LIGHT — Nav + Hero
-════════════════════════════════════════════ -->
-<div class="bg-warm-wh relative z-10">
+<div class="mobile-menu" id="mobileMenu" hidden>
+  <nav aria-label="Mobile">
+    <a href="#programs">Programs</a>
+    <a href="#how-it-works">How it works</a>
+    <a href="#portal">Portal</a>
+    <a href="#about">About</a>
+    <a href="brokers.html">Brokers</a>
+    <a href="contact.html">Contact</a>
+    <div class="mobile-menu-actions">
+      <a class="btn btn--ghost" href="https://loans.fullstacklending.com/login">Log in</a>
+      <a class="btn btn--paper" href="https://loans.fullstacklending.com/signup">Get a quote</a>
+    </div>
+  </nav>
+</div>
 
-  <site-nav></site-nav>
+<main id="top">
 
-  <!-- Hero -->
-  <section class="relative overflow-hidden max-w-6xl mx-auto px-6 lg:px-10 pt-28 pb-32" data-parallax>
+  <!-- ============ HERO ============ -->
+  <section class="hero">
+    <canvas class="ridges" id="ridgesHero" aria-hidden="true"></canvas>
+    <div class="hero-scrim" aria-hidden="true"></div>
 
-    <!-- Building image — behind text, pinned to bottom-right -->
-    <div id="hero-img" class="absolute top-32 bottom-0 right-0 hidden lg:block">
-      <img src="building.png" alt=""
-           class="w-full h-full object-cover object-bottom" />
-      <!-- Fade left edge into section background -->
-      <div class="absolute inset-y-0 left-0 w-72"
-           style="background: linear-gradient(to right, #faf7f2 20%, transparent)"></div>
-      <!-- Fade bottom edge into section background -->
-      <div class="absolute bottom-0 inset-x-0 h-40"
-           style="background: linear-gradient(to top, #faf7f2 20%, transparent)"></div>
+    <div class="hero-inner">
+      <p class="eyebrow reveal">Lending for real estate investors</p>
+      <h1 class="display" data-split>Financing that closes like cash.</h1>
+      <p class="hero-sub reveal" style="--d:.25s">
+        Fix &amp; flip, construction, bridge, and rental loans for residential
+        investors. Apply in five minutes, see your quote within 24 hours, and
+        close in about ten business days.
+      </p>
+      <div class="hero-ctas reveal" style="--d:.4s">
+        <a class="btn btn--lime btn--lg" href="https://loans.fullstacklending.com/signup">Get a quote</a>
+        <a class="btn btn--ghost btn--lg" href="#programs">Explore programs</a>
+      </div>
     </div>
 
-    <!-- Text — sits above the image -->
-    <div class="relative z-10">
-      <h1 class="font-serif text-5xl md:text-[4.25rem] lg:text-7xl leading-[1.04] mb-8 text-ink max-w-3xl">
-        Lending Built for <br />
-        <em class="text-gold not-italic">Professional Investors</em>
-      </h1>
+    <aside class="hero-widgets" aria-hidden="true">
+      <div class="widget widget--a reveal" style="--d:.6s">
+        <span class="widget-label">Quote ready</span>
+        <span class="widget-big">$487,500 <em>· Fix &amp; Flip</em></span>
+        <span class="widget-foot">Delivered in 19 hours</span>
+      </div>
+      <div class="widget widget--b reveal" style="--d:.75s">
+        <span class="widget-label">Draw funded</span>
+        <span class="widget-big">$42,300 <em>· Framing</em></span>
+        <span class="widget-foot">1 business day</span>
+      </div>
+      <div class="widget widget--c reveal" style="--d:.9s">
+        <span class="widget-label">Documents</span>
+        <span class="widget-big">12 of 12 <em>on file</em></span>
+        <span class="widget-foot">Uploaded once</span>
+      </div>
+    </aside>
 
-      <p class="text-base md:text-lg text-ink/70 leading-relaxed max-w-xl mb-12">
-        Fullstack Lending offers institutional-grade financing powered by a software-driven process built for speed.
-        Apply online, get your term sheet in <em class="text-gold not-italic">24 hours</em>, and close in as little as <em class="text-gold not-italic">5 business days</em>. Fix-and-flip, stabilized bridge, ground-up construction, and DSCR rental loans.
+    <div class="hero-stats">
+      <div class="stat reveal" style="--d:.1s">
+        <span class="stat-num"><span data-count="5">0</span><span class="stat-unit">min</span></span>
+        <span class="stat-label">to apply online</span>
+      </div>
+      <div class="stat reveal" style="--d:.2s">
+        <span class="stat-num"><span data-count="24">0</span><span class="stat-unit">hrs</span></span>
+        <span class="stat-label">to your quote</span>
+      </div>
+      <div class="stat reveal" style="--d:.3s">
+        <span class="stat-num"><span data-count="10">0</span><span class="stat-unit">days</span></span>
+        <span class="stat-label">average close</span>
+      </div>
+      <div class="stat reveal" style="--d:.4s">
+        <span class="stat-num"><span data-count="1">0</span><span class="stat-unit">day</span></span>
+        <span class="stat-label">draw funding</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PROGRAMS ============ -->
+  <section class="section section--paper" id="programs">
+    <div class="container">
+      <p class="eyebrow eyebrow--olive reveal">Loan programs</p>
+      <h2 class="display-2" data-split>Seven programs. One platform.</h2>
+      <p class="section-intro reveal">
+        From a first flip to a ten-property portfolio, every loan runs through
+        the same fast, transparent process. Loans from $100K to $1.5M on
+        residential real estate, nationwide.
       </p>
 
-      <div class="flex flex-wrap gap-4">
-        <a href="https://loans.fullstacklending.com/signup"
-           class="px-8 py-3.5 bg-gold text-ink font-semibold text-sm tracking-wide hover:bg-gold-lt transition-colors duration-200">
-          Start an Application
-        </a>
-        <a href="#products"
-           class="px-8 py-3.5 border text-ink font-semibold text-sm tracking-wide hover:bg-gold hover:border-gold hover:text-ink transition-colors duration-200"
-           style="border-color: rgba(201,169,110,.45)">
-          Explore Products
-        </a>
-      </div>
-    </div>
+      <div class="program-grid">
+        <article class="card reveal">
+          <span class="card-tag">Buy &amp; renovate</span>
+          <h3>Fix &amp; Flip</h3>
+          <p>Buy and renovate 1–10 unit residential, with the rehab 100% financed.</p>
+          <ul>
+            <li>Up to 92.5% loan-to-cost</li>
+            <li>Up to 75% of after-repair value</li>
+            <li>6, 12, or 18-month terms, interest-only</li>
+            <li>Close in as little as 5 business days</li>
+          </ul>
+        </article>
 
-  </section>
+        <article class="card reveal" style="--d:.06s">
+          <span class="card-tag">Buy &amp; renovate</span>
+          <h3>Construction</h3>
+          <p>Ground-up capital for single-family, townhomes, and ADUs.</p>
+          <ul>
+            <li>Up to 85% loan-to-cost</li>
+            <li>Up to 65% of completed value</li>
+            <li>Draws funded in as little as 1 business day</li>
+            <li>No prepayment penalties</li>
+          </ul>
+        </article>
 
-</div><!-- /light hero -->
+        <article class="card reveal" style="--d:.12s">
+          <span class="card-tag">Transition</span>
+          <h3>Bridge</h3>
+          <p>Multi-year runway between buying, stabilizing, and your next move.</p>
+          <ul>
+            <li>Up to 75% loan-to-value</li>
+            <li>Up to 65% on cash-out</li>
+            <li>Multi-year terms</li>
+            <li>No prepayment penalties</li>
+          </ul>
+        </article>
 
+        <article class="card reveal" style="--d:.18s">
+          <span class="card-tag">Hold &amp; rent</span>
+          <h3>Rental</h3>
+          <p>Long-term financing for single-family and multifamily rentals.</p>
+          <ul>
+            <li>Up to 80% loan-to-value</li>
+            <li>Up to 75% on cash-out</li>
+            <li>DSCR from 0.75</li>
+            <li>Low or no prepayment penalty options</li>
+          </ul>
+        </article>
 
-<!-- ═══════════════════════════════════════════
-     DARK — Stats bar
-════════════════════════════════════════════ -->
-<div class="bg-ink relative z-10">
-  <section class="border-y rule-dark" data-stats>
-    <div class="max-w-6xl mx-auto px-6 lg:px-10 py-14">
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-10 md:gap-6 max-w-2xl mx-auto">
-        <div class="text-center">
-          <p class="font-serif text-4xl text-gold mb-2" data-counter data-target="10" data-suffix=" days">10 days</p>
-          <p class="text-xs text-cream/60 uppercase tracking-widest">Avg. Close Time</p>
-        </div>
-        <div class="text-center">
-          <p class="font-serif text-4xl text-gold mb-2" data-counter data-target="40" data-suffix="+">40+</p>
-          <p class="text-xs text-cream/60 uppercase tracking-widest">States Active</p>
-        </div>
-      </div>
-    </div>
-  </section>
-</div><!-- /dark stats -->
+        <article class="card reveal" style="--d:.24s">
+          <span class="card-tag">Hold &amp; rent</span>
+          <h3>Short-Term Rental</h3>
+          <p>Purpose-built for Airbnb, VRBO, and similar listings.</p>
+          <ul>
+            <li>Up to 75% loan-to-value</li>
+            <li>Up to 70% on cash-out</li>
+            <li>Single-family &amp; multifamily</li>
+            <li>Low or no prepayment penalty options</li>
+          </ul>
+        </article>
 
+        <article class="card reveal" style="--d:.3s">
+          <span class="card-tag">Hold &amp; rent</span>
+          <h3>Rental Portfolio</h3>
+          <p>One facility for three or more rental properties.</p>
+          <ul>
+            <li>Up to 75% loan-to-value</li>
+            <li>Up to 70% on cash-out</li>
+            <li>Minimum of 3 properties</li>
+            <li>Low or no prepayment penalty options</li>
+          </ul>
+        </article>
 
-<!-- ═══════════════════════════════════════════
-     LIGHT — Loan Products
-════════════════════════════════════════════ -->
-<div id="products" class="bg-cream relative z-10">
-  <section class="max-w-6xl mx-auto px-6 lg:px-10 py-28">
+        <article class="card reveal" style="--d:.36s">
+          <span class="card-tag">Hold &amp; rent</span>
+          <h3>Bank Statement</h3>
+          <p>Qualify on bank statement analysis, with 30-year terms.</p>
+          <ul>
+            <li>Up to 80% loan-to-value</li>
+            <li>30-year term, competitive pricing</li>
+            <li>Qualification via bank statement analysis</li>
+            <li>Low or no prepayment penalty options</li>
+          </ul>
+        </article>
 
-    <div class="mb-16">
-      <h2 class="font-serif text-4xl md:text-5xl text-ink leading-tight">
-        Financing for Every<br />Investment Strategy
-      </h2>
-    </div>
-
-    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
-
-      <div class="card-light border p-8 hover:border-gold/60 transition-colors duration-300 cursor-default">
-        <div class="w-8 h-px bg-gold mb-8"></div>
-        <h3 class="font-serif text-xl text-ink mb-3">Fix &amp; Flip</h3>
-        <p class="text-sm text-ink/70 leading-relaxed mb-8">
-          Acquisition plus rehab financing drawn down as work progresses. Maximize leverage on every project.
-        </p>
-        <ul class="space-y-1.5 text-xs text-ink/55">
-          <li>Up to 92.5% LTC for experienced investors</li>
-          <li>100% of rehab funded</li>
-          <li>ARV-based underwriting</li>
-        </ul>
-      </div>
-
-      <div class="card-light border p-8 hover:border-gold/60 transition-colors duration-300 cursor-default">
-        <div class="w-8 h-px bg-gold mb-8"></div>
-        <h3 class="font-serif text-xl text-ink mb-3">Stabilized Bridge</h3>
-        <p class="text-sm text-ink/70 leading-relaxed mb-8">
-          Short-term capital for rent-ready properties — buy or refinance fast, then exit into a sale or long-term DSCR loan.
-        </p>
-        <ul class="space-y-1.5 text-xs text-ink/55">
-          <li>Up to 75% LTV</li>
-          <li>6–18 month terms</li>
-          <li>Close in 5–7 days</li>
-        </ul>
-      </div>
-
-      <div class="card-light border p-8 hover:border-gold/60 transition-colors duration-300 cursor-default">
-        <div class="w-8 h-px bg-gold mb-8"></div>
-        <h3 class="font-serif text-xl text-ink mb-3">Ground-Up Construction</h3>
-        <p class="text-sm text-ink/70 leading-relaxed mb-8">
-          Land acquisition and vertical construction loans for residential builds, built for experienced builders.
-        </p>
-        <ul class="space-y-1.5 text-xs text-ink/55">
-          <li>Up to 85% LTC (90% with interest reserve)</li>
-          <li>Flexible draw schedules</li>
-          <li>Interest reserve options</li>
-        </ul>
-      </div>
-
-      <div class="card-light border p-8 hover:border-gold/60 transition-colors duration-300 cursor-default">
-        <div class="w-8 h-px bg-gold mb-8"></div>
-        <h3 class="font-serif text-xl text-ink mb-3">DSCR Rental Loans</h3>
-        <p class="text-sm text-ink/70 leading-relaxed mb-8">
-          Qualify on property cash flow — not personal income. Built for buy-and-hold portfolio builders.
-        </p>
-        <ul class="space-y-1.5 text-xs text-ink/55">
-          <li>Up to 80% LTV</li>
-          <li>30-year fixed available</li>
-          <li>Interest-only option (10-year I/O on our 5/6 ARM)</li>
-          <li>No income docs required</li>
-        </ul>
+        <article class="card card--cta reveal" style="--d:.42s">
+          <h3>Not sure which fits?</h3>
+          <p>Apply once. We'll quote the structure that fits the deal.</p>
+          <a class="btn btn--ink" href="https://loans.fullstacklending.com/signup">Start your application</a>
+        </article>
       </div>
 
+      <p class="criteria-strip reveal">
+        $100K–$1.5M loan amounts&ensp;·&ensp;Lending to LLCs &amp; entities&ensp;·&ensp;680+ FICO, soft pull only&ensp;·&ensp;1–10 unit residential&ensp;·&ensp;Nationwide except ND, NV, SD, VT &amp; WV
+      </p>
     </div>
   </section>
-</div><!-- /light products -->
 
+  <!-- ============ HOW IT WORKS (sticky sequence) ============ -->
+  <section class="steps" id="how-it-works">
+    <div class="steps-track" id="stepsTrack">
+      <div class="steps-sticky">
+        <header class="steps-head">
+          <p class="eyebrow">How it works</p>
+          <h2 class="display-2" data-split>Application to funded, in four steps.</h2>
+        </header>
 
-<!-- ═══════════════════════════════════════════
-     DARK — Why Fullstack
-════════════════════════════════════════════ -->
-<div id="why" class="bg-ink relative z-10">
-  <section class="max-w-6xl mx-auto px-6 lg:px-10 py-28">
-    <div class="grid lg:grid-cols-2 gap-16 lg:gap-24 items-start">
+        <div class="steps-stage">
+          <ol class="steps-rail" aria-hidden="true">
+            <li data-step="0" class="is-active">01</li>
+            <li data-step="1">02</li>
+            <li data-step="2">03</li>
+            <li data-step="3">04</li>
+          </ol>
 
-      <div class="lg:sticky lg:top-20">
-        <h2 class="font-serif text-4xl md:text-5xl text-warm-wh leading-[1.1]">
-          The Lender That<br />Moves Like You Do.
-        </h2>
-        <p class="text-sm text-cream/80 leading-relaxed mt-6 max-w-sm">
-          Most private lenders promise speed. We're built for it — from our underwriting process to our capital stack.
-        </p>
-      </div>
-
-      <div class="space-y-10">
-
-        <div class="flex gap-7">
-          <div class="w-px flex-shrink-0 mt-1" style="background:rgba(201,169,110,.35)"></div>
-          <div>
-            <h3 class="text-warm-wh font-medium mb-2">Decisions in 24 Hours</h3>
-            <p class="text-sm text-cream/80 leading-relaxed">
-              Our underwriting team gives you a clear answer within one business day of a complete file.
-            </p>
+          <div class="steps-panels">
+            <article class="step-panel is-active">
+              <span class="step-ghost" aria-hidden="true">01</span>
+              <p class="step-kicker">Apply</p>
+              <h3>Five minutes, online.</h3>
+              <p>One short application at loans.fullstacklending.com. No PDFs, no
+              phone tag — and only a soft credit pull, so your score never takes
+              a hit.</p>
+            </article>
+            <article class="step-panel">
+              <span class="step-ghost" aria-hidden="true">02</span>
+              <p class="step-kicker">Quote</p>
+              <h3>Terms within 24 hours.</h3>
+              <p>Your quote lands in the portal within a day — leverage, pricing,
+              and structure, ready to take to the seller.</p>
+            </article>
+            <article class="step-panel">
+              <span class="step-ghost" aria-hidden="true">03</span>
+              <p class="step-kicker">Close</p>
+              <h3>Funded in about 10 business days.</h3>
+              <p>Upload each document once and track every milestone in the
+              portal. Our average close runs about ten business days, so your
+              offers can compete with cash.</p>
+            </article>
+            <article class="step-panel">
+              <span class="step-ghost" aria-hidden="true">04</span>
+              <p class="step-kicker">Build</p>
+              <h3>Draws in as little as 1 day.</h3>
+              <p>On renovation and construction loans, request draws from the
+              portal. Virtual inspections take 1–3 business days, funds arrive in
+              as little as one — and you pay no interest on undrawn funds.</p>
+            </article>
           </div>
         </div>
-
-        <div class="flex gap-7">
-          <div class="w-px flex-shrink-0 mt-1" style="background:rgba(201,169,110,.35)"></div>
-          <div>
-            <h3 class="text-warm-wh font-medium mb-2">Relationship, Not Just Transactions</h3>
-            <p class="text-sm text-cream/80 leading-relaxed">
-              You get a dedicated loan officer who knows your portfolio, your markets, and your preferred structure — deal after deal.
-            </p>
-          </div>
-        </div>
-
-        <div class="flex gap-7">
-          <div class="w-px flex-shrink-0 mt-1" style="background:rgba(201,169,110,.35)"></div>
-          <div>
-            <h3 class="text-warm-wh font-medium mb-2">Flexible Structures</h3>
-            <p class="text-sm text-cream/80 leading-relaxed">
-              We structure around the deal, not a rate sheet. Cross-collateralization, partial lien releases, and portfolio loans are all on the table.
-            </p>
-          </div>
-        </div>
-
-        <div class="flex gap-7">
-          <div class="w-px flex-shrink-0 mt-1" style="background:rgba(201,169,110,.35)"></div>
-          <div>
-            <h3 class="text-warm-wh font-medium mb-2">Institutional Capital, Private Speed</h3>
-            <p class="text-sm text-cream/80 leading-relaxed">
-              Backed by a deep institutional capital pool — so we close with certainty and no last-minute funding gaps.
-            </p>
-          </div>
-        </div>
-
       </div>
     </div>
   </section>
-</div><!-- /dark why -->
 
-
-<!-- ═══════════════════════════════════════════
-     LIGHT — Process
-════════════════════════════════════════════ -->
-<div id="process" class="bg-warm-wh relative z-10">
-  <section class="max-w-6xl mx-auto px-6 lg:px-10 py-28">
-
-    <div class="mb-16 text-center">
-      <p class="text-xs text-gold-dk tracking-[0.22em] uppercase mb-4">The Process</p>
-      <h2 class="font-serif text-4xl md:text-5xl text-ink">From Intro to Close</h2>
-    </div>
-
-    <div class="grid md:grid-cols-3 divide-y md:divide-y-0 md:divide-x" style="border-color: rgba(201,169,110,.25)">
-      <div class="p-10 md:pr-14">
-        <p class="font-serif text-5xl mb-6 text-gold/40">01</p>
-        <h3 class="font-serif text-xl text-ink mb-3">Create Your Account &amp; Submit</h3>
-        <p class="text-sm text-ink/70 leading-relaxed">
-          Start by creating a free account on our <a href="https://loans.fullstacklending.com/signup" class="text-gold-dk underline hover:text-ink transition-colors duration-200">borrower portal</a>. Once logged in, submit your deal details — no lengthy email chains, no back-and-forth.
+  <!-- ============ PORTAL ============ -->
+  <section class="section section--paper" id="portal">
+    <div class="container portal-grid">
+      <div class="portal-copy">
+        <p class="eyebrow eyebrow--olive reveal">The Fullstack portal</p>
+        <h2 class="display-2" data-split>Upload once. Never dig through email again.</h2>
+        <p class="reveal">
+          Every loan runs through the Fullstack portal. Your application,
+          documents, quote, closing timeline, and draw requests live in one
+          place — not scattered across email threads. No more re-sending the
+          same bank statement for the third time.
         </p>
+        <ul class="check-list reveal" style="--d:.15s">
+          <li>Apply in about five minutes</li>
+          <li>Every document stored, tracked, and requested in one place</li>
+          <li>Real-time status at each milestone</li>
+          <li>Draw requests and virtual inspections, fully online</li>
+        </ul>
+        <a class="btn btn--ink reveal" style="--d:.25s" href="https://loans.fullstacklending.com/signup">Open your account</a>
       </div>
-      <div class="p-10 md:px-14">
-        <p class="font-serif text-5xl mb-6 text-gold/40">02</p>
-        <h3 class="font-serif text-xl text-ink mb-3">Receive a Term Sheet</h3>
-        <p class="text-sm text-ink/70 leading-relaxed">
-          Within 24 hours, a detailed term sheet is delivered directly to your portal — rate, LTV, fees, and structure all in one place. Our software automates the analysis so there are no delays waiting on a desk.
-        </p>
-      </div>
-      <div class="p-10 md:pl-14">
-        <p class="font-serif text-5xl mb-6 text-gold/40">03</p>
-        <h3 class="font-serif text-xl text-ink mb-3">Close &amp; Fund</h3>
-        <p class="text-sm text-ink/70 leading-relaxed">
-          Once you accept your term sheet in the portal, our processing team coordinates title, appraisal, and legal. Bridge loans close in as few as 5 business days.
-        </p>
-      </div>
-    </div>
 
-  </section>
-</div><!-- /light process -->
-
-
-<!-- ═══════════════════════════════════════════
-     DARK — Testimonials + CTA + Footer
-════════════════════════════════════════════ -->
-<div class="bg-ink relative z-10">
-
-  <!-- TESTIMONIALS PLACEHOLDER: Real quotes to be added later
-  <section class="border-b rule-dark">
-    <div class="max-w-6xl mx-auto px-6 lg:px-10 py-24">
-      <div class="grid md:grid-cols-3 gap-12">
-
-        <div>
-          <p class="text-sm text-cream leading-relaxed mb-7">
-            "Fullstack closed a complex bridge deal in 6 days when two other lenders backed out at the table.
-            They've funded eight of our acquisitions since."
-          </p>
-          <div class="flex items-center gap-3">
-            <div class="w-8 h-8 rounded-full flex-shrink-0" style="background:rgba(201,169,110,.12);border:1px solid rgba(201,169,110,.2)"></div>
-            <div>
-              <p class="text-sm text-warm-wh font-medium">Marcus T.</p>
-              <p class="text-xs text-cream/60">50+ Unit Portfolio · Atlanta, GA</p>
+      <div class="portal-mock reveal" style="--d:.2s" aria-hidden="true">
+        <div class="pm-bar">
+          <span class="pm-dot"></span><span class="pm-dot"></span><span class="pm-dot"></span>
+          <span class="pm-url">loans.fullstacklending.com</span>
+        </div>
+        <div class="pm-body">
+          <aside class="pm-side">
+            <img src="assets/logo/ascend-mark-color-transparent.svg" alt="" width="28" height="18">
+            <span class="pm-item is-active">Overview</span>
+            <span class="pm-item">Documents</span>
+            <span class="pm-item">Draws</span>
+            <span class="pm-item">Messages</span>
+          </aside>
+          <div class="pm-main">
+            <div class="pm-head">
+              <span class="pm-pill">Quote ready</span>
+              <strong>1427 Alder St · Fix &amp; Flip</strong>
             </div>
-          </div>
-        </div>
-
-        <div>
-          <p class="text-sm text-cream leading-relaxed mb-7">
-            "DSCR loans with no income verification changed how I scale. I went from 4 doors to 22 in under a year
-            using Fullstack's portfolio program."
-          </p>
-          <div class="flex items-center gap-3">
-            <div class="w-8 h-8 rounded-full flex-shrink-0" style="background:rgba(201,169,110,.12);border:1px solid rgba(201,169,110,.2)"></div>
-            <div>
-              <p class="text-sm text-warm-wh font-medium">Priya M.</p>
-              <p class="text-xs text-cream/60">Buy-and-Hold Investor · Phoenix, AZ</p>
+            <div class="pm-progress">
+              <span class="pm-seg is-done"></span>
+              <span class="pm-seg is-done"></span>
+              <span class="pm-seg is-live"></span>
+              <span class="pm-seg"></span>
             </div>
+            <ul class="pm-docs">
+              <li><span>Bank statement</span><em class="is-done">On file</em></li>
+              <li><span>Purchase contract</span><em class="is-done">On file</em></li>
+              <li><span>Scope of work</span><em class="is-done">On file</em></li>
+              <li><span>Entity documents</span><em>Requested</em></li>
+            </ul>
           </div>
         </div>
-
-        <div>
-          <p class="text-sm text-cream leading-relaxed mb-7">
-            "The team actually understands construction draws. No delays, no micromanaging.
-            My GC specifically requests Fullstack deals now."
-          </p>
-          <div class="flex items-center gap-3">
-            <div class="w-8 h-8 rounded-full flex-shrink-0" style="background:rgba(201,169,110,.12);border:1px solid rgba(201,169,110,.2)"></div>
-            <div>
-              <p class="text-sm text-warm-wh font-medium">Derek O.</p>
-              <p class="text-xs text-cream/60">Ground-Up Builder · Dallas, TX</p>
-            </div>
-          </div>
-        </div>
-
       </div>
     </div>
   </section>
-  -->
 
-  <!-- CTA -->
-  <section id="contact" class="max-w-6xl mx-auto px-6 lg:px-10 py-36 text-center">
-    <h2 class="font-serif text-4xl md:text-6xl text-warm-wh mb-6 leading-[1.07]">
-      Let's Talk About<br />Your Next Deal.
-    </h2>
-    <p class="text-cream/80 max-w-sm mx-auto mb-12 leading-relaxed text-sm">
-      Bridge and fix-and-flip loans on 1–4 unit residential properties. DSCR financing for 1–4 unit rentals and portfolios. Business-purpose only. Term sheet delivered to your portal within 24 hours.
-    </p>
-    <div class="flex flex-wrap justify-center gap-4">
-      <a href="https://loans.fullstacklending.com/signup"
-         class="px-10 py-4 bg-gold text-ink font-semibold text-sm tracking-wide hover:bg-gold-lt transition-colors duration-200">
-        Register & Start an Application
-      </a>
-      <!-- <a href="tel:+18005551234"
-         class="px-10 py-4 border text-cream text-sm tracking-wide hover:border-gold/60 transition-colors duration-200"
-         style="border-color: rgba(201,169,110,.3)">
-        (800) 555-1234
-      </a> -->
+  <!-- ============ WHY FULLSTACK ============ -->
+  <section class="section section--ink" id="why">
+    <div class="container">
+      <p class="eyebrow reveal">Why Fullstack</p>
+      <h2 class="display-2" data-split>Built by investors who've sat on your side of the table.</h2>
+      <div class="pillar-grid">
+        <article class="pillar reveal">
+          <h3>Investor-built</h3>
+          <p>Fullstack was started by operators who've flipped, built, and held
+          hundreds of properties — and borrowed from plenty of lenders along the
+          way. We built the lender we always wanted across the table.</p>
+        </article>
+        <article class="pillar reveal" style="--d:.1s">
+          <h3>Institutional capital</h3>
+          <p>Every loan is funded with institutional capital, so an approval
+          means what it says. No thin balance sheet, no eleventh-hour
+          surprises at the closing table.</p>
+        </article>
+        <article class="pillar reveal" style="--d:.2s">
+          <h3>Modern from day one</h3>
+          <p>No legacy systems, no committee bottlenecks. One portal, clear
+          criteria, and underwriting that applies data where it helps and
+          judgment where it counts.</p>
+        </article>
+      </div>
     </div>
   </section>
 
-</div><!-- /dark testimonials+cta+footer -->
+  <!-- ============ ABOUT ============ -->
+  <section class="section section--paper" id="about">
+    <div class="container">
+      <p class="eyebrow eyebrow--olive reveal">The partners</p>
+      <h2 class="display-2" data-split>Operators first. Lenders second.</h2>
+      <div class="bio-grid">
+        <article class="bio reveal">
+          <h3>Leka Devatha</h3>
+          <p class="bio-role">Managing Partner</p>
+          <p>Leka is a Seattle-based developer, investor, and broker, and the
+          President of Rehabit Homes. Over 12 years she has led hundreds of
+          transactions and more than $150M in residential and commercial
+          development, with over 200 deals as a principal. She hosts the
+          Real Estate At Work meetup, is the author of <em>Return on Real
+          Estate</em>, and has spoken at BiggerPockets Conference and MFIN Con.</p>
+          <p>Fullstack exists because she borrowed from a lot of lenders across
+          countless flips — and decided the pain points deserved fixing.</p>
+        </article>
+        <article class="bio reveal" style="--d:.12s">
+          <h3>Kunaal Kumar</h3>
+          <p class="bio-role">Managing Partner</p>
+          <p>Kunaal is the General Partner of Bozeman Capital Partners, managing
+          more than $80M invested in short-term, first-lien loans to residential
+          real estate investors. A former Meta software engineer with a
+          background in computer science and quantitative finance, he applies
+          systems, data, and automation across private credit — risk analytics,
+          portfolio management, and capital raising.</p>
+        </article>
+      </div>
+    </div>
+  </section>
 
-<site-footer></site-footer>
+  <!-- ============ FAQ ============ -->
+  <section class="section section--ink" id="faq">
+    <div class="container container--narrow">
+      <p class="eyebrow reveal">Questions</p>
+      <h2 class="display-2" data-split>The fine print, in plain language.</h2>
 
-<script src="components.js"></script>
-<script>
-  // ── Stat counter animation ────────────────────────────────
-  (function () {
-    const DURATION = 1600; // ms
+      <div class="faq-list">
+        <div class="faq-item reveal">
+          <button class="faq-q" aria-expanded="false">Do you work with first-time investors?<span class="faq-icon"></span></button>
+          <div class="faq-a"><div class="faq-a-inner">
+            <p>Yes. Our programs start at zero completed projects. Experience
+            unlocks higher leverage — for example, up to 92.5% loan-to-cost on
+            fix &amp; flip once you've completed five projects in the last three
+            years.</p>
+          </div></div>
+        </div>
+        <div class="faq-item reveal">
+          <button class="faq-q" aria-expanded="false">Will getting a quote hurt my credit?<span class="faq-icon"></span></button>
+          <div class="faq-a"><div class="faq-a-inner">
+            <p>No. Qualification uses a soft credit assessment, which doesn't
+            affect your score.</p>
+          </div></div>
+        </div>
+        <div class="faq-item reveal">
+          <button class="faq-q" aria-expanded="false">Do I need an LLC or other entity?<span class="faq-icon"></span></button>
+          <div class="faq-a"><div class="faq-a-inner">
+            <p>Yes — loans are made to entities rather than individuals, which is
+            standard for business-purpose lending. A personal guarantee is
+            customary.</p>
+          </div></div>
+        </div>
+        <div class="faq-item reveal">
+          <button class="faq-q" aria-expanded="false">Where do you lend?<span class="faq-icon"></span></button>
+          <div class="faq-a"><div class="faq-a-inner">
+            <p>Nationwide, except North Dakota, Nevada, South Dakota, Vermont,
+            and West Virginia.</p>
+          </div></div>
+        </div>
+        <div class="faq-item reveal">
+          <button class="faq-q" aria-expanded="false">What properties are eligible?<span class="faq-icon"></span></button>
+          <div class="faq-a"><div class="faq-a-inner">
+            <p>Single-family homes, townhomes, warrantable condos, and 2–4 unit
+            residential, with 5–10 unit properties considered case by case.
+            Construction loans also cover ADUs.</p>
+          </div></div>
+        </div>
+        <div class="faq-item reveal">
+          <button class="faq-q" aria-expanded="false">How do renovation draws work?<span class="faq-icon"></span></button>
+          <div class="faq-a"><div class="faq-a-inner">
+            <p>Request a draw in the portal and complete a virtual inspection —
+            the whole request takes 1–3 business days, with funds in as little
+            as one. Materials, labor, demolition, and customary soft costs are
+            reimbursable, and you pay no interest on undrawn funds.</p>
+          </div></div>
+        </div>
+        <div class="faq-item reveal">
+          <button class="faq-q" aria-expanded="false">How fast can I really close?<span class="faq-icon"></span></button>
+          <div class="faq-a"><div class="faq-a-inner">
+            <p>Our average is about ten business days end to end. Fix &amp; flip
+            loans can close in as little as five.</p>
+          </div></div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    function easeOutCubic(t) {
-      return 1 - Math.pow(1 - t, 3);
-    }
+  <!-- ============ FINAL CTA ============ -->
+  <section class="cta-final" id="get-started">
+    <canvas class="ridges" id="ridgesCta" aria-hidden="true"></canvas>
+    <div class="cta-inner">
+      <p class="eyebrow reveal">Get started</p>
+      <h2 class="display" data-split>The next deal won't wait.</h2>
+      <p class="reveal" style="--d:.2s">Five minutes to apply. Twenty-four hours to your quote.</p>
+      <div class="hero-ctas reveal" style="--d:.35s">
+        <a class="btn btn--lime btn--lg" href="https://loans.fullstacklending.com/signup">Get a quote</a>
+      </div>
+      <p class="cta-mail reveal" style="--d:.5s">Prefer a conversation first?
+        <a href="mailto:loans@fullstacklending.com">loans@fullstacklending.com</a>
+      </p>
+    </div>
+  </section>
 
-    function animateCounters() {
-      document.querySelectorAll('[data-counter]').forEach(el => {
-        const target  = parseFloat(el.dataset.target);
-        const prefix  = el.dataset.prefix || '';
-        const suffix  = el.dataset.suffix || '';
-        let startTime = null;
+</main>
 
-        function step(ts) {
-          if (!startTime) startTime = ts;
-          const progress = Math.min((ts - startTime) / DURATION, 1);
-          const value    = Math.round(easeOutCubic(progress) * target);
-          el.textContent = prefix + value + suffix;
-          if (progress < 1) requestAnimationFrame(step);
-        }
+<footer class="footer">
+  <div class="container footer-grid">
+    <div class="footer-brand">
+      <img src="assets/logo/fullstack-stacked-color-dark.svg" alt="Fullstack Lending" width="120" height="120">
+    </div>
+    <nav class="footer-col" aria-label="Programs">
+      <h4>Programs</h4>
+      <a href="#programs">Fix &amp; Flip</a>
+      <a href="#programs">Construction</a>
+      <a href="#programs">Bridge</a>
+      <a href="#programs">Rental</a>
+      <a href="#programs">Short-Term Rental</a>
+      <a href="#programs">Rental Portfolio</a>
+      <a href="#programs">Bank Statement</a>
+    </nav>
+    <nav class="footer-col" aria-label="Company">
+      <h4>Company</h4>
+      <a href="#about">About</a>
+      <a href="#how-it-works">How it works</a>
+      <a href="brokers.html">Brokers</a>
+      <a href="contact.html">Contact</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <nav class="footer-col" aria-label="Portal">
+      <h4>Portal</h4>
+      <a href="https://loans.fullstacklending.com/login">Log in</a>
+      <a href="https://loans.fullstacklending.com/signup">Apply</a>
+      <a href="mailto:loans@fullstacklending.com">loans@fullstacklending.com</a>
+    </nav>
+  </div>
+  <div class="container footer-legal">
+    <p>Fullstack Lending offers business-purpose loans secured by non-owner-occupied
+    residential real estate. All loans are subject to underwriting and credit
+    approval. This is not a commitment to lend. Loan programs, terms, and rates
+    are subject to change without notice and may not be available in all states.
+    Not available in ND, NV, SD, VT, or WV.</p>
+    <p>© <span id="year">2026</span> Fullstack Lending · fullstacklending.com</p>
+  </div>
+</footer>
 
-        requestAnimationFrame(step);
-      });
-    }
-
-    const statsSection = document.querySelector('[data-stats]');
-    if (statsSection) {
-      new IntersectionObserver((entries, obs) => {
-        if (entries[0].isIntersecting) {
-          animateCounters();
-          obs.disconnect();
-        }
-      }, { threshold: 0.4 }).observe(statsSection);
-    }
-  })();
-</script>
-<script>
-  // Smooth scroll for bare anchors (#section) and same-page index.html#section links
-  document.querySelectorAll('a[href^="#"], a[href^="index.html#"]').forEach(anchor => {
-    anchor.addEventListener('click', function(e) {
-      const href = this.getAttribute('href');
-      const hash = '#' + href.split('#')[1];
-      if (!hash || hash === '#') return;
-      const target = document.querySelector(hash);
-      if (target) {
-        e.preventDefault();
-        target.scrollIntoView({ behavior: 'smooth' });
-      }
-    });
-  });
-</script>
-<script>
-  // Subtle parallax on marked sections — translateY by 20% of scroll offset.
-  //
-  // data-parallax        → hero mode: offset=0 on page load, drifts as user scrolls
-  // data-parallax="center" → center mode: offset=0 when section center == viewport
-  //                          center, so content is always naturally placed at the
-  //                          moment it's most in focus.
-  (function () {
-    const sections = Array.from(document.querySelectorAll('[data-parallax]'));
-    if (!sections.length) return;
-
-    const vh = window.innerHeight;
-
-    // Pre-compute the scrollY value at which each section's offset should be 0.
-    sections.forEach(function (el) {
-      const docTop = el.getBoundingClientRect().top + window.scrollY;
-      if (el.dataset.parallax === 'center') {
-        // Zero-point = when section center aligns with viewport center
-        el._parallaxZero = docTop + el.offsetHeight / 2 - vh / 2;
-      } else {
-        // Hero: zero-point = page top (scrollY 0)
-        el._parallaxZero = 0;
-      }
-    });
-
-    let ticking = false;
-
-    function applyParallax() {
-      const scrollY  = window.scrollY;
-      const isMobile = window.innerWidth < 768;
-      sections.forEach(function (el) {
-        const rect = el.getBoundingClientRect();
-        if (rect.bottom < 0) return; // fully scrolled past — skip
-        // Disable center-mode parallax on mobile to preserve readability
-        if (isMobile && el.dataset.parallax === 'center') {
-          el.style.transform = '';
-          return;
-        }
-        const offset = (scrollY - el._parallaxZero) * 0.1;
-        el.style.transform = 'translateY(' + offset + 'px)';
-      });
-      ticking = false;
-    }
-
-    window.addEventListener('scroll', function () {
-      if (!ticking) {
-        requestAnimationFrame(applyParallax);
-        ticking = true;
-      }
-    }, { passive: true });
-  })();
-</script>
-<script>
-  // Fade in hero image once loaded; handle cached images via img.complete
-  (function () {
-    const img = document.querySelector('#hero-img img');
-    if (!img) return;
-    if (img.complete) {
-      img.classList.add('loaded');
-    } else {
-      img.addEventListener('load', function () { img.classList.add('loaded'); });
-    }
-  })();
-</script>
+<script src="js/main.js"></script>
 </body>
 </html>

@@ -1,1 +1,6 @@
 .DS_Store
+.idea/
+node_modules/
+
+# Brand source kit — kept local; GitHub Pages serves everything committed
+Full Stack Lendding Brand Identity Kit/
