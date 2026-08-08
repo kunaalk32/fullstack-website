@@ -833,6 +833,15 @@ a { color: inherit; }
   color: var(--muted-on-ink);
 }
 
+.step-link {
+  color: var(--paper);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: rgba(143, 166, 55, 0.6);
+  transition: text-decoration-color 0.25s ease;
+}
+.step-link:hover { text-decoration-color: var(--moss); }
+
 /* Steps degrade to a simple stack on small screens */
 @media (max-width: 860px) {
   .steps-track { height: auto; }
