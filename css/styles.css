@@ -467,6 +467,16 @@ a { color: inherit; }
   box-shadow: 0 24px 48px rgba(23, 24, 27, 0.1);
 }
 
+/* Cards carry both .card and .reveal; the .js .reveal transition (opacity +
+   transform only) out-specifies .card and drops box-shadow, so the hover
+   shadow popped in instantly. Re-declare at higher specificity to keep the
+   reveal behavior and fade the shadow over 1s (no reveal-stagger delay). */
+.js .card.reveal {
+  transition: opacity 0.8s var(--ease), transform 0.8s var(--ease),
+              box-shadow 1s var(--ease);
+  transition-delay: var(--d, 0s), var(--d, 0s), 0s;
+}
+
 .card h3 { font-size: 1.35rem; font-weight: 400; letter-spacing: -0.01em; }
 
 .card > p {
