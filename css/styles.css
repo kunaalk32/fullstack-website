@@ -1183,6 +1183,11 @@ a { color: inherit; }
   display: inline-block;
   overflow: hidden;
   vertical-align: top;
+  /* Extend the clip box below the baseline so descenders (g, y, p) aren't
+     cut off by the tight line-height; negative margin cancels the added
+     height so line spacing is unchanged. */
+  padding-bottom: 0.16em;
+  margin-bottom: -0.16em;
 }
 
 .js [data-split] .w > span {
