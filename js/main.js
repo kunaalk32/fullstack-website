@@ -56,7 +56,7 @@
     function frame() {
       ctx.clearRect(0, 0, w, h);
       for (var i = 0; i < layers.length; i++) drawLayer(layers[i]);
-      t += 1;
+      t += 0.1;   // phase advance per frame; lower = slower ridge motion
       if (running && !reducedMotion) rafId = requestAnimationFrame(frame);
     }
 
