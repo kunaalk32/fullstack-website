@@ -88,6 +88,230 @@
 
   document.querySelectorAll(".ridges").forEach(function (c) { RidgeField(c, {}); });
 
+  /* ---------- Wireframe house (hero) ----------
+     Isometric line model that draws itself in on load (assembled), then
+     explodes as the user scrolls: the roof assembly lifts away and the
+     ground plate drops. Fixed camera, no rotation. Vanilla canvas 2D,
+     orthographic isometric projection. */
+
+  function WireHouse(canvas) {
+    var ctx = canvas.getContext("2d");
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var w = 0, h = 0;
+
+    var ROOF_LIFT = 1.15;    // roof height above walls when fully exploded
+    var GROUND_DROP = 0.8;   // ground depth below walls when fully exploded
+    var SCROLL_SPAN = 0.6;   // fraction of viewport height to fully explode
+
+    var OLIVE = "rgba(63, 74, 24, 0.9)";
+    var MOSS = "rgba(143, 166, 55, 0.75)";
+    var MOSS_FAINT = "rgba(143, 166, 55, 0.45)";
+    var PAPER = "rgba(244, 241, 236, 0.8)";
+    var PAPER_FAINT = "rgba(244, 241, 236, 0.4)";
+
+    /* --- Edge helpers: each edge is [x1,y1,z1, x2,y2,z2] --- */
+    function rectY(y, x1, z1, x2, z2) {
+      return [
+        [x1, y, z1, x2, y, z1], [x2, y, z1, x2, y, z2],
+        [x2, y, z2, x1, y, z2], [x1, y, z2, x1, y, z1]
+      ];
+    }
+    function box(x1, y1, z1, x2, y2, z2) {
+      return rectY(y1, x1, z1, x2, z2).concat(rectY(y2, x1, z1, x2, z2), [
+        [x1, y1, z1, x1, y2, z1], [x2, y1, z1, x2, y2, z1],
+        [x2, y1, z2, x2, y2, z2], [x1, y1, z2, x1, y2, z2]
+      ]);
+    }
+    // Rectangle on a gable-end face (constant x): corners in (z, y)
+    function rectX(x, z1, y1, z2, y2) {
+      return [
+        [x, y1, z1, x, y2, z1], [x, y2, z1, x, y2, z2],
+        [x, y2, z2, x, y1, z2], [x, y1, z2, x, y1, z1]
+      ];
+    }
+    // Rectangle on a long-wall face (constant z): corners in (x, y)
+    function rectZ(z, x1, y1, x2, y2) {
+      return [
+        [x1, y1, z, x1, y2, z], [x1, y2, z, x2, y2, z],
+        [x2, y2, z, x2, y1, z], [x2, y1, z, x1, y1, z]
+      ];
+    }
+
+    /* --- Walls (static group) --- */
+    var wallEdges = [];
+    var wallFaint = [];
+    // base, top plate band, corner studs
+    wallEdges = wallEdges.concat(
+      rectY(0, -1, -0.75, 1, 0.75),
+      rectY(0.95, -1, -0.75, 1, 0.75),
+      rectY(1.05, -1, -0.75, 1, 0.75),
+      [[-1, 0, -0.75, -1, 1.05, -0.75], [1, 0, -0.75, 1, 1.05, -0.75],
+       [1, 0, 0.75, 1, 1.05, 0.75], [-1, 0, 0.75, -1, 1.05, 0.75]]
+    );
+    // garage opening on the near gable-end wall (x = -1), with inset depth
+    wallFaint = wallFaint.concat(
+      [[-1, 0, -0.5, -1, 0.8, -0.5], [-1, 0.8, -0.5, -1, 0.8, 0.5], [-1, 0.8, 0.5, -1, 0, 0.5]],
+      [[-0.88, 0, -0.5, -0.88, 0.8, -0.5], [-0.88, 0.8, -0.5, -0.88, 0.8, 0.5], [-0.88, 0.8, 0.5, -0.88, 0, 0.5]],
+      [[-1, 0.8, -0.5, -0.88, 0.8, -0.5], [-1, 0.8, 0.5, -0.88, 0.8, 0.5],
+       [-1, 0, -0.5, -0.88, 0, -0.5], [-1, 0, 0.5, -0.88, 0, 0.5]]
+    );
+    // door on the near long wall (z = 0.75), with inset
+    wallFaint = wallFaint.concat(
+      [[0.35, 0, 0.75, 0.35, 0.62, 0.75], [0.35, 0.62, 0.75, 0.62, 0.62, 0.75], [0.62, 0.62, 0.75, 0.62, 0, 0.75]],
+      [[0.35, 0, 0.68, 0.35, 0.62, 0.68], [0.35, 0.62, 0.68, 0.62, 0.62, 0.68], [0.62, 0.62, 0.68, 0.62, 0, 0.68]],
+      [[0.35, 0.62, 0.75, 0.35, 0.62, 0.68], [0.62, 0.62, 0.75, 0.62, 0.62, 0.68]]
+    );
+    // two windows on the near long wall, with inset
+    [[-0.6, -0.28], [-0.1, 0.22]].forEach(function (win) {
+      wallFaint = wallFaint.concat(
+        rectZ(0.75, win[0], 0.35, win[1], 0.68),
+        rectZ(0.68, win[0], 0.35, win[1], 0.68),
+        [[win[0], 0.35, 0.75, win[0], 0.35, 0.68], [win[1], 0.68, 0.75, win[1], 0.68, 0.68]]
+      );
+    });
+
+    /* --- Roof assembly (lifts away on scroll; includes chimney) --- */
+    var roofEdges = [];
+    var roofFaint = [];
+    roofEdges = roofEdges.concat(
+      [[-1.12, 2.0, 0, 1.12, 2.0, 0]],                                       // ridge
+      [[-1.12, 2.0, 0, -1.12, 0.98, -0.9], [-1.12, 2.0, 0, -1.12, 0.98, 0.9],
+       [1.12, 2.0, 0, 1.12, 0.98, -0.9], [1.12, 2.0, 0, 1.12, 0.98, 0.9]],   // slope ends
+      [[-1.12, 0.98, -0.9, 1.12, 0.98, -0.9], [-1.12, 0.98, 0.9, 1.12, 0.98, 0.9]], // eaves
+      [[-1, 1.05, -0.75, -1, 1.95, 0], [-1, 1.95, 0, -1, 1.05, 0.75],        // gable triangles
+       [1, 1.05, -0.75, 1, 1.95, 0], [1, 1.95, 0, 1, 1.05, 0.75]],
+      [[-1.25, 1.5, -0.12, -0.7, 1.5, -0.12], [-1.25, 1.5, 0.12, -0.7, 1.5, 0.12]] // beam stubs
+    );
+    // rafters across both slopes
+    for (var rx = -0.9; rx <= 0.91; rx += 0.3) {
+      roofFaint.push([rx, 2.0, 0, rx, 0.98, -0.9]);
+      roofFaint.push([rx, 2.0, 0, rx, 0.98, 0.9]);
+    }
+    var chimneyEdges = box(-0.35, 1.35, -0.3, -0.12, 2.3, -0.08);
+
+    /* --- Ground plate (drops away on scroll) --- */
+    var groundEdges = rectY(0, -1.5, -1.1, 1.5, 1.1).concat(
+      rectY(-0.06, -1.5, -1.1, 1.5, 1.1),
+      [[-1.5, 0, -1.1, -1.5, -0.06, -1.1], [1.5, 0, -1.1, 1.5, -0.06, -1.1],
+       [1.5, 0, 1.1, 1.5, -0.06, 1.1], [-1.5, 0, 1.1, -1.5, -0.06, 1.1]],
+      rectY(0, -1.35, -0.95, 1.35, 0.95)
+    );
+
+    /* --- Flat edge list in construction draw order (for the load-in) --- */
+    var allEdges = [];
+    function addGroup(edges, color, group) {
+      edges.forEach(function (e) { allEdges.push({ p: e, color: color, group: group }); });
+    }
+    addGroup(groundEdges, OLIVE, "ground");
+    addGroup(wallEdges, MOSS, "walls");
+    addGroup(wallFaint, MOSS_FAINT, "walls");
+    addGroup(roofEdges, PAPER, "roof");
+    addGroup(roofFaint, PAPER_FAINT, "roof");
+    addGroup(chimneyEdges, MOSS_FAINT, "roof");
+    allEdges.forEach(function (e, i) {
+      e.start = (i / allEdges.length) * 0.82;
+      e.span = 0.18;
+    });
+
+    /* --- Orthographic isometric projection (fixed camera) --- */
+    var A = Math.cos(0.7), B = Math.sin(0.7);  // yaw
+    var K = 0.92, M = 0.42;                    // vertical scale, depth-to-vertical
+
+    function project(x, y, z, lift) {
+      y += lift;
+      var sx = A * x + B * z;
+      var depth = -B * x + A * z;
+      var sy = K * y - M * depth;
+      // Wall band midpoint (sy ~0.48) sits at canvas middle; the canvas is
+      // anchored in the hero via CSS, so moving the canvas moves the house.
+      var scale = Math.min(w / 4.2, h / 5.75);
+      return [w / 2 + sx * scale, h / 2 + (0.48 - sy) * scale];
+    }
+
+    /* buildP: 0..1 draw-in on load. explodeP: 0 assembled -> 1 exploded. */
+    function render(buildP, explodeP) {
+      var lifts = {
+        ground: -GROUND_DROP * explodeP,
+        walls: 0,
+        roof: ROOF_LIFT * explodeP
+      };
+      ctx.clearRect(0, 0, w, h);
+      ctx.lineWidth = 1.4;
+      ctx.lineCap = "round";
+      allEdges.forEach(function (e) {
+        var q = buildP >= 1 ? 1 : Math.min(Math.max((buildP - e.start) / e.span, 0), 1);
+        if (q <= 0) return;
+        var lift = lifts[e.group];
+        var a = project(e.p[0], e.p[1], e.p[2], lift);
+        var b = project(e.p[3], e.p[4], e.p[5], lift);
+        ctx.strokeStyle = e.color;
+        ctx.beginPath();
+        ctx.moveTo(a[0], a[1]);
+        ctx.lineTo(a[0] + (b[0] - a[0]) * q, a[1] + (b[1] - a[1]) * q);
+        ctx.stroke();
+      });
+    }
+
+    function smoothstep(p) { return p * p * (3 - 2 * p); }
+
+    function progress() {
+      var p = window.scrollY / (window.innerHeight * SCROLL_SPAN);
+      return smoothstep(Math.min(Math.max(p, 0), 1));
+    }
+
+    function resize() {
+      var r = canvas.getBoundingClientRect();
+      w = Math.max(1, Math.round(r.width));
+      h = Math.max(1, Math.round(r.height));
+      canvas.width = w * dpr;
+      canvas.height = h * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+
+    // Debug hook: force-render at explode progress ep (0..1), build bp (default 1)
+    canvas.__wireRender = function (ep, bp) { resize(); render(bp == null ? 1 : bp, ep || 0); };
+
+    if (reducedMotion) {
+      resize();
+      render(1, 0);
+      window.addEventListener("resize", function () { resize(); render(1, 0); });
+      return;
+    }
+
+    var BUILD_MS = 1000;
+    var buildDone = false;
+    var ticking = false;
+
+    function onScroll() {
+      if (ticking || !buildDone) return;
+      ticking = true;
+      requestAnimationFrame(function () {
+        ticking = false;
+        render(1, progress());
+      });
+    }
+
+    resize();
+    var t0 = null;
+    function buildFrame(now) {
+      if (t0 == null) t0 = now;
+      var bp = Math.min((now - t0) / BUILD_MS, 1);
+      render(bp, progress());
+      if (bp < 1) requestAnimationFrame(buildFrame);
+      else buildDone = true;
+    }
+    requestAnimationFrame(buildFrame);
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", function () {
+      resize();
+      render(buildDone ? 1 : 0, progress());
+    });
+  }
+
+  var heroHouse = document.getElementById("heroHouse");
+  if (heroHouse) WireHouse(heroHouse);
+
   /* ---------- Word-split headlines ---------- */
 
   document.querySelectorAll("[data-split]").forEach(function (el) {

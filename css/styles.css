@@ -294,6 +294,31 @@ a { color: inherit; }
   display: block;
 }
 
+/* Wireframe house canvas — right of the hero copy, behind the widgets */
+.hero-house {
+  position: absolute;
+  right: 0;
+  top: 45%;
+  transform: translateY(-50%);
+  width: clamp(420px, 48vw, 780px);
+  height: clamp(360px, 88vh, 720px);
+  display: block;
+  pointer-events: none;
+  z-index: 0;
+}
+
+@media (max-width: 1100px) {
+  .hero-house {
+    right: auto;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: min(150%, 640px);
+    height: 70vh;
+    opacity: 0.3;
+  }
+}
+
 .hero-scrim {
   position: absolute;
   inset: 0;
