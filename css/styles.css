@@ -177,7 +177,41 @@ a { color: inherit; }
   gap: 2.5rem;
 }
 
-.nav-logo img { width: 150px; height: auto; }
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.68rem;
+  text-decoration: none;
+}
+
+.nav-logo-mark { height: 32px; width: auto; display: block; }
+
+.nav-logo-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+}
+
+/* Matches the wordmark art: Light, tight tracking */
+.nav-logo-name {
+  font-size: 1.32rem;
+  font-weight: 300;
+  letter-spacing: -0.02em;
+  color: var(--paper);
+}
+
+/* Matches the wordmark art: caps, wide tracking, 72% opacity */
+.nav-logo-sub {
+  font-size: 0.6rem;
+  font-weight: 400;
+  letter-spacing: 0.5em;
+  text-transform: uppercase;
+  color: var(--paper);
+  opacity: 0.72;
+  margin-top: 0.32em;
+  /* trailing tracking on the last letter, pulled back so the block aligns left */
+  margin-right: -0.5em;
+}
 
 .nav-links {
   display: flex;
