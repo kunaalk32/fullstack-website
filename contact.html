@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact — Fullstack Lending</title>
+  <meta name="description" content="Talk to a partner at Fullstack Lending about financing your next residential investment project.">
+  <link rel="canonical" href="https://fullstacklending.com/contact.html">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicons/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/favicons/favicon-16.png">
+  <link rel="apple-touch-icon" href="assets/favicons/favicon-180.png">
+  <meta name="theme-color" content="#0B0C0E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <script>document.documentElement.classList.add('js');</script>
+</head>
+<body>
+
+<header class="nav is-scrolled" id="nav">
+  <div class="nav-inner">
+    <a class="nav-logo" href="index.html" aria-label="Fullstack Lending — home">
+      <img class="nav-logo-mark" src="assets/logo/ascend-mark-color-transparent.svg" alt="" width="55" height="34">
+      <span class="nav-logo-text">
+        <span class="nav-logo-name">fullstack</span>
+        <span class="nav-logo-sub">lending</span>
+      </span>
+    </a>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="index.html#programs">Programs</a>
+      <a href="index.html#how-it-works">How it works</a>
+      <a href="index.html#portal">Portal</a>
+      <a href="index.html#about">About</a>
+      <a href="brokers.html">Brokers</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <div class="nav-actions">
+      <a class="btn btn--ghost" href="https://loans.fullstacklending.com/login">Log in</a>
+    </div>
+    <button class="nav-burger" id="navBurger" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
+      <span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<div class="mobile-menu" id="mobileMenu" hidden>
+  <nav aria-label="Mobile">
+    <a href="index.html#programs">Programs</a>
+    <a href="index.html#how-it-works">How it works</a>
+    <a href="index.html#portal">Portal</a>
+    <a href="index.html#about">About</a>
+    <a href="brokers.html">Brokers</a>
+    <a href="contact.html">Contact</a>
+    <div class="mobile-menu-actions">
+      <a class="btn btn--ghost" href="https://loans.fullstacklending.com/login">Log in</a>
+      <a class="btn btn--paper" href="https://loans.fullstacklending.com/signup">Get a quote</a>
+    </div>
+  </nav>
+</div>
+
+<main class="subpage">
+  <div class="container">
+    <p class="eyebrow reveal">Contact</p>
+    <h1 class="display-2" data-split>Talk to a partner, not a call center.</h1>
+    <p class="subpage-intro reveal">
+      Questions about a deal, a program, or whether a property fits? Send a
+      note and one of the partners will get back to you. If you're ready for
+      numbers, the fastest route is a
+      <a href="https://loans.fullstacklending.com/signup" style="color: var(--paper);">five-minute application</a> —
+      quote within 24 hours.
+    </p>
+
+    <!-- ============================================================
+         ACTIVECAMPAIGN EMBED SLOT
+         When the ActiveCampaign form embed is ready, replace the
+         <form> below (id="contactForm") with the AC embed code.
+         Until then, the form opens a pre-filled email to
+         loans@fullstacklending.com as a working fallback.
+         ============================================================ -->
+    <form class="form" id="contactForm">
+      <div class="field">
+        <label for="cf-name">Name</label>
+        <input id="cf-name" name="name" type="text" autocomplete="name" required>
+      </div>
+      <div class="field">
+        <label for="cf-email">Email</label>
+        <input id="cf-email" name="email" type="email" autocomplete="email" required>
+      </div>
+      <div class="field">
+        <label for="cf-type">Loan type</label>
+        <select id="cf-type" name="loanType">
+          <option>Fix &amp; Flip</option>
+          <option>Construction</option>
+          <option>Bridge</option>
+          <option>Rental</option>
+          <option>Short-Term Rental</option>
+          <option>Rental Portfolio</option>
+          <option>Bank Statement</option>
+          <option>Not sure yet</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="cf-state">Property state</label>
+        <input id="cf-state" name="state" type="text" placeholder="e.g. WA">
+      </div>
+      <div class="field field--full">
+        <label for="cf-msg">What are you working on?</label>
+        <textarea id="cf-msg" name="message" required></textarea>
+      </div>
+      <div class="form-actions">
+        <button class="btn btn--lime btn--lg" type="submit">Send message</button>
+      </div>
+      <p class="form-note">Or email us directly:
+        <a href="mailto:loans@fullstacklending.com" style="color: var(--muted-on-ink);">loans@fullstacklending.com</a>
+      </p>
+    </form>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="container footer-legal" style="margin-top: 0; border-top: none; padding-top: 0;">
+    <nav class="footer-legal-links" aria-label="Legal">
+      <a href="privacy-policy.html">Privacy Policy</a>
+      <a href="terms-of-service.html">Terms of Service</a>
+    </nav>
+    <p>Fullstack Lending offers business-purpose loans secured by non-owner-occupied
+    residential real estate. All loans are subject to underwriting and credit
+    approval. This is not a commitment to lend. Loan programs, terms, and rates
+    are subject to change without notice and may not be available in all states.
+    Not available in ND, NV, SD, VT, or WV.</p>
+    <p>© <span id="year">2026</span> Fullstack Lending · <a href="index.html" style="color: var(--faint-on-ink);">fullstacklending.com</a></p>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+<script>
+  // Interim submit: opens a pre-filled email until the ActiveCampaign
+  // embed replaces this form.
+  document.getElementById("contactForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+    var f = e.target;
+    var subject = "Loan inquiry — " + f.loanType.value;
+    var body = "Name: " + f.name.value +
+      "\nEmail: " + f.email.value +
+      "\nLoan type: " + f.loanType.value +
+      "\nProperty state: " + f.state.value +
+      "\n\n" + f.message.value;
+    window.location.href = "mailto:loans@fullstacklending.com?subject=" +
+      encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
+  });
+</script>
+</body>
+</html>
