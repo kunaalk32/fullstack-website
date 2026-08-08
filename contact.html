@@ -72,24 +72,40 @@
     </p>
 
     <!-- ============================================================
-         ACTIVECAMPAIGN EMBED SLOT
-         When the ActiveCampaign form embed is ready, replace the
-         <form> below (id="contactForm") with the AC embed code.
-         Until then, the form opens a pre-filled email to
-         loans@fullstacklending.com as a working fallback.
+         Posts directly to ActiveCampaign (hosted form id=3) via a
+         hidden iframe, so the visitor stays on-page and sees our own
+         success state. Hidden u/f/s/c/m/act/v/or fields identify the
+         form; custom fields map firstname/lastname/email +
+         field[6]=Loan type, field[5]=Property state, field[7]=Message.
          ============================================================ -->
-    <form class="form" id="contactForm">
+    <form class="form" id="contactForm"
+          action="https://fullstacklending.activehosted.com/proc.php"
+          method="post" target="ac_target">
+      <input type="hidden" name="u" value="6A776B22DB24E">
+      <input type="hidden" name="f" value="3">
+      <input type="hidden" name="s">
+      <input type="hidden" name="c" value="0">
+      <input type="hidden" name="m" value="0">
+      <input type="hidden" name="act" value="sub">
+      <input type="hidden" name="v" value="2">
+      <input type="hidden" name="or" value="5fdf0593-6abf-4bb7-bf01-656217be3fc3">
+
       <div class="field">
-        <label for="cf-name">Name</label>
-        <input id="cf-name" name="name" type="text" autocomplete="name" required>
+        <label for="cf-first">First name</label>
+        <input id="cf-first" name="firstname" type="text" autocomplete="given-name" required>
       </div>
       <div class="field">
+        <label for="cf-last">Last name</label>
+        <input id="cf-last" name="lastname" type="text" autocomplete="family-name" required>
+      </div>
+      <div class="field field--full">
         <label for="cf-email">Email</label>
         <input id="cf-email" name="email" type="email" autocomplete="email" required>
       </div>
       <div class="field">
         <label for="cf-type">Loan type</label>
-        <select id="cf-type" name="loanType">
+        <select id="cf-type" name="field[6]" required>
+          <option value="">Select…</option>
           <option>Fix &amp; Flip</option>
           <option>Construction</option>
           <option>Bridge</option>
@@ -97,16 +113,16 @@
           <option>Short-Term Rental</option>
           <option>Rental Portfolio</option>
           <option>Bank Statement</option>
-          <option>Not sure yet</option>
+          <option value="Not Sure Yet">Not sure yet</option>
         </select>
       </div>
       <div class="field">
         <label for="cf-state">Property state</label>
-        <input id="cf-state" name="state" type="text" placeholder="e.g. WA">
+        <input id="cf-state" name="field[5]" type="text" placeholder="e.g. WA">
       </div>
       <div class="field field--full">
         <label for="cf-msg">What are you working on?</label>
-        <textarea id="cf-msg" name="message" required></textarea>
+        <textarea id="cf-msg" name="field[7]" required></textarea>
       </div>
       <div class="form-actions">
         <button class="btn btn--lime btn--lg" type="submit">Send message</button>
@@ -115,6 +131,15 @@
         <a href="mailto:loans@fullstacklending.com" style="color: var(--muted-on-ink);">loans@fullstacklending.com</a>
       </p>
     </form>
+
+    <!-- Hidden target so the AC POST doesn't navigate the visitor away -->
+    <iframe name="ac_target" id="ac_target" title="Form submission" style="display:none" aria-hidden="true" tabindex="-1"></iframe>
+
+    <div class="form-success" id="formSuccess" hidden>
+      <h2>Thanks — we've got it.</h2>
+      <p>One of the partners will get back to you shortly. If it's time-sensitive,
+      email <a href="mailto:loans@fullstacklending.com">loans@fullstacklending.com</a>.</p>
+    </div>
   </div>
 </main>
 
@@ -135,20 +160,33 @@
 
 <script src="js/main.js"></script>
 <script>
-  // Interim submit: opens a pre-filled email until the ActiveCampaign
-  // embed replaces this form.
-  document.getElementById("contactForm").addEventListener("submit", function (e) {
-    e.preventDefault();
-    var f = e.target;
-    var subject = "Loan inquiry — " + f.loanType.value;
-    var body = "Name: " + f.name.value +
-      "\nEmail: " + f.email.value +
-      "\nLoan type: " + f.loanType.value +
-      "\nProperty state: " + f.state.value +
-      "\n\n" + f.message.value;
-    window.location.href = "mailto:loans@fullstacklending.com?subject=" +
-      encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
-  });
+  // The form POSTs natively to ActiveCampaign's proc.php, targeting a
+  // hidden iframe so the page doesn't navigate away. HTML5 validation
+  // still gates submit, so this fires only once the fields are valid.
+  (function () {
+    var form = document.getElementById("contactForm");
+    var frame = document.getElementById("ac_target");
+    var success = document.getElementById("formSuccess");
+    var submitted = false;
+
+    form.addEventListener("submit", function () {
+      submitted = true;
+      var btn = form.querySelector('button[type="submit"]');
+      if (btn) {
+        btn.disabled = true;
+        btn.textContent = "Sending…";
+      }
+    });
+
+    // The iframe fires "load" once on initial render and again after the
+    // POST response comes back — the flag ensures we only react to the latter.
+    frame.addEventListener("load", function () {
+      if (!submitted) return;
+      form.hidden = true;
+      success.hidden = false;
+      success.scrollIntoView({ behavior: "smooth", block: "center" });
+    });
+  })();
 </script>
 </body>
 </html>

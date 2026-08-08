@@ -1236,6 +1236,9 @@ a { color: inherit; }
 
 .form .field--full { grid-column: 1 / -1; }
 
+/* `display: grid` above overrides the UA [hidden] rule, so hide explicitly. */
+.form[hidden] { display: none; }
+
 .field { display: flex; flex-direction: column; gap: 0.45rem; }
 
 .field label {
@@ -1271,6 +1274,28 @@ a { color: inherit; }
   font-size: 0.85rem;
   color: var(--faint-on-ink);
 }
+
+.form-success {
+  margin-top: 3rem;
+  max-width: 640px;
+  background: var(--ink-2);
+  border: 1px solid rgba(244, 241, 236, 0.16);
+  border-radius: 14px;
+  padding: 2rem 2.2rem;
+}
+
+.form-success h2 {
+  font-size: 1.5rem;
+  margin-bottom: 0.6rem;
+  color: var(--text-on-ink);
+}
+
+.form-success p {
+  max-width: 46ch;
+  color: var(--muted-on-ink);
+}
+
+.form-success a { color: var(--lime); }
 
 @media (max-width: 640px) {
   .form { grid-template-columns: 1fr; }
