@@ -415,6 +415,102 @@
     });
   });
 
+  /* ---------- Program drawer ----------
+     Clicking a loan-program card opens a right-side drawer with its full
+     terms. Detail comes from the card's <template class="program-detail">
+     when present; otherwise it's built from the card's summary as an
+     interim view until full copy is added. */
+
+  (function () {
+    var drawer = document.getElementById("programDrawer");
+    var backdrop = document.getElementById("drawerBackdrop");
+    if (!drawer || !backdrop) return;
+
+    var closeBtn = document.getElementById("drawerClose");
+    var titleEl = document.getElementById("drawerTitle");
+    var detailEl = document.getElementById("drawerDetail");
+    var scroller = drawer.querySelector(".drawer-scroll");
+    var opener = null;
+
+    function buildInterim(card) {
+      // Fallback content from the card's own summary paragraph + bullets.
+      var frag = document.createDocumentFragment();
+      var lead = card.querySelector(":scope > p");
+      if (lead) {
+        var p = document.createElement("p");
+        p.className = "pd-lead";
+        p.textContent = lead.textContent;
+        frag.appendChild(p);
+      }
+      var list = card.querySelector(":scope > ul");
+      if (list) {
+        var section = document.createElement("section");
+        section.className = "pd-section";
+        var h4 = document.createElement("h4");
+        h4.textContent = "Key terms";
+        section.appendChild(h4);
+        section.appendChild(list.cloneNode(true));
+        frag.appendChild(section);
+      }
+      return frag;
+    }
+
+    function openDrawer(card) {
+      var title = card.querySelector("h3");
+      titleEl.textContent = title ? title.textContent : "";
+
+      detailEl.innerHTML = "";
+      var tpl = card.querySelector("template.program-detail");
+      if (tpl) {
+        detailEl.appendChild(tpl.content.cloneNode(true));
+      } else {
+        detailEl.appendChild(buildInterim(card));
+      }
+
+      opener = card;
+      backdrop.classList.add("is-open");
+      drawer.classList.add("is-open");
+      drawer.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
+      if (scroller) scroller.scrollTop = 0;
+      closeBtn.focus();
+    }
+
+    function closeDrawer() {
+      backdrop.classList.remove("is-open");
+      drawer.classList.remove("is-open");
+      drawer.setAttribute("aria-hidden", "true");
+      document.body.style.overflow = "";
+      if (opener) { opener.focus(); opener = null; }
+    }
+
+    document.querySelectorAll(".card--program").forEach(function (card) {
+      card.addEventListener("click", function () { openDrawer(card); });
+      card.addEventListener("keydown", function (e) {
+        if (e.key === "Enter" || e.key === " " || e.key === "Spacebar") {
+          e.preventDefault();
+          openDrawer(card);
+        }
+      });
+    });
+
+    closeBtn.addEventListener("click", closeDrawer);
+    backdrop.addEventListener("click", closeDrawer);
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && drawer.classList.contains("is-open")) closeDrawer();
+    });
+
+    // Keep focus inside the drawer while it's open.
+    drawer.addEventListener("keydown", function (e) {
+      if (e.key !== "Tab") return;
+      var focusable = drawer.querySelectorAll('button, a[href], [tabindex]:not([tabindex="-1"])');
+      if (!focusable.length) return;
+      var first = focusable[0], last = focusable[focusable.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    });
+  })();
+
   /* ---------- Nav ---------- */
 
   var nav = document.getElementById("nav");

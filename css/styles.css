@@ -536,6 +536,181 @@ a { color: inherit; }
   color: var(--muted-on-paper);
 }
 
+/* Interactive program cards */
+.card--program { cursor: pointer; position: relative; }
+
+.card--program::after {
+  /* subtle "open" affordance in the corner */
+  content: "";
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  width: 16px;
+  height: 16px;
+  background:
+    linear-gradient(currentColor, currentColor) no-repeat,
+    linear-gradient(currentColor, currentColor) no-repeat;
+  background-size: 100% 1.5px, 1.5px 100%;
+  background-position: bottom, right;
+  color: rgba(23, 24, 27, 0.28);
+  transform: rotate(-45deg);
+  transition: color 0.35s var(--ease), transform 0.35s var(--ease);
+}
+
+.card--program:hover::after,
+.card--program:focus-visible::after {
+  color: var(--olive);
+  transform: rotate(-45deg) translate(2px, -2px);
+}
+
+.card--program:focus-visible {
+  outline: 2px solid var(--olive);
+  outline-offset: 3px;
+}
+
+/* ---------- Program drawer ---------- */
+
+.drawer-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: rgba(11, 12, 14, 0.62);
+  -webkit-backdrop-filter: blur(3px);
+  backdrop-filter: blur(3px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s var(--ease);
+}
+.drawer-backdrop.is-open { opacity: 1; pointer-events: auto; }
+
+.drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 201;
+  height: 100vh;
+  height: 100dvh;
+  /* desktop cap 700px (25% wider than before); mobile still uses 92vw */
+  width: min(700px, 92vw);
+  background: var(--paper);
+  border-left: 1px solid rgba(23, 24, 27, 0.1);
+  box-shadow: -30px 0 80px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  transform: translateX(100%);
+  visibility: hidden;
+  transition: transform 0.5s var(--ease), visibility 0s linear 0.5s;
+}
+.drawer.is-open {
+  transform: translateX(0);
+  visibility: visible;
+  transition: transform 0.55s var(--ease);
+}
+
+.drawer-close {
+  position: absolute;
+  top: 1.1rem;
+  right: 1.1rem;
+  z-index: 2;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 1px solid rgba(23, 24, 27, 0.2);
+  background: rgba(23, 24, 27, 0.03);
+  color: var(--ink);
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 0.25s ease, border-color 0.25s ease;
+}
+.drawer-close:hover { background: rgba(23, 24, 27, 0.08); border-color: rgba(23, 24, 27, 0.45); }
+
+.drawer-scroll {
+  flex: 1;
+  overflow-y: auto;
+  padding: clamp(2.5rem, 5vw, 3.5rem) clamp(1.6rem, 4vw, 3rem) 2rem;
+}
+
+.drawer-title {
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+  font-weight: 300;
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+  color: var(--text-on-paper);
+  margin-bottom: 1.4rem;
+}
+
+.pd-lead {
+  font-size: 1.02rem;
+  color: var(--muted-on-paper);
+  margin-bottom: 1.6rem;
+}
+
+.pd-section { margin-top: 1.9rem; }
+
+.pd-section h4 {
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--olive);
+  padding-bottom: 0.7rem;
+  margin-bottom: 0.9rem;
+  border-bottom: 1px solid rgba(63, 74, 24, 0.28);
+}
+
+.pd-section h4 sup { font-size: 0.7em; }
+
+.pd-section ul { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+
+.pd-section li {
+  position: relative;
+  padding-left: 1.3rem;
+  font-size: 0.95rem;
+  color: var(--text-on-paper);
+}
+
+.pd-section li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.5em;
+  width: 8px;
+  height: 6px;
+  background: var(--olive);
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+}
+
+.pd-footnote {
+  margin-top: 2rem;
+  font-size: 0.78rem;
+  line-height: 1.6;
+  color: rgba(23, 24, 27, 0.5);
+}
+.pd-footnote sup { color: var(--olive); }
+
+.drawer-foot {
+  flex: none;
+  padding: 1.3rem clamp(1.6rem, 4vw, 3rem) 1.6rem;
+  border-top: 1px solid rgba(23, 24, 27, 0.12);
+  background: var(--paper-2);
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+.drawer-foot .btn { text-align: center; }
+
+.drawer-mail {
+  font-size: 0.85rem;
+  color: var(--muted-on-paper);
+  text-decoration: none;
+}
+.drawer-mail:hover { color: var(--text-on-paper); }
+
+@media (prefers-reduced-motion: reduce) {
+  .drawer, .drawer-backdrop { transition: none; }
+}
+
 /* ---------- Sticky steps ---------- */
 
 .steps { background: var(--ink); }
