@@ -458,6 +458,7 @@
     function openDrawer(card) {
       var title = card.querySelector("h3");
       titleEl.textContent = title ? title.textContent : "";
+      trackEvent("program_open", { program_name: titleEl.textContent });
 
       detailEl.innerHTML = "";
       var tpl = card.querySelector("template.program-detail");
@@ -537,6 +538,39 @@
       });
     });
   }
+
+  /* ---------- Analytics (GA4 custom events) ----------
+     Named events for the actions marketing cares about: application
+     starts, portal logins, and email clicks. gtag is defined inline in
+     every page's <head>; the guard keeps this inert when analytics is
+     blocked or absent. GA4 sends clicks via sendBeacon, so events
+     survive the navigation to the loan portal. */
+
+  function trackEvent(name, params) {
+    if (typeof window.gtag === "function") window.gtag("event", name, params || {});
+  }
+
+  document.addEventListener("click", function (e) {
+    var a = e.target.closest ? e.target.closest("a[href]") : null;
+    if (!a) return;
+    var href = a.getAttribute("href") || "";
+
+    // Label events with the enclosing section so we learn which parts
+    // of the page actually drive clicks (hero vs. programs vs. footer).
+    var region = a.closest("section[id], header, footer, nav");
+    var location = region ? (region.id || region.tagName.toLowerCase()) : "page";
+
+    if (href.indexOf("loans.fullstacklending.com/signup") !== -1) {
+      trackEvent("apply_click", {
+        link_location: location,
+        link_text: (a.textContent || "").trim().slice(0, 60)
+      });
+    } else if (href.indexOf("loans.fullstacklending.com/login") !== -1) {
+      trackEvent("login_click", { link_location: location });
+    } else if (href.indexOf("mailto:") === 0) {
+      trackEvent("email_click", { link_location: location });
+    }
+  });
 
   /* ---------- Footer year ---------- */
 

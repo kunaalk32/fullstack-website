@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-P2R5NRW1WV"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-P2R5NRW1WV');
+  </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Contact — Fullstack Lending</title>
@@ -168,9 +177,16 @@
     var frame = document.getElementById("ac_target");
     var success = document.getElementById("formSuccess");
     var submitted = false;
+    var leadMeta = null;
 
     form.addEventListener("submit", function () {
       submitted = true;
+      // Captured for the GA4 event; deliberately no name/email — PII
+      // never goes to analytics.
+      leadMeta = {
+        loan_type: form.querySelector("#cf-type").value,
+        property_state: (form.querySelector("#cf-state").value || "").trim().toUpperCase()
+      };
       var btn = form.querySelector('button[type="submit"]');
       if (btn) {
         btn.disabled = true;
@@ -185,6 +201,7 @@
       form.hidden = true;
       success.hidden = false;
       success.scrollIntoView({ behavior: "smooth", block: "center" });
+      if (typeof gtag === "function") gtag("event", "contact_form_submit", leadMeta || {});
     });
   })();
 </script>
