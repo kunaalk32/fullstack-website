@@ -282,7 +282,16 @@
     var buildDone = false;
     var ticking = false;
 
+    // Parallax: lag the house ~40% behind the scroll so more of the
+    // explode animation stays in view. Set a CSS var so it composes with
+    // the element's centering transform (which differs by breakpoint).
+    function applyParallax() {
+      if (reducedMotion) return;
+      canvas.style.setProperty("--house-parallax", (window.scrollY * 0.4) + "px");
+    }
+
     function onScroll() {
+      applyParallax();
       if (ticking || !buildDone) return;
       ticking = true;
       requestAnimationFrame(function () {
@@ -292,6 +301,7 @@
     }
 
     resize();
+    applyParallax();
     var t0 = null;
     function buildFrame(now) {
       if (t0 == null) t0 = now;

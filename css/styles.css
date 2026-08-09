@@ -308,12 +308,14 @@ a { color: inherit; }
   position: absolute;
   right: 0;
   top: 45%;
-  transform: translateY(-50%);
+  /* --house-parallax is set on scroll (JS) to lag the house ~40% behind */
+  transform: translateY(calc(-50% + var(--house-parallax, 0px)));
   width: clamp(420px, 48vw, 780px);
   height: clamp(360px, 88vh, 720px);
   display: block;
   pointer-events: none;
   z-index: 0;
+  will-change: transform;
 }
 
 @media (max-width: 1100px) {
@@ -321,7 +323,7 @@ a { color: inherit; }
     right: auto;
     left: 50%;
     top: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, calc(-50% + var(--house-parallax, 0px)));
     width: min(150%, 640px);
     height: 70vh;
     opacity: 0.3;
