@@ -282,7 +282,16 @@
     var buildDone = false;
     var ticking = false;
 
+    // Parallax: lag the house ~40% behind the scroll so more of the
+    // explode animation stays in view. Set a CSS var so it composes with
+    // the element's centering transform (which differs by breakpoint).
+    function applyParallax() {
+      if (reducedMotion) return;
+      canvas.style.setProperty("--house-parallax", (window.scrollY * 0.4) + "px");
+    }
+
     function onScroll() {
+      applyParallax();
       if (ticking || !buildDone) return;
       ticking = true;
       requestAnimationFrame(function () {
@@ -292,6 +301,7 @@
     }
 
     resize();
+    applyParallax();
     var t0 = null;
     function buildFrame(now) {
       if (t0 == null) t0 = now;
@@ -374,7 +384,8 @@
   if (track) {
     var panels = track.querySelectorAll(".step-panel");
     var railItems = track.querySelectorAll(".steps-rail li");
-    var active = 0, ticking = false;
+    var scrollCue = track.querySelector(".steps-scroll-cue");
+    var active = -1, rafId = null;
 
     function setActive(idx) {
       if (idx === active) return;
@@ -383,19 +394,45 @@
       railItems.forEach(function (r, i) { r.classList.toggle("is-active", i === idx); });
     }
 
-    function onScroll() {
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(function () {
-        ticking = false;
-        var rect = track.getBoundingClientRect();
-        var vh = window.innerHeight;
-        var total = rect.height - vh;
-        if (total <= 0) return;
-        var progress = Math.min(Math.max(-rect.top / total, 0), 0.999);
-        setActive(Math.floor(progress * panels.length));
-      });
+    function update() {
+      rafId = null;
+      var rect = track.getBoundingClientRect();
+      var total = rect.height - window.innerHeight;
+      if (total <= 0) return;
+      var progress = Math.min(Math.max(-rect.top / total, 0), 0.999);
+      setActive(Math.floor(progress * panels.length));
     }
+
+    // Coalesce scroll bursts to one update per frame. Cancel-and-reschedule
+    // rather than a boolean latch, so a dropped frame (backgrounded tab, a
+    // scroll hitch) can never wedge the sequence on a single step.
+    function onScroll() {
+      if (rafId !== null) cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(update);
+    }
+
+    // Jump to the middle of a step's scroll band; past the last step,
+    // release the pin and continue to the rest of the page.
+    // scroll-behavior: smooth animates the jump.
+    function jumpToStep(idx) {
+      var rect = track.getBoundingClientRect();
+      var trackTop = rect.top + window.scrollY;
+      var total = rect.height - window.innerHeight;
+      if (idx >= panels.length || total <= 0) {
+        window.scrollTo({ top: trackTop + rect.height, behavior: "smooth" });
+      } else {
+        var progress = (idx + 0.5) / panels.length;
+        window.scrollTo({ top: trackTop + progress * total, behavior: "smooth" });
+      }
+    }
+
+    // The cue advances one step; the rail numbers jump straight to a step.
+    if (scrollCue) {
+      scrollCue.addEventListener("click", function () { jumpToStep(active + 1); });
+    }
+    railItems.forEach(function (item, i) {
+      item.addEventListener("click", function () { jumpToStep(i); });
+    });
 
     // Desktop only — the mobile layout stacks the panels statically.
     var desktopSteps = window.matchMedia("(min-width: 861px)");
@@ -458,6 +495,7 @@
     function openDrawer(card) {
       var title = card.querySelector("h3");
       titleEl.textContent = title ? title.textContent : "";
+      trackEvent("program_open", { program_name: titleEl.textContent });
 
       detailEl.innerHTML = "";
       var tpl = card.querySelector("template.program-detail");
@@ -537,6 +575,39 @@
       });
     });
   }
+
+  /* ---------- Analytics (GA4 custom events) ----------
+     Named events for the actions marketing cares about: application
+     starts, portal logins, and email clicks. gtag is defined inline in
+     every page's <head>; the guard keeps this inert when analytics is
+     blocked or absent. GA4 sends clicks via sendBeacon, so events
+     survive the navigation to the loan portal. */
+
+  function trackEvent(name, params) {
+    if (typeof window.gtag === "function") window.gtag("event", name, params || {});
+  }
+
+  document.addEventListener("click", function (e) {
+    var a = e.target.closest ? e.target.closest("a[href]") : null;
+    if (!a) return;
+    var href = a.getAttribute("href") || "";
+
+    // Label events with the enclosing section so we learn which parts
+    // of the page actually drive clicks (hero vs. programs vs. footer).
+    var region = a.closest("section[id], header, footer, nav");
+    var location = region ? (region.id || region.tagName.toLowerCase()) : "page";
+
+    if (href.indexOf("loans.fullstacklending.com/signup") !== -1) {
+      trackEvent("apply_click", {
+        link_location: location,
+        link_text: (a.textContent || "").trim().slice(0, 60)
+      });
+    } else if (href.indexOf("loans.fullstacklending.com/login") !== -1) {
+      trackEvent("login_click", { link_location: location });
+    } else if (href.indexOf("mailto:") === 0) {
+      trackEvent("email_click", { link_location: location });
+    }
+  });
 
   /* ---------- Footer year ---------- */
 
