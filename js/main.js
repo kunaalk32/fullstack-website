@@ -374,7 +374,8 @@
   if (track) {
     var panels = track.querySelectorAll(".step-panel");
     var railItems = track.querySelectorAll(".steps-rail li");
-    var active = 0, ticking = false;
+    var scrollCue = track.querySelector(".steps-scroll-cue");
+    var active = -1, rafId = null;
 
     function setActive(idx) {
       if (idx === active) return;
@@ -383,19 +384,45 @@
       railItems.forEach(function (r, i) { r.classList.toggle("is-active", i === idx); });
     }
 
-    function onScroll() {
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(function () {
-        ticking = false;
-        var rect = track.getBoundingClientRect();
-        var vh = window.innerHeight;
-        var total = rect.height - vh;
-        if (total <= 0) return;
-        var progress = Math.min(Math.max(-rect.top / total, 0), 0.999);
-        setActive(Math.floor(progress * panels.length));
-      });
+    function update() {
+      rafId = null;
+      var rect = track.getBoundingClientRect();
+      var total = rect.height - window.innerHeight;
+      if (total <= 0) return;
+      var progress = Math.min(Math.max(-rect.top / total, 0), 0.999);
+      setActive(Math.floor(progress * panels.length));
     }
+
+    // Coalesce scroll bursts to one update per frame. Cancel-and-reschedule
+    // rather than a boolean latch, so a dropped frame (backgrounded tab, a
+    // scroll hitch) can never wedge the sequence on a single step.
+    function onScroll() {
+      if (rafId !== null) cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(update);
+    }
+
+    // Jump to the middle of a step's scroll band; past the last step,
+    // release the pin and continue to the rest of the page.
+    // scroll-behavior: smooth animates the jump.
+    function jumpToStep(idx) {
+      var rect = track.getBoundingClientRect();
+      var trackTop = rect.top + window.scrollY;
+      var total = rect.height - window.innerHeight;
+      if (idx >= panels.length || total <= 0) {
+        window.scrollTo({ top: trackTop + rect.height, behavior: "smooth" });
+      } else {
+        var progress = (idx + 0.5) / panels.length;
+        window.scrollTo({ top: trackTop + progress * total, behavior: "smooth" });
+      }
+    }
+
+    // The cue advances one step; the rail numbers jump straight to a step.
+    if (scrollCue) {
+      scrollCue.addEventListener("click", function () { jumpToStep(active + 1); });
+    }
+    railItems.forEach(function (item, i) {
+      item.addEventListener("click", function () { jumpToStep(i); });
+    });
 
     // Desktop only — the mobile layout stacks the panels statically.
     var desktopSteps = window.matchMedia("(min-width: 861px)");

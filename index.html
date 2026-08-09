@@ -507,11 +507,11 @@
         </header>
 
         <div class="steps-stage">
-          <ol class="steps-rail" aria-hidden="true">
-            <li data-step="0" class="is-active">01</li>
-            <li data-step="1">02</li>
-            <li data-step="2">03</li>
-            <li data-step="3">04</li>
+          <ol class="steps-rail">
+            <li data-step="0" class="is-active"><button type="button" aria-label="Go to step 1">01</button></li>
+            <li data-step="1"><button type="button" aria-label="Go to step 2">02</button></li>
+            <li data-step="2"><button type="button" aria-label="Go to step 3">03</button></li>
+            <li data-step="3"><button type="button" aria-label="Go to step 4">04</button></li>
           </ol>
 
           <div class="steps-panels">
@@ -550,6 +550,14 @@
             </article>
           </div>
         </div>
+
+        <button class="steps-scroll-cue" type="button" aria-label="Continue to the next step">
+          <svg viewBox="0 0 24 24" width="108" height="108" fill="none"
+               stroke="currentColor" stroke-width="1"
+               stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M6 9l6 6 6-6" />
+          </svg>
+        </button>
       </div>
     </div>
   </section>
