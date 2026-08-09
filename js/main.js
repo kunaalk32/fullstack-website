@@ -496,6 +496,7 @@
       var title = card.querySelector("h3");
       titleEl.textContent = title ? title.textContent : "";
       trackEvent("program_open", { program_name: titleEl.textContent });
+      trackMeta("ViewContent", { content_type: "loan_program", content_name: titleEl.textContent });
 
       detailEl.innerHTML = "";
       var tpl = card.querySelector("template.program-detail");
@@ -587,6 +588,12 @@
     if (typeof window.gtag === "function") window.gtag("event", name, params || {});
   }
 
+  // Meta pixel counterpart. `custom` picks trackCustom (for events with no
+  // Meta standard-event equivalent) over the standard track call.
+  function trackMeta(name, params, custom) {
+    if (typeof window.fbq === "function") window.fbq(custom ? "trackCustom" : "track", name, params || {});
+  }
+
   document.addEventListener("click", function (e) {
     var a = e.target.closest ? e.target.closest("a[href]") : null;
     if (!a) return;
@@ -602,10 +609,13 @@
         link_location: location,
         link_text: (a.textContent || "").trim().slice(0, 60)
       });
+      trackMeta("InitiateCheckout", { content_name: "loan_application", link_location: location });
     } else if (href.indexOf("loans.fullstacklending.com/login") !== -1) {
       trackEvent("login_click", { link_location: location });
+      trackMeta("PortalLogin", { link_location: location }, true);
     } else if (href.indexOf("mailto:") === 0) {
       trackEvent("email_click", { link_location: location });
+      trackMeta("Contact", { link_location: location });
     }
   });
 
