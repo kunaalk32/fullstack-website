@@ -594,6 +594,47 @@
     if (typeof window.fbq === "function") window.fbq(custom ? "trackCustom" : "track", name, params || {});
   }
 
+  /* ---------- UTM pass-through to the loan portal ----------
+     The portal reads utm_* off the URL it lands on, so portal links get
+     the visitor's arrival UTMs (captured into sessionStorage by
+     analytics.js) appended at click time. Stored values win over any
+     utm_* already on the href; with nothing stored, a website/direct
+     fallback fills only the missing keys so hand-tagged links keep their
+     tags and portal signups are never untagged. Only the five utm_* keys
+     ever pass through — no PII. */
+
+  var UTM_KEYS = ["utm_source", "utm_medium", "utm_campaign", "utm_term", "utm_content"];
+
+  function appendUtms(href) {
+    try {
+      var stored = null;
+      try { stored = sessionStorage.getItem("fsl_utm"); } catch (e) { /* private mode */ }
+      var utms = stored ? JSON.parse(stored) : null;
+
+      var hashIdx = href.indexOf("#");
+      var hash = hashIdx === -1 ? "" : href.slice(hashIdx);
+      var rest = hashIdx === -1 ? href : href.slice(0, hashIdx);
+      var queryIdx = rest.indexOf("?");
+      var base = queryIdx === -1 ? rest : rest.slice(0, queryIdx);
+      var params = new URLSearchParams(queryIdx === -1 ? "" : rest.slice(queryIdx + 1));
+
+      if (utms) {
+        UTM_KEYS.forEach(function (key) {
+          if (typeof utms[key] === "string") params.set(key, utms[key]);
+        });
+      } else {
+        if (!params.has("utm_source")) params.set("utm_source", "website");
+        if (!params.has("utm_medium")) params.set("utm_medium", "direct");
+      }
+      var qs = params.toString();
+      return qs ? base + "?" + qs + hash : base + hash;
+    } catch (e) {
+      return href; // never break the link
+    }
+  }
+
+  // Capture phase: the rewrite must land before navigation starts and
+  // must not be skippable by stopPropagation in a bubble-phase handler.
   document.addEventListener("click", function (e) {
     var a = e.target.closest ? e.target.closest("a[href]") : null;
     if (!a) return;
@@ -603,6 +644,12 @@
     // of the page actually drive clicks (hero vs. programs vs. footer).
     var region = a.closest("section[id], header, footer, nav");
     var location = region ? (region.id || region.tagName.toLowerCase()) : "page";
+
+    // Just-in-time rewrite so dynamically added portal links are covered.
+    if (href.indexOf("loans.fullstacklending.com") !== -1) {
+      var tagged = appendUtms(a.getAttribute("href"));
+      if (tagged !== a.getAttribute("href")) a.setAttribute("href", tagged);
+    }
 
     if (href.indexOf("loans.fullstacklending.com/signup") !== -1) {
       trackEvent("apply_click", {
@@ -617,7 +664,7 @@
       trackEvent("email_click", { link_location: location });
       trackMeta("Contact", { link_location: location });
     }
-  });
+  }, true);
 
   /* ---------- Footer year ---------- */
 
