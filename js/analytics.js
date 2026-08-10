@@ -20,6 +20,25 @@
 (function () {
   "use strict";
 
+  /* ---------- UTM capture (runs on every page, before the geo gate) ----------
+     Arrival utm_* params are stashed for the session so outbound portal
+     links can carry them (main.js rewrites those links at click time).
+     This is first-party CRM attribution, not GA/Meta, so it must NOT be
+     gated behind the US-only analytics check below. A page with no utm_*
+     params leaves the stored set alone, so the landing page's params
+     survive navigation across the site. */
+  try {
+    var arrival = new URLSearchParams(window.location.search);
+    var utms = {};
+    var hasUtms = false;
+    ["utm_source", "utm_medium", "utm_campaign", "utm_term", "utm_content"]
+      .forEach(function (key) {
+        var value = arrival.get(key);
+        if (value !== null) { utms[key] = value; hasUtms = true; }
+      });
+    if (hasUtms) sessionStorage.setItem("fsl_utm", JSON.stringify(utms));
+  } catch (e) { /* private mode etc. — portal links fall back to website/direct */ }
+
   var GA_ID = "G-P2R5NRW1WV";
   var META_ID = "1058965793168149";
   var CACHE_KEY = "fsl_geo_cc";
