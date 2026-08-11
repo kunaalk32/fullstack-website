@@ -1250,7 +1250,7 @@ a { color: inherit; }
   font-size: 0.78rem;
   line-height: 1.7;
   color: var(--faint-on-ink);
-  max-width: 90ch;
+  max-width: none;
 }
 
 @media (max-width: 860px) {
