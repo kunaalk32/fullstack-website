@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Analytics: GA4 + Meta Pixel, loaded only for US visitors (see js/analytics.js) -->
+  <script src="/js/analytics.js" defer></script>
+  <title>Contact — Fullstack Lending</title>
+  <meta name="description" content="Talk to a partner at Fullstack Lending about financing your next residential investment project.">
+  <link rel="canonical" href="https://fullstacklending.com/contact/">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicons/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicons/favicon-16.png">
+  <link rel="apple-touch-icon" href="/assets/favicons/favicon-180.png">
+  <meta name="theme-color" content="#0B0C0E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/styles.css">
+  <script>document.documentElement.classList.add('js');</script>
+</head>
+<body>
+
+<header class="nav is-scrolled" id="nav">
+  <div class="nav-inner">
+    <a class="nav-logo" href="/" aria-label="Fullstack Lending — home">
+      <img class="nav-logo-mark" src="/assets/logo/ascend-mark-color-transparent.svg" alt="" width="55" height="34">
+      <span class="nav-logo-text">
+        <span class="nav-logo-name">fullstack</span>
+        <span class="nav-logo-sub">lending</span>
+      </span>
+    </a>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="/#programs">Programs</a>
+      <a href="/#how-it-works">How it works</a>
+      <a href="/#portal">Portal</a>
+      <a href="/#about">About</a>
+      <a href="/brokers/">Brokers</a>
+      <a href="/contact/">Contact</a>
+    </nav>
+    <div class="nav-actions">
+      <a class="btn btn--ghost" href="https://loans.fullstacklending.com/login">Log in</a>
+    </div>
+    <button class="nav-burger" id="navBurger" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
+      <span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<div class="mobile-menu" id="mobileMenu" hidden>
+  <nav aria-label="Mobile">
+    <a href="/#programs">Programs</a>
+    <a href="/#how-it-works">How it works</a>
+    <a href="/#portal">Portal</a>
+    <a href="/#about">About</a>
+    <a href="/brokers/">Brokers</a>
+    <a href="/contact/">Contact</a>
+    <div class="mobile-menu-actions">
+      <a class="btn btn--ghost" href="https://loans.fullstacklending.com/login">Log in</a>
+      <a class="btn btn--paper" href="https://loans.fullstacklending.com/signup">Get a quote</a>
+    </div>
+  </nav>
+</div>
+
+<main class="subpage">
+  <div class="container">
+    <p class="eyebrow reveal">Contact</p>
+    <h1 class="display-2" data-split>Talk to a partner, not a call center.</h1>
+    <p class="subpage-intro reveal">
+      Questions about a deal, a program, or whether a property fits? Send a
+      note and one of the partners will get back to you. If you're ready for
+      numbers, the fastest route is a
+      <a href="https://loans.fullstacklending.com/signup" style="color: var(--paper);">five-minute application</a> —
+      quote within 24 hours.
+    </p>
+
+    <!-- ============================================================
+         Posts directly to ActiveCampaign (hosted form id=3) via a
+         hidden iframe, so the visitor stays on-page and sees our own
+         success state. Hidden u/f/s/c/m/act/v/or fields identify the
+         form; custom fields map firstname/lastname/email +
+         field[6]=Loan type, field[5]=Property state, field[7]=Message.
+         ============================================================ -->
+    <form class="form" id="contactForm"
+          action="https://fullstacklending.activehosted.com/proc.php"
+          method="post" target="ac_target">
+      <input type="hidden" name="u" value="6A776B22DB24E">
+      <input type="hidden" name="f" value="3">
+      <input type="hidden" name="s">
+      <input type="hidden" name="c" value="0">
+      <input type="hidden" name="m" value="0">
+      <input type="hidden" name="act" value="sub">
+      <input type="hidden" name="v" value="2">
+      <input type="hidden" name="or" value="5fdf0593-6abf-4bb7-bf01-656217be3fc3">
+
+      <div class="field">
+        <label for="cf-first">First name</label>
+        <input id="cf-first" name="firstname" type="text" autocomplete="given-name" required>
+      </div>
+      <div class="field">
+        <label for="cf-last">Last name</label>
+        <input id="cf-last" name="lastname" type="text" autocomplete="family-name" required>
+      </div>
+      <div class="field field--full">
+        <label for="cf-email">Email</label>
+        <input id="cf-email" name="email" type="email" autocomplete="email" required>
+      </div>
+      <div class="field">
+        <label for="cf-type">Loan type</label>
+        <select id="cf-type" name="field[6]" required>
+          <option value="">Select…</option>
+          <option>Fix &amp; Flip</option>
+          <option>Construction</option>
+          <option>Bridge</option>
+          <option>Rental</option>
+          <option>Short-Term Rental</option>
+          <option>Rental Portfolio</option>
+          <option>Bank Statement</option>
+          <option value="Not Sure Yet">Not sure yet</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="cf-state">Property state</label>
+        <input id="cf-state" name="field[5]" type="text" placeholder="e.g. WA">
+      </div>
+      <div class="field field--full">
+        <label for="cf-msg">What are you working on?</label>
+        <textarea id="cf-msg" name="field[7]" required></textarea>
+      </div>
+      <div class="form-actions">
+        <button class="btn btn--lime btn--lg" type="submit">Send message</button>
+      </div>
+      <p class="form-note">Or email us directly:
+        <a href="mailto:loans@fullstacklending.com" style="color: var(--muted-on-ink);">loans@fullstacklending.com</a>
+      </p>
+    </form>
+
+    <!-- Hidden target so the AC POST doesn't navigate the visitor away -->
+    <iframe name="ac_target" id="ac_target" title="Form submission" style="display:none" aria-hidden="true" tabindex="-1"></iframe>
+
+    <div class="form-success" id="formSuccess" hidden>
+      <h2>Thanks — we've got it.</h2>
+      <p>One of the partners will get back to you shortly. If it's time-sensitive,
+      email <a href="mailto:loans@fullstacklending.com">loans@fullstacklending.com</a>.</p>
+    </div>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="container footer-legal" style="margin-top: 0; border-top: none; padding-top: 0;">
+    <nav class="footer-legal-links" aria-label="Legal">
+      <a href="/privacy-policy/">Privacy Policy</a>
+      <a href="/terms-of-service/">Terms of Service</a>
+    </nav>
+    <p>Fullstack Lending offers business-purpose loans secured by non-owner-occupied
+    residential real estate. All loans are subject to underwriting and credit
+    approval. This is not a commitment to lend. Loan programs, terms, and rates
+    are subject to change without notice and may not be available in all states.
+    Not available in ND, NY, SD, VT, or WV.</p>
+    <p>© <span id="year">2026</span> Fullstack Lending · <a href="/" style="color: var(--faint-on-ink);">fullstacklending.com</a></p>
+  </div>
+</footer>
+
+<script src="/js/main.js"></script>
+<script>
+  // The form POSTs natively to ActiveCampaign's proc.php, targeting a
+  // hidden iframe so the page doesn't navigate away. HTML5 validation
+  // still gates submit, so this fires only once the fields are valid.
+  (function () {
+    var form = document.getElementById("contactForm");
+    var frame = document.getElementById("ac_target");
+    var success = document.getElementById("formSuccess");
+    var submitted = false;
+    var leadMeta = null;
+
+    form.addEventListener("submit", function () {
+      submitted = true;
+      // Captured for the GA4 event; deliberately no name/email — PII
+      // never goes to analytics.
+      leadMeta = {
+        loan_type: form.querySelector("#cf-type").value,
+        property_state: (form.querySelector("#cf-state").value || "").trim().toUpperCase()
+      };
+      var btn = form.querySelector('button[type="submit"]');
+      if (btn) {
+        btn.disabled = true;
+        btn.textContent = "Sending…";
+      }
+    });
+
+    // The iframe fires "load" once on initial render and again after the
+    // POST response comes back — the flag ensures we only react to the latter.
+    frame.addEventListener("load", function () {
+      if (!submitted) return;
+      form.hidden = true;
+      success.hidden = false;
+      success.scrollIntoView({ behavior: "smooth", block: "center" });
+      if (typeof gtag === "function") gtag("event", "contact_form_submit", leadMeta || {});
+      if (typeof fbq === "function") fbq("track", "Lead", {
+        content_category: leadMeta ? leadMeta.loan_type : undefined,
+        property_state: leadMeta ? leadMeta.property_state : undefined
+      });
+    });
+  })();
+</script>
+</body>
+</html>
