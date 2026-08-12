@@ -951,6 +951,9 @@ a { color: inherit; }
   clip-path: polygon(50% 0, 100% 100%, 0 100%);
 }
 
+/* On ink grounds the olive marker vanishes — step up to moss. */
+.check-list--moss li::before { background: var(--moss); }
+
 .portal-mock {
   background: var(--white);
   border-radius: 18px;

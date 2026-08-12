@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Analytics: GA4 + Meta Pixel, loaded only for US visitors (see js/analytics.js) -->
+  <script src="/js/analytics.js" defer></script>
+  <title>Deal Analyzer + Lender's Playbook — Fullstack Lending</title>
+  <meta name="description" content="Free download: the Deal Analyzer + Lender's Playbook — a spreadsheet that runs your deal's numbers, then shows you how a lender reads the same deal.">
+  <link rel="canonical" href="https://fullstacklending.com/deal-analyzer/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="The Deal Analyzer + Lender's Playbook — free download">
+  <meta property="og:description" content="Run your deal's numbers, then see the same deal the way an underwriter does. Free spreadsheet from Fullstack Lending.">
+  <meta property="og:url" content="https://fullstacklending.com/deal-analyzer/">
+  <meta property="og:image" content="https://fullstacklending.com/assets/og-card.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:alt" content="Fullstack Lending">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://fullstacklending.com/assets/og-card.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicons/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicons/favicon-16.png">
+  <link rel="apple-touch-icon" href="/assets/favicons/favicon-180.png">
+  <meta name="theme-color" content="#0B0C0E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/styles.css">
+  <script>document.documentElement.classList.add('js');</script>
+</head>
+<body>
+
+<header class="nav is-scrolled" id="nav">
+  <div class="nav-inner">
+    <a class="nav-logo" href="/" aria-label="Fullstack Lending — home">
+      <img class="nav-logo-mark" src="/assets/logo/ascend-mark-color-transparent.svg" alt="" width="55" height="34">
+      <span class="nav-logo-text">
+        <span class="nav-logo-name">fullstack</span>
+        <span class="nav-logo-sub">lending</span>
+      </span>
+    </a>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="/#programs">Programs</a>
+      <a href="/#how-it-works">How it works</a>
+      <a href="/#portal">Portal</a>
+      <a href="/#about">About</a>
+      <a href="/brokers/">Brokers</a>
+      <a href="/contact/">Contact</a>
+    </nav>
+    <div class="nav-actions">
+      <a class="btn btn--ghost" href="https://loans.fullstacklending.com/login">Log in</a>
+    </div>
+    <button class="nav-burger" id="navBurger" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
+      <span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<div class="mobile-menu" id="mobileMenu" hidden>
+  <nav aria-label="Mobile">
+    <a href="/#programs">Programs</a>
+    <a href="/#how-it-works">How it works</a>
+    <a href="/#portal">Portal</a>
+    <a href="/#about">About</a>
+    <a href="/brokers/">Brokers</a>
+    <a href="/contact/">Contact</a>
+    <div class="mobile-menu-actions">
+      <a class="btn btn--ghost" href="https://loans.fullstacklending.com/login">Log in</a>
+      <a class="btn btn--paper" href="https://loans.fullstacklending.com/signup">Get a quote</a>
+    </div>
+  </nav>
+</div>
+
+<main class="subpage">
+  <div class="container">
+    <p class="eyebrow reveal">Free download</p>
+    <h1 class="display-2" data-split>Run the numbers. Then see what the lender sees.</h1>
+    <p class="subpage-intro reveal">
+      The Deal Analyzer + Lender's Playbook is one free spreadsheet, three
+      layers deep. It prices out your next project end to end — then flips the
+      table and shows you how an underwriter reads the very same deal, before
+      you ever submit it.
+    </p>
+    <ul class="check-list check-list--moss reveal" style="--d:.15s">
+      <li><strong>Deal math tabs</strong> — purchase, rehab, ARV, carrying and
+        financing costs, straight through to projected profit. Reuse it on
+        every deal you look at.</li>
+      <li><strong>The Lender's View</strong> — the tab you can't build
+        yourself: where leverage constraints bind, how your experience shapes
+        what you qualify for, how to sanity-check value before the appraisal
+        does it for you, and the handful of things that kill or stall deals in
+        underwriting.</li>
+      <li><strong>The Insider Toolbox</strong> — the research and valuation
+        tools lenders lean on that most investors have never heard of.</li>
+    </ul>
+
+    <!-- ============================================================
+         Posts directly to ActiveCampaign (hosted form id=6) via a
+         hidden iframe, so the visitor stays on-page and sees our own
+         success state. Hidden u/f/s/c/m/act/v/or fields identify the
+         form; fields map firstname/lastname/email +
+         field[14]=Deal timeline (AC custom field "deal_timeline").
+         ============================================================ -->
+    <form class="form" id="analyzerForm"
+          action="https://fullstacklending.activehosted.com/proc.php"
+          method="post" target="ac_target">
+      <input type="hidden" name="u" value="6">
+      <input type="hidden" name="f" value="6">
+      <input type="hidden" name="s">
+      <input type="hidden" name="c" value="0">
+      <input type="hidden" name="m" value="0">
+      <input type="hidden" name="act" value="sub">
+      <input type="hidden" name="v" value="2">
+      <input type="hidden" name="or" value="c7be8196-1ecf-4d49-8aa3-ad46987f31fd">
+
+      <div class="field">
+        <label for="da-first">First name</label>
+        <input id="da-first" name="firstname" type="text" autocomplete="given-name" required>
+      </div>
+      <div class="field">
+        <label for="da-last">Last name</label>
+        <input id="da-last" name="lastname" type="text" autocomplete="family-name" required>
+      </div>
+      <div class="field field--full">
+        <label for="da-email">Email</label>
+        <input id="da-email" name="email" type="email" autocomplete="email" required>
+      </div>
+      <div class="field field--full">
+        <label for="da-timeline">Where are you right now?</label>
+        <select id="da-timeline" name="field[14]" required>
+          <option value="">Select…</option>
+          <option value="Deal in hand">Deal in hand</option>
+          <option value="Deal in next 6 months">Deal in the next 6 months</option>
+          <option value="Building toward first deal">Building toward my first deal</option>
+        </select>
+      </div>
+      <div class="form-actions">
+        <button class="btn btn--lime btn--lg" type="submit">Send me the Deal Analyzer</button>
+      </div>
+      <p class="form-note">Free. Delivered straight to your inbox — no spam,
+        unsubscribe anytime.</p>
+    </form>
+
+    <!-- Hidden target so the AC POST doesn't navigate the visitor away -->
+    <iframe name="ac_target" id="ac_target" title="Form submission" style="display:none" aria-hidden="true" tabindex="-1"></iframe>
+
+    <div class="form-success" id="formSuccess" hidden>
+      <h2>Check your email — it's on the way.</h2>
+      <p>The Deal Analyzer + Lender's Playbook is headed to your inbox right
+      now. If it hasn't landed in a few minutes, check your spam or promotions
+      folder. Questions about a deal in the meantime?
+      Email <a href="mailto:loans@fullstacklending.com">loans@fullstacklending.com</a>.</p>
+    </div>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="container footer-legal" style="margin-top: 0; border-top: none; padding-top: 0;">
+    <nav class="footer-legal-links" aria-label="Legal">
+      <a href="/privacy-policy/">Privacy Policy</a>
+      <a href="/terms-of-service/">Terms of Service</a>
+    </nav>
+    <p>Fullstack Lending offers business-purpose loans secured by non-owner-occupied
+    residential real estate. All loans are subject to underwriting and credit
+    approval. This is not a commitment to lend. Loan programs, terms, and rates
+    are subject to change without notice and may not be available in all states.
+    Not available in ND, NY, SD, VT, or WV.</p>
+    <p>© <span id="year">2026</span> Fullstack Lending · <a href="/" style="color: var(--faint-on-ink);">fullstacklending.com</a></p>
+  </div>
+</footer>
+
+<script src="/js/main.js"></script>
+<script>
+  // The form POSTs natively to ActiveCampaign's proc.php, targeting a
+  // hidden iframe so the page doesn't navigate away. HTML5 validation
+  // still gates submit, so this fires only once the fields are valid.
+  (function () {
+    var form = document.getElementById("analyzerForm");
+    var frame = document.getElementById("ac_target");
+    var success = document.getElementById("formSuccess");
+    var submitted = false;
+    var leadMeta = null;
+
+    form.addEventListener("submit", function () {
+      submitted = true;
+      // Captured for the GA4 event; deliberately no name/email — PII
+      // never goes to analytics.
+      leadMeta = {
+        deal_timeline: form.querySelector("#da-timeline").value
+      };
+      var btn = form.querySelector('button[type="submit"]');
+      if (btn) {
+        btn.disabled = true;
+        btn.textContent = "Sending…";
+      }
+    });
+
+    // The iframe fires "load" once on initial render and again after the
+    // POST response comes back — the flag ensures we only react to the latter.
+    frame.addEventListener("load", function () {
+      if (!submitted) return;
+      form.hidden = true;
+      success.hidden = false;
+      success.scrollIntoView({ behavior: "smooth", block: "center" });
+      if (typeof gtag === "function") gtag("event", "lead_magnet_submit", leadMeta || {});
+      if (typeof fbq === "function") fbq("track", "Lead", {
+        content_name: "Deal Analyzer + Lender's Playbook",
+        deal_timeline: leadMeta ? leadMeta.deal_timeline : undefined
+      });
+    });
+  })();
+</script>
+</body>
+</html>
