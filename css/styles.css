@@ -951,6 +951,9 @@ a { color: inherit; }
   clip-path: polygon(50% 0, 100% 100%, 0 100%);
 }
 
+/* On ink grounds the olive marker vanishes — step up to moss. */
+.check-list--moss li::before { background: var(--moss); }
+
 .portal-mock {
   background: var(--white);
   border-radius: 18px;
@@ -1279,7 +1282,9 @@ a { color: inherit; }
   margin-top: 3rem;
   max-width: 640px;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  /* minmax(0, 1fr) lets the two columns shrink below the inputs' intrinsic
+     width; without it a narrow container (e.g. the modal) overflows right. */
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: 1.1rem;
 }
 
@@ -1288,7 +1293,9 @@ a { color: inherit; }
 /* `display: grid` above overrides the UA [hidden] rule, so hide explicitly. */
 .form[hidden] { display: none; }
 
-.field { display: flex; flex-direction: column; gap: 0.45rem; }
+/* min-width: 0 overrides the grid item's default min-width:auto so the
+   field can shrink below its input's intrinsic width instead of overflowing. */
+.field { display: flex; flex-direction: column; gap: 0.45rem; min-width: 0; }
 
 .field label {
   font-size: 0.72rem;
@@ -1307,6 +1314,8 @@ a { color: inherit; }
   border-radius: 10px;
   padding: 0.85em 1em;
   transition: border-color 0.25s ease;
+  width: 100%;
+  min-width: 0;
 }
 
 .field input:focus, .field select:focus, .field textarea:focus {
@@ -1348,6 +1357,331 @@ a { color: inherit; }
 
 @media (max-width: 640px) {
   .form { grid-template-columns: 1fr; }
+}
+
+/* ---------- Paper variant of the subpage (e.g. /deal-analyzer) ----------
+   Recolors an otherwise ink-ground subpage onto a paper section: dark text,
+   muted-on-paper secondary copy, and light form fields. The eyebrow and
+   check-list markers switch to their olive (paper-ground) forms in markup. */
+
+/* The nav fades to transparent at the top of the page (main.js drops
+   .is-scrolled near scrollY 0), where its light wordmark and links would
+   vanish on paper. Keep it a solid ink bar at every scroll position. */
+.page-paper .nav,
+.page-paper .nav.is-scrolled {
+  background: var(--ink);
+  box-shadow: 0 1px 0 rgba(244, 241, 236, 0.08);
+}
+
+.subpage--paper {
+  background: var(--paper);
+  color: var(--text-on-paper);
+}
+
+.subpage--paper .subpage-intro { color: var(--muted-on-paper); }
+
+.subpage--paper .field label { color: var(--muted-on-paper); }
+
+.subpage--paper .field input,
+.subpage--paper .field select,
+.subpage--paper .field textarea {
+  color: var(--text-on-paper);
+  background: var(--white);
+  border-color: rgba(23, 24, 27, 0.18);
+}
+
+.subpage--paper .field input:focus,
+.subpage--paper .field select:focus,
+.subpage--paper .field textarea:focus {
+  border-color: var(--moss);
+}
+
+.subpage--paper .form-note { color: var(--muted-on-paper); }
+
+.subpage--paper .form-success {
+  background: var(--paper-2);
+  border-color: rgba(23, 24, 27, 0.14);
+}
+
+.subpage--paper .form-success h2 { color: var(--text-on-paper); }
+.subpage--paper .form-success p { color: var(--muted-on-paper); }
+/* Lime text is forbidden on paper — the inbox link goes olive. */
+.subpage--paper .form-success a { color: var(--olive); }
+
+/* ---------- Lead-capture landing layout (/deal-analyzer) ----------
+   Two-column hero: pitch left, form card right, so the form sits in the
+   first viewport on desktop. On mobile the grid reorders to
+   headline → form → detail, keeping the form one flick away. */
+
+.subpage--lp { padding-top: clamp(6.5rem, 14vh, 8.5rem); }
+
+.lp-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-areas:
+    "title  title"
+    "sub    sub"
+    "body   form"
+    "detail form";
+  column-gap: clamp(2.5rem, 5vw, 5rem);
+  row-gap: 0;
+  align-items: start;
+}
+
+/* Full-width headline + subheading banners; below them the preview (left)
+   and form (right) sit inline, with the bullets under the preview.
+   Override .subpage's caps (.display-2 16ch, .subpage-intro 52ch) so both
+   span the container — .subpage--lp ancestor matches their specificity. */
+.subpage--lp .lp-title { max-width: none; }
+.subpage--lp .lp-sub { max-width: none; }
+.lp-title { grid-area: title; margin-bottom: 0.9rem; }
+.lp-sub { grid-area: sub; font-size: 1.2rem; margin-bottom: 2.2rem; }
+.lp-body { grid-area: body; }
+.lp-detail { grid-area: detail; margin-top: 2rem; }
+.lp-form { grid-area: form; }
+
+/* The tablet/mobile CTA button and the modal close button are desktop-hidden. */
+.lp-form-open,
+.lp-form-close { display: none; }
+
+/* Tablet + mobile: single column, and the form becomes a modal opened by
+   the CTA button (so the ask is visible without scrolling past a long form). */
+@media (max-width: 1024px) {
+  .lp-grid {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: "title" "sub" "cta" "body" "detail";
+  }
+  .lp-sub { margin-bottom: 1.6rem; }
+
+  .lp-form-open {
+    grid-area: cta;
+    display: inline-flex;
+    justify-content: center;
+    width: 22rem;
+    max-width: 100%;
+    justify-self: start;
+    margin-bottom: 0.5rem;
+  }
+
+  /* Form as a centered modal over a dimmed backdrop; hidden until opened. */
+  .lp-form {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    display: none;
+    align-items: flex-start;
+    justify-content: center;
+    padding: clamp(1rem, 5vh, 3rem) 1.1rem;
+    background: rgba(11, 12, 14, 0.55);
+    -webkit-backdrop-filter: blur(3px);
+    backdrop-filter: blur(3px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+  .lp-form.is-open { display: flex; }
+
+  .lp-form .form-card {
+    position: relative;
+    width: 100%;
+    max-width: 460px;
+    margin: auto;
+  }
+
+  .lp-form-close {
+    display: block;
+    position: absolute;
+    top: 0.7rem;
+    right: 0.8rem;
+    width: 2rem;
+    height: 2rem;
+    padding: 0;
+    font-size: 1.6rem;
+    line-height: 1;
+    background: none;
+    border: none;
+    color: var(--muted-on-paper);
+    cursor: pointer;
+  }
+  .lp-form-close:hover { color: var(--text-on-paper); }
+}
+
+.form-card {
+  background: var(--white);
+  border: 1px solid rgba(23, 24, 27, 0.12);
+  border-radius: var(--radius);
+  padding: 1.9rem 2rem 2.1rem;
+  box-shadow: 0 20px 45px rgba(23, 24, 27, 0.08);
+}
+
+.form-card-title {
+  font-size: 1.35rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: var(--text-on-paper);
+}
+
+.form-card-sub {
+  font-size: 0.9rem;
+  color: var(--muted-on-paper);
+  margin-top: 0.25rem;
+}
+
+.form-card .form { margin-top: 1.4rem; max-width: none; gap: 0.95rem; }
+.form-card .form-actions .btn { width: 100%; }
+
+/* Inside the card the success state is plain content, not a second card. */
+.form-card .form-success {
+  margin-top: 0.5rem;
+  max-width: none;
+  background: transparent;
+  border: none;
+  padding: 1rem 0 0;
+}
+
+/* Spreadsheet-screenshot preview of the lead magnet, above the form.
+   File chrome + column letters + row numbers + gridlines + sheet tabs
+   so it reads unmistakably as a spreadsheet. Gridlines are the 1px grid
+   gaps showing the container's dark background between the cells. */
+.sheet-shot {
+  margin: 2.2rem 0 0.5rem;
+  max-width: 460px;
+  background: var(--white);
+  border: 1px solid rgba(23, 24, 27, 0.14);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 18px 40px rgba(23, 24, 27, 0.1);
+}
+
+.sheet-chrome {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0.55rem 0.85rem;
+  background: var(--paper-2);
+  border-bottom: 1px solid rgba(23, 24, 27, 0.1);
+}
+
+.sheet-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: rgba(23, 24, 27, 0.2);
+}
+
+.sheet-filename {
+  margin-left: 0.55rem;
+  font-size: 0.74rem;
+  color: var(--muted-on-paper);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sheet-grid {
+  display: grid;
+  grid-template-columns: 26px minmax(0, 1.7fr) repeat(3, minmax(0, 1fr));
+  gap: 1px;
+  background: rgba(23, 24, 27, 0.12);
+  font-size: 0.76rem;
+}
+
+/* Header chrome: corner, column letters (A/B), row numbers. */
+.sheet-corner,
+.sheet-col,
+.sheet-rownum {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--paper-2);
+  color: var(--muted-on-paper);
+  font-weight: 500;
+}
+
+.sheet-corner,
+.sheet-col {
+  padding: 0.2rem 0.4rem;
+  font-size: 0.72rem;
+}
+
+.sheet-rownum { font-size: 0.72rem; }
+
+.sheet-cell {
+  display: flex;
+  align-items: center;
+  padding: 0.34rem 0.5rem;
+  background: var(--white);
+  color: var(--muted-on-paper);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sheet-cell--num {
+  justify-content: flex-end;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-on-paper);
+}
+
+/* Section title, merged across the data columns like the real sheet. */
+.sheet-cell--title {
+  grid-column: 2 / -1;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: var(--text-on-paper);
+}
+
+/* Column headers (Loan-to-Purchase / -Cost / -ARV): allowed to wrap. */
+.sheet-cell--head {
+  justify-content: center;
+  text-align: center;
+  white-space: normal;
+  line-height: 1.15;
+  font-size: 0.68rem;
+  font-weight: 500;
+}
+
+/* The "◄ Binding" flag on the constraint that actually limits the loan. */
+.sheet-cell--binding {
+  background: rgba(143, 166, 55, 0.16);
+  font-weight: 600;
+  color: var(--olive);
+}
+
+/* Bottom-line row + a "selected" green cell outline on the profit figure. */
+.sheet-rownum--total { background: rgba(143, 166, 55, 0.22); color: var(--text-on-paper); }
+.sheet-cell--total { background: rgba(143, 166, 55, 0.12); font-weight: 600; color: var(--text-on-paper); }
+
+.sheet-cell--selected {
+  background: rgba(143, 166, 55, 0.12);
+  font-weight: 700;
+  color: var(--olive);
+  box-shadow: inset 0 0 0 2px var(--moss);
+}
+
+/* Sheet tabs, spreadsheet-style, along the bottom. */
+.sheet-tabs {
+  display: flex;
+  gap: 2px;
+  padding: 0.4rem 0.5rem 0.5rem;
+  background: var(--paper-2);
+  border-top: 1px solid rgba(23, 24, 27, 0.1);
+  font-size: 0.7rem;
+  font-weight: 500;
+}
+
+.sheet-tabs span {
+  padding: 0.3em 0.65em;
+  border-radius: 5px;
+  color: var(--muted-on-paper);
+  white-space: nowrap;
+}
+
+.sheet-tabs .is-active {
+  background: var(--white);
+  color: var(--text-on-paper);
+  box-shadow: 0 1px 3px rgba(23, 24, 27, 0.12);
 }
 
 /* ---------- Legal pages ---------- */
