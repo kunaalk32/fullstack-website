@@ -236,6 +236,15 @@ a { color: inherit; }
 }
 .nav-links a:hover { color: var(--text-on-ink); }
 
+/* Deal analyzer is the lead magnet — moss picks it out from the plain
+   nav links (accent use on the ink bar, not body text). Hover lightens
+   the moss rather than going lime, to keep the one-lime-per-composition
+   rule intact. Same treatment in the mobile menu below. */
+.nav-links a.nav-link--deal { color: var(--moss); }
+.nav-links a.nav-link--deal:hover {
+  color: color-mix(in srgb, var(--moss) 65%, var(--white));
+}
+
 .nav-actions { display: flex; gap: 0.8rem; align-items: center; }
 
 .nav-burger {
@@ -274,6 +283,7 @@ a { color: inherit; }
   text-decoration: none;
   color: var(--text-on-ink);
 }
+.mobile-menu a.nav-link--deal { color: var(--moss); }
 .mobile-menu-actions { display: flex; gap: 1rem; margin-top: 1.5rem; }
 .mobile-menu-actions .btn { font-size: 0.8rem; }
 

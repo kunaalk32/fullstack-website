@@ -2,11 +2,10 @@
   "version": "0.0.1",
   "configurations": [
     {
-      "name": "Fullstack Lending",
-      "runtimeExecutable": "sh",
-      "runtimeArgs": ["-c", "python3 -m http.server \"${PORT:-8080}\""],
-      "port": 8080,
-      "autoPort": true
+      "name": "jekyll",
+      "runtimeExecutable": "bash",
+      "runtimeArgs": ["-lc", "export PATH=\"/opt/homebrew/opt/ruby/bin:$PATH\"; exec bundle exec jekyll serve --livereload --port 4000"],
+      "port": 4000
     }
   ]
 }
