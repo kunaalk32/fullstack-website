@@ -2,8 +2,15 @@
   Shared body for the Deal Analyzer pages — the pitch, the lead form, and
   the funnel/analytics scripts. Included by both /deal-analyzer/ (full nav,
   organic + navbar traffic) and /lp/deal-analyzer/ (minimal nav, paid
-  traffic). The only differences between the two pages live in the nav
-  include and the <head>; everything below is identical.
+  traffic).
+
+  Params:
+    lp — when true, this is the paid landing variant: render the slim
+         footer (a near dead-end) and emit the nav_leak exit-tracking
+         event. Omit it on the organic page, which gets the full footer
+         for onward exploration and no leak tracking (nav clicks there are
+         intended navigation, not leakage). Should match the nav include's
+         `minimal` flag on the same page.
 {% endcomment %}
 <!-- No .reveal / data-split here: the first viewport must be readable
      instantly, so entrance animations are skipped. -->
@@ -166,7 +173,7 @@
   </div>
 </main>
 
-{% include footer.html slim=true %}
+{% include footer.html slim=include.lp %}
 
 <script src="/js/main.js"></script>
 <script>
@@ -238,9 +245,9 @@
   // GA4 events go through window.fslTrack (analytics.js), which buffers
   // until the geo-gated GA loads. Funnel, in page order:
   //   lead_form_view → lead_form_start → timeline_selected →
-  //   lead_magnet_submit | lead_form_abandon, plus scroll_depth and
-  //   nav_leak. Deliberately no name/email in any event — PII never
-  //   goes to analytics.
+  //   lead_magnet_submit | lead_form_abandon, plus scroll_depth, and
+  //   nav_leak on the /lp/ variant only. Deliberately no name/email in
+  //   any event — PII never goes to analytics.
   (function () {
     var form = document.getElementById("analyzerForm");
     var frame = document.getElementById("ac_target");
@@ -303,8 +310,12 @@
     window.addEventListener("scroll", onScrollDepth, { passive: true });
     onScrollDepth();
 
-    // --- Exits: logo + footer legal links are the only ways off the
-    // page; measure the leak before deciding they matter ---
+{% if include.lp %}
+    // --- Exits: on the paid lander the logo + footer legal links are the
+    // only ways off the page; measure the leak before deciding they matter.
+    // Emitted only on /lp/ (include.lp) — on the full-nav /deal-analyzer/
+    // page, nav clicks are intended exploration, not leakage, and firing
+    // the same event there would contaminate the LP's leak numbers. ---
     document.querySelectorAll(".nav-logo, .footer-legal-links a").forEach(function (a) {
       a.addEventListener("click", function () {
         track("nav_leak", {
@@ -313,6 +324,7 @@
         });
       });
     });
+{% endif %}
 
     form.addEventListener("submit", function () {
       submitted = true;
