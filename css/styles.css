@@ -390,8 +390,8 @@ a { color: inherit; }
 }
 
 .widget--a { right: 6%; top: 24%; animation-delay: 0s; }
-.widget--b { right: 12%; top: 52%; animation-delay: -2.4s; }
-.widget--c { right: 4%; top: 74%; animation-delay: -4.8s; }
+.widget--b { right: 12%; top: 55%; animation-delay: -2.4s; }
+.widget--c { right: 32%; top: 42%; animation-delay: -4.8s; }
 
 @keyframes bob {
   0%, 100% { transform: translateY(0); }

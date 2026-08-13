@@ -89,10 +89,11 @@
   document.querySelectorAll(".ridges").forEach(function (c) { RidgeField(c, {}); });
 
   /* ---------- Wireframe house (hero) ----------
-     Isometric line model that draws itself in on load (assembled), then
-     explodes as the user scrolls: the roof assembly lifts away and the
-     ground plate drops. Fixed camera, no rotation. Vanilla canvas 2D,
-     orthographic isometric projection. */
+     Isometric line model that draws itself in on load already exploded (roof
+     assembly lifted away, ground plate dropped), then comes together as the
+     user scrolls: the roof settles onto the walls and the ground rises to
+     meet them. Fixed camera, no rotation. Vanilla canvas 2D, orthographic
+     isometric projection. */
 
   function WireHouse(canvas) {
     var ctx = canvas.getContext("2d");
@@ -170,7 +171,7 @@
       );
     });
 
-    /* --- Roof assembly (lifts away on scroll; includes chimney) --- */
+    /* --- Roof assembly (settles onto the walls on scroll; includes chimney) --- */
     var roofEdges = [];
     var roofFaint = [];
     roofEdges = roofEdges.concat(
@@ -189,7 +190,7 @@
     }
     var chimneyEdges = box(-0.35, 1.35, -0.3, -0.12, 2.3, -0.08);
 
-    /* --- Ground plate (drops away on scroll) --- */
+    /* --- Ground plate (rises to meet the walls on scroll) --- */
     var groundEdges = rectY(0, -1.5, -1.1, 1.5, 1.1).concat(
       rectY(-0.06, -1.5, -1.1, 1.5, 1.1),
       [[-1.5, 0, -1.1, -1.5, -0.06, -1.1], [1.5, 0, -1.1, 1.5, -0.06, -1.1],
@@ -255,8 +256,11 @@
     function smoothstep(p) { return p * p * (3 - 2 * p); }
 
     function progress() {
+      // Reversed direction: fully exploded at the top of the page and
+      // assembling as the user scrolls down. Returns explodeP, so 1 at
+      // scrollY 0 (exploded) easing to 0 past the scroll span (assembled).
       var p = window.scrollY / (window.innerHeight * SCROLL_SPAN);
-      return smoothstep(Math.min(Math.max(p, 0), 1));
+      return 1 - smoothstep(Math.min(Math.max(p, 0), 1));
     }
 
     function resize() {
@@ -282,12 +286,12 @@
     var buildDone = false;
     var ticking = false;
 
-    // Parallax: lag the house ~40% behind the scroll so more of the
-    // explode animation stays in view. Set a CSS var so it composes with
+    // Parallax: lag the house ~25% behind the scroll so more of the
+    // assemble animation stays in view. Set a CSS var so it composes with
     // the element's centering transform (which differs by breakpoint).
     function applyParallax() {
       if (reducedMotion) return;
-      canvas.style.setProperty("--house-parallax", (window.scrollY * 0.4) + "px");
+      canvas.style.setProperty("--house-parallax", (window.scrollY * 0.25) + "px");
     }
 
     function onScroll() {
