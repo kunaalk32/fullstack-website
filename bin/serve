@@ -1,0 +1,66 @@
+#!/usr/bin/env bash
+#
+# bin/serve — start the Jekyll dev server for THIS worktree, correctly.
+#
+# Why this exists (see CLAUDE.md):
+#   * The site MUST be served through Jekyll (it uses {% include %} tags), and
+#     always with file watching on — never `--no-watch`, or edits won't rebuild.
+#   * Git worktrees created with `git worktree add` do NOT get their own
+#     installed gems (vendor/bundle); the gems live in whichever tree ran
+#     `bundle install` (normally the main working tree). So we run bundler from
+#     that tree while pointing --source/--destination at the current worktree.
+#   * Each worktree gets its own port (derived from its path) so you can preview
+#     several worktrees at the same time without collisions.
+#
+# Usage:
+#   bin/serve            # auto-assign this worktree's port
+#   bin/serve 4010       # force a specific port
+#
+set -euo pipefail
+
+# Homebrew Ruby must be on PATH (system Ruby 2.6 is too old for Jekyll).
+export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
+
+# This worktree = the directory the repo lives in, resolved from the script path.
+SOURCE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+
+# Find a working tree that actually has the gems installed (vendor/bundle).
+# `git worktree list --porcelain` emits one `worktree <path>` line per tree;
+# strip the prefix with sed (not `awk '{print $2}'`) so paths with spaces —
+# e.g. ".../Fullstack Website" — survive intact.
+GEMFILE_DIR=""
+while IFS= read -r wt; do
+  [ -n "$wt" ] || continue
+  if [ -d "$wt/vendor/bundle" ]; then GEMFILE_DIR="$wt"; break; fi
+done < <(git -C "$SOURCE_DIR" worktree list --porcelain | sed -n 's/^worktree //p')
+
+if [ -z "$GEMFILE_DIR" ]; then
+  echo "error: no worktree has gems installed (no vendor/bundle found)." >&2
+  echo "       Run 'bundle install' once in the main working tree, then retry." >&2
+  exit 1
+fi
+
+# Per-worktree port: a stable hash of this worktree's path lands it in
+# 4000–4099, then we bump past anything already listening so two worktrees
+# running at once never collide. LiveReload gets a matching offset port.
+if [ "${1:-}" ]; then
+  PORT="$1"
+else
+  hash="$(printf '%s' "$SOURCE_DIR" | cksum | cut -d' ' -f1)"
+  PORT=$(( 4000 + hash % 100 ))
+fi
+while lsof -ti "tcp:$PORT" >/dev/null 2>&1; do PORT=$(( PORT + 1 )); done
+LIVERELOAD_PORT=$(( PORT + 30000 ))
+
+echo "Worktree:   $SOURCE_DIR"
+echo "Gems from:  $GEMFILE_DIR"
+echo "Preview at: http://localhost:$PORT/  (livereload :$LIVERELOAD_PORT)"
+echo
+
+# Run bundler from the tree that has the gems, but build the current worktree.
+cd "$GEMFILE_DIR"
+exec bundle exec jekyll serve \
+  --source "$SOURCE_DIR" \
+  --destination "$SOURCE_DIR/_site" \
+  --port "$PORT" \
+  --livereload --livereload-port "$LIVERELOAD_PORT"
