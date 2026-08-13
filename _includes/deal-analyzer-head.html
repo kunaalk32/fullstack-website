@@ -1,0 +1,37 @@
+{% comment %}
+  Shared <head> for the Deal Analyzer pages. Included by both the
+  indexable page at /deal-analyzer/ and the paid landing page at
+  /lp/deal-analyzer/, so the two stay identical except for one thing:
+
+    noindex — when true, add <meta name="robots" content="noindex">.
+              The /lp/ variant passes this; its canonical already points
+              at /deal-analyzer/, so the two URLs don't compete in search.
+{% endcomment %}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Analytics: GA4 + Meta Pixel, loaded only for US visitors (see js/analytics.js) -->
+  <script src="/js/analytics.js" defer></script>
+  <title>Deal Analyzer + Lender's Playbook — Fullstack Lending</title>
+  <meta name="description" content="Free download: the Deal Analyzer + Lender's Playbook — a spreadsheet that runs your deal's numbers, then shows you how a lender reads the same deal.">
+  <link rel="canonical" href="https://fullstacklending.com/deal-analyzer/">
+{% if include.noindex %}  <meta name="robots" content="noindex">
+{% endif %}  <meta property="og:type" content="website">
+  <meta property="og:title" content="The Deal Analyzer + Lender's Playbook — free download">
+  <meta property="og:description" content="Run your deal's numbers, then see the same deal the way an underwriter does. Free spreadsheet from Fullstack Lending.">
+  <meta property="og:url" content="https://fullstacklending.com/deal-analyzer/">
+  <meta property="og:image" content="https://fullstacklending.com/assets/og-card.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:alt" content="Fullstack Lending">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://fullstacklending.com/assets/og-card.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicons/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicons/favicon-16.png">
+  <link rel="apple-touch-icon" href="/assets/favicons/favicon-180.png">
+  <meta name="theme-color" content="#0B0C0E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/styles.css">
+  <script>document.documentElement.classList.add('js');</script>

@@ -1,0 +1,21 @@
+---
+# Front matter (intentionally empty) tells Jekyll to process the {% include %}
+# tags below. Without it, Jekyll would copy this file verbatim.
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+{% include deal-analyzer-head.html noindex=true %}
+</head>
+<body class="page-paper">
+
+<!-- Paid landing page: nav is logo-only (attention ratio 1:1) — the form is
+     the single action, so no site links compete with it. Point ad campaigns
+     here. noindex + canonical → /deal-analyzer/ so this twin doesn't compete
+     in search with the full-nav version. -->
+{% include nav.html scrolled=true minimal=true %}
+
+{% include deal-analyzer.html lp=true %}
+
+</body>
+</html>

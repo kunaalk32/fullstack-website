@@ -1,0 +1,360 @@
+{% comment %}
+  Shared body for the Deal Analyzer pages — the pitch, the lead form, and
+  the funnel/analytics scripts. Included by both /deal-analyzer/ (full nav,
+  organic + navbar traffic) and /lp/deal-analyzer/ (minimal nav, paid
+  traffic).
+
+  Params:
+    lp — when true, this is the paid landing variant: render the slim
+         footer (a near dead-end) and emit the nav_leak exit-tracking
+         event. Omit it on the organic page, which gets the full footer
+         for onward exploration and no leak tracking (nav clicks there are
+         intended navigation, not leakage). Should match the nav include's
+         `minimal` flag on the same page.
+{% endcomment %}
+<!-- No .reveal / data-split here: the first viewport must be readable
+     instantly, so entrance animations are skipped. -->
+<main class="subpage subpage--paper subpage--lp">
+  <div class="container lp-grid">
+
+    <h1 class="display-2 lp-title">Run the numbers. Then see what the lender sees.</h1>
+    <p class="subpage-intro lp-sub">One free spreadsheet, both sides of the deal.</p>
+
+    <!-- Tablet/mobile only: a CTA button that stands in for the inline form
+         and opens it in a modal, so the ask is visible without scrolling.
+         Hidden on desktop (the form shows inline there). -->
+    <button type="button" class="btn btn--lime btn--lg lp-form-open" id="lpFormOpen"
+            aria-haspopup="dialog" aria-controls="lpForm">Get the free spreadsheet</button>
+
+    <div class="lp-body">
+      <!-- Preview of the lead magnet, inline beside the form on desktop.
+           Decorative, so aria-hidden. Tab names and figures mirror the real
+           spreadsheet, open to the Lender's View tab's "Three constraints,
+           one loan" section (LTP-bound: caps 82.5/87/68 → initial $231,000). -->
+      <figure class="sheet-shot" aria-hidden="true">
+        <div class="sheet-chrome">
+          <span class="sheet-dot"></span>
+          <span class="sheet-dot"></span>
+          <span class="sheet-dot"></span>
+          <span class="sheet-filename">Deal&nbsp;Analyzer&nbsp;+&nbsp;Lender's&nbsp;Playbook.xlsx</span>
+        </div>
+        <div class="sheet-grid">
+          <div class="sheet-corner"></div>
+          <div class="sheet-col">A</div>
+          <div class="sheet-col">B</div>
+          <div class="sheet-col">C</div>
+          <div class="sheet-col">D</div>
+
+          <div class="sheet-rownum">1</div>
+          <div class="sheet-cell sheet-cell--title">1.&ensp;THREE CONSTRAINTS, ONE LOAN</div>
+
+          <div class="sheet-rownum">2</div>
+          <div class="sheet-cell"></div>
+          <div class="sheet-cell sheet-cell--head">Loan-to-Purchase</div>
+          <div class="sheet-cell sheet-cell--head">Loan-to-Cost</div>
+          <div class="sheet-cell sheet-cell--head">Loan-to-ARV</div>
+
+          <div class="sheet-rownum">3</div>
+          <div class="sheet-cell">Cap</div>
+          <div class="sheet-cell sheet-cell--num">82.5%</div>
+          <div class="sheet-cell sheet-cell--num">87.0%</div>
+          <div class="sheet-cell sheet-cell--num">68.0%</div>
+
+          <div class="sheet-rownum">4</div>
+          <div class="sheet-cell">Max initial loan</div>
+          <div class="sheet-cell sheet-cell--num">$231,000</div>
+          <div class="sheet-cell sheet-cell--num">$234,591</div>
+          <div class="sheet-cell sheet-cell--num">$243,500</div>
+
+          <div class="sheet-rownum">5</div>
+          <div class="sheet-cell">Binding?</div>
+          <div class="sheet-cell sheet-cell--binding">◄ Binding</div>
+          <div class="sheet-cell"></div>
+          <div class="sheet-cell"></div>
+
+          <div class="sheet-rownum sheet-rownum--total">6</div>
+          <div class="sheet-cell sheet-cell--total">Initial loan — least of 3</div>
+          <div class="sheet-cell sheet-cell--num sheet-cell--selected">$231,000</div>
+          <div class="sheet-cell"></div>
+          <div class="sheet-cell"></div>
+
+          <div class="sheet-rownum">7</div>
+          <div class="sheet-cell">Required equity at close</div>
+          <div class="sheet-cell sheet-cell--num">$62,106</div>
+          <div class="sheet-cell"></div>
+          <div class="sheet-cell"></div>
+        </div>
+        <div class="sheet-tabs">
+          <span>Summary</span>
+          <span>Deal Analyzer</span>
+          <span>Scope of Work</span>
+          <span class="is-active">Lender's View</span>
+        </div>
+      </figure>
+    </div>
+
+    <aside class="lp-form" id="lpForm" aria-labelledby="formCardTitle">
+      <div class="form-card">
+        <button type="button" class="lp-form-close" id="lpFormClose" aria-label="Close">&times;</button>
+        <h2 class="form-card-title" id="formCardTitle">Get the free spreadsheet</h2>
+        <p class="form-card-sub">Sent straight to your inbox.</p>
+
+        <!-- ============================================================
+             Posts directly to ActiveCampaign (hosted form id=6) via a
+             hidden iframe, so the visitor stays on-page and sees our own
+             success state. Hidden u/f/s/c/m/act/v/or fields identify the
+             form; fields map firstname/lastname/email +
+             field[14]=Deal timeline (AC custom field "deal_timeline").
+             ============================================================ -->
+        <form class="form" id="analyzerForm"
+              action="https://fullstacklending.activehosted.com/proc.php"
+              method="post" target="ac_target">
+          <input type="hidden" name="u" value="6">
+          <input type="hidden" name="f" value="6">
+          <input type="hidden" name="s">
+          <input type="hidden" name="c" value="0">
+          <input type="hidden" name="m" value="0">
+          <input type="hidden" name="act" value="sub">
+          <input type="hidden" name="v" value="2">
+          <input type="hidden" name="or" value="c7be8196-1ecf-4d49-8aa3-ad46987f31fd">
+
+          <div class="field">
+            <label for="da-first">First name</label>
+            <input id="da-first" name="firstname" type="text" autocomplete="given-name" required>
+          </div>
+          <div class="field">
+            <label for="da-last">Last name</label>
+            <input id="da-last" name="lastname" type="text" autocomplete="family-name" required>
+          </div>
+          <div class="field field--full">
+            <label for="da-email">Email</label>
+            <input id="da-email" name="email" type="email" autocomplete="email" required>
+          </div>
+          <div class="field field--full">
+            <label for="da-timeline">Where are you right now?</label>
+            <select id="da-timeline" name="field[14]" required>
+              <option value="">Select…</option>
+              <option value="Deal in hand">Deal in hand</option>
+              <option value="Deal in next 6 months">Deal in the next 6 months</option>
+              <option value="Building toward first deal">Building toward my first deal</option>
+            </select>
+          </div>
+          <div class="form-actions">
+            <button class="btn btn--lime btn--lg" type="submit">Send me the Deal Analyzer</button>
+          </div>
+          <p class="form-note">Free. No spam, unsubscribe anytime.</p>
+        </form>
+
+        <!-- Hidden target so the AC POST doesn't navigate the visitor away -->
+        <iframe name="ac_target" id="ac_target" title="Form submission" style="display:none" aria-hidden="true" tabindex="-1"></iframe>
+
+        <div class="form-success" id="formSuccess" hidden>
+          <h2>Check your email — it's on the way.</h2>
+          <p>The Deal Analyzer + Lender's Playbook is headed to your inbox right
+          now. If it hasn't landed in a few minutes, check your spam or promotions
+          folder. Questions about a deal in the meantime?
+          Email <a href="mailto:loans@fullstacklending.com">loans@fullstacklending.com</a>.</p>
+        </div>
+      </div>
+    </aside>
+
+    <div class="lp-detail">
+      <ul class="check-list">
+        <li><strong>Deal Analyzer</strong> — purchase, rehab, ARV, carrying
+          and financing costs, straight through to projected profit.</li>
+        <li><strong>Scope of Work</strong> — a priced, line-item rehab budget
+          with the contingency cushion lenders look for.</li>
+        <li><strong>The Lender's View</strong> — which leverage cap binds
+          your loan, how your track record shapes your terms, and the
+          deal-killer checklist that stalls files in underwriting.</li>
+      </ul>
+    </div>
+
+  </div>
+</main>
+
+{% include footer.html slim=include.lp %}
+
+<script src="/js/main.js"></script>
+<script>
+  // Tablet/mobile only: the form is presented as a modal opened by the CTA
+  // button, so the ask is visible without scrolling. On desktop the button
+  // is hidden and the form is inline, so none of this runs visibly. Dialog
+  // semantics are added only while open (the element is inline on desktop).
+  (function () {
+    var openBtn = document.getElementById("lpFormOpen");
+    var modal = document.getElementById("lpForm");
+    var closeBtn = document.getElementById("lpFormClose");
+    if (!openBtn || !modal) return;
+
+    var lastFocus = null;
+    var compact = window.matchMedia("(max-width: 1024px)");
+
+    function focusables() {
+      return Array.prototype.filter.call(
+        modal.querySelectorAll('a[href], button:not([disabled]), input, select, textarea, [tabindex]:not([tabindex="-1"])'),
+        function (el) { return el.offsetParent !== null; }
+      );
+    }
+
+    function onKey(e) {
+      if (e.key === "Escape") { closeModal(); return; }
+      if (e.key !== "Tab") return;
+      var f = focusables();
+      if (!f.length) return;
+      var first = f[0], last = f[f.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    }
+
+    function openModal() {
+      lastFocus = document.activeElement;
+      modal.classList.add("is-open");
+      modal.setAttribute("role", "dialog");
+      modal.setAttribute("aria-modal", "true");
+      document.body.style.overflow = "hidden";
+      document.addEventListener("keydown", onKey);
+      var first = modal.querySelector("input, select, button:not(.lp-form-close)");
+      if (first) first.focus();
+    }
+
+    function closeModal() {
+      modal.classList.remove("is-open");
+      modal.removeAttribute("role");
+      modal.removeAttribute("aria-modal");
+      document.body.style.overflow = "";
+      document.removeEventListener("keydown", onKey);
+      if (lastFocus && lastFocus.focus) lastFocus.focus();
+    }
+
+    openBtn.addEventListener("click", openModal);
+    if (closeBtn) closeBtn.addEventListener("click", closeModal);
+    // Click on the dimmed backdrop (outside the card) closes.
+    modal.addEventListener("click", function (e) { if (e.target === modal) closeModal(); });
+    // Resizing up to desktop while open: close so the inline form shows cleanly.
+    compact.addEventListener("change", function (e) {
+      if (!e.matches && modal.classList.contains("is-open")) closeModal();
+    });
+  })();
+</script>
+<script>
+  // The form POSTs natively to ActiveCampaign's proc.php, targeting a
+  // hidden iframe so the page doesn't navigate away. HTML5 validation
+  // still gates submit, so submit fires only once the fields are valid.
+  //
+  // GA4 events go through window.fslTrack (analytics.js), which buffers
+  // until the geo-gated GA loads. Funnel, in page order:
+  //   lead_form_view → lead_form_start → timeline_selected →
+  //   lead_magnet_submit | lead_form_abandon, plus scroll_depth, and
+  //   nav_leak on the /lp/ variant only. Deliberately no name/email in
+  //   any event — PII never goes to analytics.
+  (function () {
+    var form = document.getElementById("analyzerForm");
+    var frame = document.getElementById("ac_target");
+    var success = document.getElementById("formSuccess");
+    var submitted = false;
+    var leadMeta = null;
+
+    function track(name, params) {
+      if (window.fslTrack) window.fslTrack(name, params);
+    }
+
+    // --- Funnel: form entered the viewport ---
+    if ("IntersectionObserver" in window) {
+      var viewIO = new IntersectionObserver(function (entries, io) {
+        if (entries.some(function (e) { return e.isIntersecting; })) {
+          track("lead_form_view");
+          io.disconnect();
+        }
+      }, { threshold: 0.4 });
+      viewIO.observe(form);
+    }
+
+    // --- Funnel: first field focused; remember the last field touched
+    // so abandonment reports where people stall ---
+    var startedAt = null;
+    var lastField = null;
+    form.addEventListener("focusin", function (e) {
+      if (!e.target.name || e.target.type === "hidden") return;
+      lastField = e.target.id || e.target.name;
+      if (startedAt === null) {
+        startedAt = Date.now();
+        track("lead_form_start");
+      }
+    });
+
+    document.getElementById("da-timeline").addEventListener("change", function () {
+      if (this.value) track("timeline_selected", { deal_timeline: this.value });
+    });
+
+    // --- Funnel: left the page after starting but before submitting.
+    // pagehide (not beforeunload) so bfcache navigations count too. ---
+    window.addEventListener("pagehide", function () {
+      if (startedAt !== null && !submitted) {
+        track("lead_form_abandon", { last_field: lastField, transport_type: "beacon" });
+      }
+    });
+
+    // --- Scroll depth tiers (GA4's built-in scroll event only fires
+    // at 90%). Each tier fires once; listener detaches after 90%. ---
+    var tiers = [25, 50, 75, 90];
+    function onScrollDepth() {
+      var max = document.documentElement.scrollHeight - window.innerHeight;
+      if (max <= 0) return;
+      var pct = (window.scrollY / max) * 100;
+      while (tiers.length && pct >= tiers[0]) {
+        track("scroll_depth", { scroll_percent: tiers.shift() });
+      }
+      if (!tiers.length) window.removeEventListener("scroll", onScrollDepth);
+    }
+    window.addEventListener("scroll", onScrollDepth, { passive: true });
+    onScrollDepth();
+
+{% if include.lp %}
+    // --- Exits: on the paid lander the logo + footer legal links are the
+    // only ways off the page; measure the leak before deciding they matter.
+    // Emitted only on /lp/ (include.lp) — on the full-nav /deal-analyzer/
+    // page, nav clicks are intended exploration, not leakage, and firing
+    // the same event there would contaminate the LP's leak numbers. ---
+    document.querySelectorAll(".nav-logo, .footer-legal-links a").forEach(function (a) {
+      a.addEventListener("click", function () {
+        track("nav_leak", {
+          exit_destination: a.getAttribute("href"),
+          transport_type: "beacon"
+        });
+      });
+    });
+{% endif %}
+
+    form.addEventListener("submit", function () {
+      submitted = true;
+      leadMeta = {
+        deal_timeline: form.querySelector("#da-timeline").value,
+        seconds_to_submit: startedAt === null
+          ? undefined
+          : Math.round((Date.now() - startedAt) / 1000)
+      };
+      var btn = form.querySelector('button[type="submit"]');
+      if (btn) {
+        btn.disabled = true;
+        btn.textContent = "Sending…";
+      }
+    });
+
+    // The iframe fires "load" once on initial render and again after the
+    // POST response comes back — the flag ensures we only react to the latter.
+    // Note: a cross-origin iframe load says the POST completed, not that AC
+    // accepted it — reconcile GA counts against ActiveCampaign periodically.
+    frame.addEventListener("load", function () {
+      if (!submitted) return;
+      form.hidden = true;
+      success.hidden = false;
+      success.scrollIntoView({ behavior: "smooth", block: "center" });
+      track("lead_magnet_submit", leadMeta || {});
+      if (typeof fbq === "function") fbq("track", "Lead", {
+        content_name: "Deal Analyzer + Lender's Playbook",
+        deal_timeline: leadMeta ? leadMeta.deal_timeline : undefined
+      });
+    });
+  })();
+</script>
