@@ -1271,6 +1271,23 @@ a { color: inherit; }
 
 .subpage .display-2 { max-width: 16ch; }
 
+/* ---------- Generic campaign confirmation (/thanks) ---------- */
+
+.thanks-page {
+  display: flex;
+  align-items: center;
+  min-height: 100svh;
+  padding: clamp(7rem, 14vh, 10rem) 0 5rem;
+}
+
+.thanks-page__content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.thanks-page .subpage-intro { margin-bottom: 2.4rem; }
+
 .subpage-intro {
   max-width: 52ch;
   margin-top: 1.3rem;
