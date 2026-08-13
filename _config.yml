@@ -1,0 +1,29 @@
+# Minimal Jekyll config for GitHub Pages.
+#
+# The site is plain static HTML. Jekyll is used only for its {% include %}
+# tag so the navbar and footer live in one place (_includes/nav.html and
+# _includes/footer.html) instead of being copy-pasted into every page.
+#
+# GitHub Pages runs Jekyll automatically (there is no .nojekyll file), so no
+# CI or build step of our own is required — pushing to the `public` branch is
+# enough. To preview locally you need Jekyll installed (see README/Gemfile),
+# then run `bundle exec jekyll serve`.
+
+title: Fullstack Lending
+
+# This site is hand-written static HTML with its own /css/styles.css. It uses
+# Jekyll only for {% include %} (our own _includes/), so disable the default
+# Minima theme — otherwise Jekyll tries to compile Minima's SCSS, which we
+# neither ship nor use.
+theme: null
+
+# Keep source/tooling files out of the built _site output.
+exclude:
+  - CLAUDE.md
+  - Gemfile
+  - Gemfile.lock
+  - README.md
+  - "Full Stack Lendding Brand Identity Kit/"
+  - .claude/
+  - .idea/
+  - vendor/

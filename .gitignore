@@ -4,3 +4,10 @@ node_modules/
 
 # Brand source kit — kept local; GitHub Pages serves everything committed
 Full Stack Lendding Brand Identity Kit/
+
+# Jekyll (local build only; GitHub Pages builds its own copy on push)
+_site/
+.jekyll-cache/
+.jekyll-metadata
+vendor/
+.bundle/
