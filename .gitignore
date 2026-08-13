@@ -11,3 +11,6 @@ _site/
 .jekyll-metadata
 vendor/
 .bundle/
+
+# Internal dev/assistant notes — kept local, never published to the public repo
+CLAUDE.md
