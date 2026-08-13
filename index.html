@@ -1,3 +1,7 @@
+---
+# Front matter (intentionally empty) tells Jekyll to process the {% include %}
+# tags below. Without it, Jekyll would copy this file verbatim.
+---
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -31,46 +35,7 @@
 </head>
 <body>
 
-<header class="nav" id="nav">
-  <div class="nav-inner">
-    <a class="nav-logo" href="#top" aria-label="Fullstack Lending — home">
-      <img class="nav-logo-mark" src="/assets/logo/ascend-mark-color-transparent.svg" alt="" width="55" height="34">
-      <span class="nav-logo-text">
-        <span class="nav-logo-name">fullstack</span>
-        <span class="nav-logo-sub">lending</span>
-      </span>
-    </a>
-    <nav class="nav-links" aria-label="Primary">
-      <a href="#programs">Programs</a>
-      <a href="#how-it-works">How it works</a>
-      <a href="#portal">Portal</a>
-      <a href="#about">About</a>
-      <a href="/brokers/">Brokers</a>
-      <a href="/contact/">Contact</a>
-    </nav>
-    <div class="nav-actions">
-      <a class="btn btn--ghost" href="https://loans.fullstacklending.com/login">Log in</a>
-    </div>
-    <button class="nav-burger" id="navBurger" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
-      <span></span><span></span>
-    </button>
-  </div>
-</header>
-
-<div class="mobile-menu" id="mobileMenu" hidden>
-  <nav aria-label="Mobile">
-    <a href="#programs">Programs</a>
-    <a href="#how-it-works">How it works</a>
-    <a href="#portal">Portal</a>
-    <a href="#about">About</a>
-    <a href="/brokers/">Brokers</a>
-    <a href="/contact/">Contact</a>
-    <div class="mobile-menu-actions">
-      <a class="btn btn--ghost" href="https://loans.fullstacklending.com/login">Log in</a>
-      <a class="btn btn--paper" href="https://loans.fullstacklending.com/signup">Get a quote</a>
-    </div>
-  </nav>
-</div>
+{% include nav.html %}
 
 <main id="top">
 
@@ -776,49 +741,7 @@
   </div>
 </aside>
 
-<footer class="footer">
-  <div class="container footer-grid">
-    <div class="footer-brand">
-      <img src="/assets/logo/fullstack-stacked-color-dark.svg" alt="Fullstack Lending" width="120" height="120">
-    </div>
-    <nav class="footer-col" aria-label="Programs">
-      <h4>Programs</h4>
-      <a href="#programs">Fix &amp; Flip</a>
-      <a href="#programs">Construction</a>
-      <a href="#programs">Bridge</a>
-      <a href="#programs">Rental</a>
-      <a href="#programs">Short-Term Rental</a>
-      <a href="#programs">Rental Portfolio</a>
-      <a href="#programs">Bank Statement</a>
-    </nav>
-    <nav class="footer-col" aria-label="Company">
-      <h4>Company</h4>
-      <a href="#about">About</a>
-      <a href="#how-it-works">How it works</a>
-      <a href="/brokers/">Brokers</a>
-      <a href="/contact/">Contact</a>
-      <a href="#faq">FAQ</a>
-    </nav>
-    <nav class="footer-col" aria-label="Portal">
-      <h4>Portal</h4>
-      <a href="https://loans.fullstacklending.com/login">Log in</a>
-      <a href="https://loans.fullstacklending.com/signup">Apply</a>
-      <a href="mailto:loans@fullstacklending.com">loans@fullstacklending.com</a>
-    </nav>
-  </div>
-  <div class="container footer-legal">
-    <nav class="footer-legal-links" aria-label="Legal">
-      <a href="/privacy-policy/">Privacy Policy</a>
-      <a href="/terms-of-service/">Terms of Service</a>
-    </nav>
-    <p>Fullstack Lending offers business-purpose loans secured by non-owner-occupied
-    residential real estate. All loans are subject to underwriting and credit
-    approval. This is not a commitment to lend. Loan programs, terms, and rates
-    are subject to change without notice and may not be available in all states.
-    Not available in ND, NY, SD, VT, or WV.</p>
-    <p>© <span id="year">2026</span> Fullstack Lending · fullstacklending.com</p>
-  </div>
-</footer>
+{% include footer.html %}
 
 <script src="/js/main.js"></script>
 </body>

@@ -1,3 +1,7 @@
+---
+# Front matter (intentionally empty) tells Jekyll to process the {% include %}
+# tags below. Without it, Jekyll would copy this file verbatim.
+---
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -33,17 +37,7 @@
 
 <!-- Campaign landing page: nav is logo-only (attention ratio 1:1) —
      the form is the single action, so no site links compete with it. -->
-<header class="nav is-scrolled" id="nav">
-  <div class="nav-inner">
-    <a class="nav-logo" href="/" aria-label="Fullstack Lending — home">
-      <img class="nav-logo-mark" src="/assets/logo/ascend-mark-color-transparent.svg" alt="" width="55" height="34">
-      <span class="nav-logo-text">
-        <span class="nav-logo-name">fullstack</span>
-        <span class="nav-logo-sub">lending</span>
-      </span>
-    </a>
-  </div>
-</header>
+{% include nav.html scrolled=true minimal=true %}
 
 <!-- No .reveal / data-split here: on a paid lander the first viewport
      must be readable instantly, so entrance animations are skipped. -->
@@ -206,20 +200,7 @@
   </div>
 </main>
 
-<footer class="footer">
-  <div class="container footer-legal" style="margin-top: 0; border-top: none; padding-top: 0;">
-    <nav class="footer-legal-links" aria-label="Legal">
-      <a href="/privacy-policy/">Privacy Policy</a>
-      <a href="/terms-of-service/">Terms of Service</a>
-    </nav>
-    <p>Fullstack Lending offers business-purpose loans secured by non-owner-occupied
-    residential real estate. All loans are subject to underwriting and credit
-    approval. This is not a commitment to lend. Loan programs, terms, and rates
-    are subject to change without notice and may not be available in all states.
-    Not available in ND, NY, SD, VT, or WV.</p>
-    <p>© <span id="year">2026</span> Fullstack Lending · <a href="/" style="color: var(--faint-on-ink);">fullstacklending.com</a></p>
-  </div>
-</footer>
+{% include footer.html slim=true %}
 
 <script src="/js/main.js"></script>
 <script>

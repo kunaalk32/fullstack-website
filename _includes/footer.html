@@ -1,0 +1,54 @@
+{% comment %}
+  Shared site footer.
+
+  Params:
+    slim — when true, render only the legal strip (used on subpages).
+           When omitted/false, render the full footer with the
+           Programs / Company / Portal columns above the legal strip
+           (used on the homepage and the thank-you page).
+{% endcomment %}
+<footer class="footer">
+{% unless include.slim %}
+  <div class="container footer-grid">
+    <div class="footer-brand">
+      <img src="/assets/logo/fullstack-stacked-color-dark.svg" alt="Fullstack Lending" width="120" height="120">
+    </div>
+    <nav class="footer-col" aria-label="Programs">
+      <h4>Programs</h4>
+      <a href="/#programs">Fix &amp; Flip</a>
+      <a href="/#programs">Construction</a>
+      <a href="/#programs">Bridge</a>
+      <a href="/#programs">Rental</a>
+      <a href="/#programs">Short-Term Rental</a>
+      <a href="/#programs">Rental Portfolio</a>
+      <a href="/#programs">Bank Statement</a>
+    </nav>
+    <nav class="footer-col" aria-label="Company">
+      <h4>Company</h4>
+      <a href="/#about">About</a>
+      <a href="/#how-it-works">How it works</a>
+      <a href="/brokers/">Brokers</a>
+      <a href="/contact/">Contact</a>
+      <a href="/#faq">FAQ</a>
+    </nav>
+    <nav class="footer-col" aria-label="Portal">
+      <h4>Portal</h4>
+      <a href="https://loans.fullstacklending.com/login">Log in</a>
+      <a href="https://loans.fullstacklending.com/signup">Apply</a>
+      <a href="mailto:loans@fullstacklending.com">loans@fullstacklending.com</a>
+    </nav>
+  </div>
+{% endunless %}
+  <div class="container footer-legal"{% if include.slim %} style="margin-top: 0; border-top: none; padding-top: 0;"{% endif %}>
+    <nav class="footer-legal-links" aria-label="Legal">
+      <a href="/privacy-policy/">Privacy Policy</a>
+      <a href="/terms-of-service/">Terms of Service</a>
+    </nav>
+    <p>Fullstack Lending offers business-purpose loans secured by non-owner-occupied
+    residential real estate. All loans are subject to underwriting and credit
+    approval. This is not a commitment to lend. Loan programs, terms, and rates
+    are subject to change without notice and may not be available in all states.
+    Not available in ND, NY, SD, VT, or WV.</p>
+    <p>© <span id="year">2026</span> Fullstack Lending · <a href="/" style="color: var(--faint-on-ink);">fullstacklending.com</a></p>
+  </div>
+</footer>
