@@ -43,6 +43,22 @@
   var META_ID = "1058965793168149";
   var CACHE_KEY = "fsl_geo_cc";
 
+  /* ---------- Event funnel: window.fslTrack(name, params) ----------
+     Pages report GA4 events through this instead of calling gtag
+     directly, because GA loads late (after the geo lookup) or never
+     (non-US / geo failure). Events fired before GA is ready are
+     buffered and flushed in order once it loads; if it never loads,
+     the capped buffer is simply discarded — nothing leaves the page. */
+  var pending = [];
+  var gaReady = false;
+  window.fslTrack = function (name, params) {
+    if (gaReady) {
+      window.gtag("event", name, params || {});
+    } else if (pending.length < 100) {
+      pending.push([name, params || {}]);
+    }
+  };
+
   function loadGoogleAnalytics() {
     window.dataLayer = window.dataLayer || [];
     window.gtag = function () { window.dataLayer.push(arguments); };
@@ -52,6 +68,9 @@
     document.head.appendChild(s);
     window.gtag("js", new Date());
     window.gtag("config", GA_ID);
+    gaReady = true;
+    pending.forEach(function (evt) { window.gtag("event", evt[0], evt[1]); });
+    pending.length = 0;
   }
 
   function loadMetaPixel() {
