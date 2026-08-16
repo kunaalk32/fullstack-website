@@ -1259,7 +1259,7 @@ a { color: inherit; }
 
 .footer-col { display: flex; flex-direction: column; gap: 0.55rem; }
 
-.footer-col h4 {
+.footer-col h3 {
   font-size: 0.72rem;
   font-weight: 500;
   letter-spacing: 0.2em;
