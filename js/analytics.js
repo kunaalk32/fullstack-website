@@ -116,19 +116,41 @@
 
   // Reuse the first lookup for the rest of the browsing session — cuts
   // geo-provider calls to one per visit and speeds up later page views.
-  var cached = null;
-  try { cached = sessionStorage.getItem(CACHE_KEY); } catch (e) { /* private mode */ }
+  function runGate() {
+    var cached = null;
+    try { cached = sessionStorage.getItem(CACHE_KEY); } catch (e) { /* private mode */ }
 
-  if (cached) {
-    gateOn(cached);
-    return;
+    if (cached) {
+      gateOn(cached);
+      return;
+    }
+
+    detectCountry().then(function (cc) {
+      cc = (cc || "").toUpperCase();
+      try { sessionStorage.setItem(CACHE_KEY, cc || "XX"); } catch (e) { /* ignore */ }
+      gateOn(cc);
+    }).catch(function () {
+      // Both providers failed: fail closed, load nothing, retry next page.
+    });
   }
 
-  detectCountry().then(function (cc) {
-    cc = (cc || "").toUpperCase();
-    try { sessionStorage.setItem(CACHE_KEY, cc || "XX"); } catch (e) { /* ignore */ }
-    gateOn(cc);
-  }).catch(function () {
-    // Both providers failed: fail closed, load nothing, retry next page.
-  });
+  /* Run the geo lookup + analytics bootstrap at browser idle rather than during
+     load. GA (Tag Manager) and the Meta Pixel were the largest contributors to
+     Total Blocking Time; idling them keeps the main thread free through first
+     paint and interactivity. The UTM capture and fslTrack funnel above stay
+     synchronous — only this network/script-heavy tail is deferred. The 2.5s
+     timeout (and setTimeout fallback for Safari < 16.4, which lacks
+     requestIdleCallback) guarantees it still fires promptly, so the PageView is
+     captured for essentially every visit. */
+  var gateStarted = false;
+  function startGate() {
+    if (gateStarted) return;
+    gateStarted = true;
+    runGate();
+  }
+  if ("requestIdleCallback" in window) {
+    requestIdleCallback(startGate, { timeout: 2500 });
+  } else {
+    setTimeout(startGate, 2500);
+  }
 })();

@@ -99,6 +99,9 @@
     var ctx = canvas.getContext("2d");
     var dpr = Math.min(window.devicePixelRatio || 1, 2);
     var w = 0, h = 0;
+    // Cache viewport height; reading window.innerHeight in the per-frame path
+    // forces a layout flush. Refreshed in resize() (fires on viewport change).
+    var vh = window.innerHeight;
 
     var ROOF_LIFT = 1.15;    // roof height above walls when fully exploded
     var GROUND_DROP = 0.8;   // ground depth below walls when fully exploded
@@ -255,16 +258,20 @@
 
     function smoothstep(p) { return p * p * (3 - 2 * p); }
 
-    function progress() {
-      // Reversed direction: fully exploded at the top of the page and
-      // assembling as the user scrolls down. Returns explodeP, so 1 at
-      // scrollY 0 (exploded) easing to 0 past the scroll span (assembled).
-      var p = window.scrollY / (window.innerHeight * SCROLL_SPAN);
+    // Reversed direction: fully exploded at the top of the page and
+    // assembling as the user scrolls down. Returns explodeP, so 1 at
+    // scrollY 0 (exploded) easing to 0 past the scroll span (assembled).
+    // Takes scrollY as an argument so callers can read it once, before any
+    // style write, and avoid a read-after-write forced reflow.
+    function progressFrom(sy) {
+      var p = sy / (vh * SCROLL_SPAN);
       return 1 - smoothstep(Math.min(Math.max(p, 0), 1));
     }
+    function progress() { return progressFrom(window.scrollY); }
 
     function resize() {
       var r = canvas.getBoundingClientRect();
+      vh = window.innerHeight;
       w = Math.max(1, Math.round(r.width));
       h = Math.max(1, Math.round(r.height));
       canvas.width = w * dpr;
@@ -289,18 +296,22 @@
     // Parallax: lag the house ~25% behind the scroll so more of the
     // assemble animation stays in view. Set a CSS var so it composes with
     // the element's centering transform (which differs by breakpoint).
-    function applyParallax() {
+    function applyParallaxFrom(sy) {
       if (reducedMotion) return;
-      canvas.style.setProperty("--house-parallax", (window.scrollY * 0.25) + "px");
+      canvas.style.setProperty("--house-parallax", (sy * 0.25) + "px");
     }
+    function applyParallax() { applyParallaxFrom(window.scrollY); }
 
     function onScroll() {
-      applyParallax();
+      // Read scroll position once, up front, then write — reading it again
+      // after the parallax style write would force a synchronous reflow.
+      var sy = window.scrollY;
+      applyParallaxFrom(sy);
       if (ticking || !buildDone) return;
       ticking = true;
       requestAnimationFrame(function () {
         ticking = false;
-        render(1, progress());
+        render(1, progressFrom(sy));
       });
     }
 
@@ -322,9 +333,6 @@
       render(buildDone ? 1 : 0, progress());
     });
   }
-
-  var heroHouse = document.getElementById("heroHouse");
-  if (heroHouse) WireHouse(heroHouse);
 
   /* ---------- Word-split headlines ---------- */
 
@@ -381,6 +389,22 @@
     });
   }, { threshold: 0.6 });
   document.querySelectorAll("[data-count]").forEach(function (el) { countIO.observe(el); });
+
+  /* ---------- Hero canvas (deferred) ----------
+     WireHouse runs an animated build on load. Kicked off here — after the text
+     reveals and count-ups are registered above — and only once the main thread
+     is idle, so the hero copy (the LCP element) paints without waiting on the
+     canvas and the build work stays out of the initial blocking window. The
+     house is decorative and aria-hidden, and already "builds in" on load, so a
+     slightly later start is imperceptible. */
+  var heroHouse = document.getElementById("heroHouse");
+  if (heroHouse) {
+    if ("requestIdleCallback" in window) {
+      requestIdleCallback(function () { WireHouse(heroHouse); }, { timeout: 1000 });
+    } else {
+      requestAnimationFrame(function () { WireHouse(heroHouse); });
+    }
+  }
 
   /* ---------- Sticky step sequence ---------- */
 
