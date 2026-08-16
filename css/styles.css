@@ -795,7 +795,9 @@ a { color: inherit; }
   gap: 1.6rem;
   font-size: 0.85rem;
   letter-spacing: 0.18em;
-  color: var(--faint-on-ink);
+  /* muted (not faint) so the 01–04 numbers clear WCAG AA (~6.6:1 on --ink);
+     faint (0.38α) fell short. Active step stays lime, hover brightens. */
+  color: var(--muted-on-ink);
 }
 
 .steps-rail li {
@@ -826,7 +828,7 @@ a { color: inherit; }
   cursor: pointer;
 }
 
-.steps-rail li:hover { color: var(--muted-on-ink); }
+.steps-rail li:hover { color: var(--text-on-ink); }
 .steps-rail li.is-active { color: var(--lime); }
 .steps-rail li.is-active::before { width: 26px; }
 
