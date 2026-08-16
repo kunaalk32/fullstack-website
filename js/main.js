@@ -534,7 +534,8 @@
         detailEl.appendChild(buildInterim(card));
       }
 
-      opener = card;
+      // Return focus to the card's trigger button (not the article) on close.
+      opener = card.querySelector(".card-open") || card;
       backdrop.classList.add("is-open");
       drawer.classList.add("is-open");
       drawer.setAttribute("aria-hidden", "false");
@@ -552,13 +553,11 @@
     }
 
     document.querySelectorAll(".card--program").forEach(function (card) {
-      card.addEventListener("click", function () { openDrawer(card); });
-      card.addEventListener("keydown", function (e) {
-        if (e.key === "Enter" || e.key === " " || e.key === "Spacebar") {
-          e.preventDefault();
-          openDrawer(card);
-        }
-      });
+      // The trigger is a real <button> stretched over the card, so Enter/Space
+      // are handled natively — no manual keydown needed. Fall back to the card
+      // itself if the button is ever absent.
+      var trigger = card.querySelector(".card-open") || card;
+      trigger.addEventListener("click", function () { openDrawer(card); });
     });
 
     closeBtn.addEventListener("click", closeDrawer);
