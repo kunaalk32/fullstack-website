@@ -323,9 +323,6 @@
     });
   }
 
-  var heroHouse = document.getElementById("heroHouse");
-  if (heroHouse) WireHouse(heroHouse);
-
   /* ---------- Word-split headlines ---------- */
 
   document.querySelectorAll("[data-split]").forEach(function (el) {
@@ -381,6 +378,22 @@
     });
   }, { threshold: 0.6 });
   document.querySelectorAll("[data-count]").forEach(function (el) { countIO.observe(el); });
+
+  /* ---------- Hero canvas (deferred) ----------
+     WireHouse runs an animated build on load. Kicked off here — after the text
+     reveals and count-ups are registered above — and only once the main thread
+     is idle, so the hero copy (the LCP element) paints without waiting on the
+     canvas and the build work stays out of the initial blocking window. The
+     house is decorative and aria-hidden, and already "builds in" on load, so a
+     slightly later start is imperceptible. */
+  var heroHouse = document.getElementById("heroHouse");
+  if (heroHouse) {
+    if ("requestIdleCallback" in window) {
+      requestIdleCallback(function () { WireHouse(heroHouse); }, { timeout: 1000 });
+    } else {
+      requestAnimationFrame(function () { WireHouse(heroHouse); });
+    }
+  }
 
   /* ---------- Sticky step sequence ---------- */
 
