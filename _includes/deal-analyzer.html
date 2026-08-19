@@ -118,6 +118,16 @@
           <input type="hidden" name="v" value="2">
           <input type="hidden" name="or" value="c7be8196-1ecf-4d49-8aa3-ad46987f31fd">
 
+          <!-- First-party UTM attribution. Populated from the arrival utm_*
+               (stored session set / current URL) at submit — see the script
+               below. AC custom-field ids: 8 source, 9 medium, 10 campaign,
+               11 term, 12 content. -->
+          <input type="hidden" name="field[8]"  data-utm="utm_source">
+          <input type="hidden" name="field[9]"  data-utm="utm_medium">
+          <input type="hidden" name="field[10]" data-utm="utm_campaign">
+          <input type="hidden" name="field[11]" data-utm="utm_term">
+          <input type="hidden" name="field[12]" data-utm="utm_content">
+
           <div class="field">
             <label for="da-first">First name</label>
             <input id="da-first" name="firstname" type="text" autocomplete="given-name" required>
@@ -259,6 +269,35 @@
       if (window.fslTrack) window.fslTrack(name, params);
     }
 
+    // --- First-party UTM attribution ---
+    // Copy the arrival utm_* into AC's hidden fields so a Deal Analyzer lead
+    // carries the same source attribution as the visitor's eventual portal
+    // signup. Source of truth is the session set analytics.js stashes in
+    // sessionStorage (so a visitor who landed with UTMs elsewhere and
+    // navigated here is still attributed), falling back to the current URL.
+    // Untagged visits default to website/direct, matching the portal-link
+    // tagging in main.js. Filled at submit — analytics.js's capture is a
+    // deferred script, so the store is reliably populated by then.
+    var UTM_KEYS = ["utm_source", "utm_medium", "utm_campaign", "utm_term", "utm_content"];
+    function fillUtms() {
+      var utms = {};
+      try {
+        var stored = sessionStorage.getItem("fsl_utm");
+        if (stored) utms = JSON.parse(stored) || {};
+      } catch (e) { /* private mode / bad JSON — fall back to the URL below */ }
+      var url = new URLSearchParams(window.location.search);
+      UTM_KEYS.forEach(function (key) {
+        var val = typeof utms[key] === "string" ? utms[key] : url.get(key);
+        var input = form.querySelector('input[data-utm="' + key + '"]');
+        if (input && val != null) input.value = val;
+      });
+      var src = form.querySelector('input[data-utm="utm_source"]');
+      var med = form.querySelector('input[data-utm="utm_medium"]');
+      if (src && !src.value) src.value = "website";
+      if (med && !med.value) med.value = "direct";
+    }
+    fillUtms();
+
     // --- Funnel: form entered the viewport ---
     if ("IntersectionObserver" in window) {
       var viewIO = new IntersectionObserver(function (entries, io) {
@@ -328,6 +367,7 @@
 
     form.addEventListener("submit", function () {
       submitted = true;
+      fillUtms(); // refresh from the (now definitely-populated) session store
       leadMeta = {
         deal_timeline: form.querySelector("#da-timeline").value,
         seconds_to_submit: startedAt === null
