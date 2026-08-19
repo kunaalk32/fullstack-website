@@ -298,6 +298,34 @@
     }
     fillUtms();
 
+    // --- Pre-fill email from a DM referral (#e=) ---
+    // Instagram DM referrals arrive with the email we already collected in the
+    // DM. analytics.js pulls it off the #e= fragment, stashes it, and strips it
+    // from the URL before GA/Meta load; here we drop it into the email field so
+    // the visitor doesn't retype it. Prefer the stashed value (survives to the
+    // modal / later navigation); fall back to reading the fragment directly,
+    // since this inline script runs at parse time — before the deferred
+    // analytics.js has had a chance to stash it on the very first load. Parsed
+    // with decodeURIComponent (not URLSearchParams) so a '+' in the address
+    // survives. Assigning to .value is injection-safe.
+    (function prefillEmail() {
+      var email = null;
+      try { email = sessionStorage.getItem("fsl_lead_email"); } catch (e) { /* private mode */ }
+      if (!email) {
+        var frag = window.location.hash.slice(1);
+        if (frag) {
+          frag.split("&").forEach(function (pair) {
+            var eq = pair.indexOf("=");
+            if (eq !== -1 && pair.slice(0, eq) === "e") {
+              try { email = decodeURIComponent(pair.slice(eq + 1)); } catch (e) { email = pair.slice(eq + 1); }
+            }
+          });
+        }
+      }
+      var field = form.querySelector("#da-email");
+      if (email && field && !field.value) field.value = email.trim();
+    })();
+
     // --- Funnel: form entered the viewport ---
     if ("IntersectionObserver" in window) {
       var viewIO = new IntersectionObserver(function (entries, io) {

@@ -39,6 +39,47 @@
     if (hasUtms) sessionStorage.setItem("fsl_utm", JSON.stringify(utms));
   } catch (e) { /* private mode etc. — portal links fall back to website/direct */ }
 
+  /* ---------- Lead email from a DM referral (#e=) — strip before analytics ----------
+     Instagram DM referrals arrive at /lp/deal-analyzer/#e=<email>, carrying the
+     email we collected in the DM so the Deal Analyzer form can pre-fill it
+     (deal-analyzer.html reads the value stashed below). The email is PII and
+     lives in the URL fragment, which GA4/Meta would otherwise send as part of
+     page_location — so pull it out, stash it for the form, and strip it from
+     the URL *now*, synchronously, long before the idle geo gate loads GA/Meta.
+     The fragment (not a query param) is used precisely so the email is never
+     placed in a request line or Referer header. Parsed by hand with
+     decodeURIComponent rather than URLSearchParams so a '+' in the local part
+     survives (URLSearchParams would turn it into a space). */
+  try {
+    var frag = window.location.hash.slice(1); // drop leading '#'
+    if (frag) {
+      var email = null;
+      var kept = [];
+      frag.split("&").forEach(function (pair) {
+        var eq = pair.indexOf("=");
+        var key = eq === -1 ? pair : pair.slice(0, eq);
+        if (key === "e") {
+          var raw = eq === -1 ? "" : pair.slice(eq + 1);
+          try { email = decodeURIComponent(raw); } catch (e) { email = raw; }
+        } else if (pair) {
+          kept.push(pair);
+        }
+      });
+      if (email !== null) {
+        var trimmed = email.trim();
+        // Only stash something that actually looks like an email.
+        if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmed)) {
+          try { sessionStorage.setItem("fsl_lead_email", trimmed); } catch (e) { /* private mode */ }
+        }
+        // Rewrite the URL without e= (keeping any other fragment bits), so the
+        // PII is gone from location.href before GA/Meta ever read it.
+        var rest = kept.join("&");
+        var clean = window.location.pathname + window.location.search + (rest ? "#" + rest : "");
+        history.replaceState(null, "", clean);
+      }
+    }
+  } catch (e) { /* fragment parsing / replaceState unsupported — leave it be */ }
+
   var GA_ID = "G-P2R5NRW1WV";
   var META_ID = "1058965793168149";
   var CACHE_KEY = "fsl_geo_cc";
