@@ -1384,6 +1384,12 @@ a { color: inherit; }
   color: var(--faint-on-ink);
 }
 
+.form-error {
+  font-size: 0.85rem;
+  color: #f37c7b;
+}
+.form-error[hidden] { display: none; }
+
 .form-success {
   margin-top: 3rem;
   max-width: 640px;

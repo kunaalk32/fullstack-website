@@ -88,6 +88,17 @@
         <label for="cf-msg">What are you working on?</label>
         <textarea id="cf-msg" name="field[7]" required></textarea>
       </div>
+      <!-- reCAPTCHA (enabled on ActiveCampaign form id=3). The widget injects a
+           hidden `g-recaptcha-response` field into this form; AC's proc.php
+           rejects the POST if it's missing/invalid. data-theme=dark matches the
+           ink ground; the submit guard below blocks submit until it's solved. -->
+      <div class="field field--full">
+        <label for="cf-captcha">Please verify your request</label>
+        <div id="cf-captcha" class="g-recaptcha"
+             data-sitekey="6LcwIw8TAAAAACP1ysM08EhCgzd6q5JAOUR1a0Go"
+             data-theme="dark"></div>
+        <p class="form-error" id="captchaError" hidden>Please confirm you're not a robot.</p>
+      </div>
       <div class="form-actions">
         <button class="btn btn--lime btn--lg" type="submit">Send message</button>
       </div>
@@ -110,6 +121,9 @@
 {% include footer.html slim=true %}
 
 <script src="/js/main.js" defer></script>
+<!-- Google reCAPTCHA v2 — auto-renders the .g-recaptcha widget above and
+     injects the hidden g-recaptcha-response field into #contactForm. -->
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 <script>
   // The form POSTs natively to ActiveCampaign's proc.php, targeting a
   // hidden iframe so the page doesn't navigate away. HTML5 validation
@@ -121,7 +135,18 @@
     var submitted = false;
     var leadMeta = null;
 
-    form.addEventListener("submit", function () {
+    var captchaError = document.getElementById("captchaError");
+
+    form.addEventListener("submit", function (e) {
+      // HTML5 validation has already passed by the time this fires. Gate on the
+      // reCAPTCHA token so we never show a false success for a POST that AC will
+      // reject (empty token also covers an expired challenge).
+      if (typeof grecaptcha !== "undefined" && !grecaptcha.getResponse()) {
+        e.preventDefault();
+        if (captchaError) captchaError.hidden = false;
+        return;
+      }
+      if (captchaError) captchaError.hidden = true;
       submitted = true;
       // Captured for the GA4 event; deliberately no name/email — PII
       // never goes to analytics.
