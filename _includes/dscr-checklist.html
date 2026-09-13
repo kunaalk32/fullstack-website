@@ -12,12 +12,11 @@
          intended navigation, not leakage). Should match the nav include's
          `minimal` flag on the same page.
 
-  NOTE — ActiveCampaign form not wired yet. The hidden u / f / or values
-  below are placeholders (__DSCR_FORM_ID__ / __DSCR_FORM_HASH__). Once the
-  new AC form exists, copy its u, f and or values out of the embed code into
-  the three inputs marked "AC form identity" and the form goes live. Field
-  mappings (firstname/lastname/email, field[14] Deal Timeline, field[8–12]
-  UTMs) already match the Fullstack AC account.
+  The form posts to ActiveCampaign hosted form id 8 ("DSCR Readiness
+  Checklist", a duplicate of the Deal Analyzer form id 6). Field mappings —
+  firstname/lastname/email, field[14] Deal Timeline, field[8–12] UTMs —
+  match the Fullstack AC account. Delivery of the checklist PDF is handled
+  by the automation triggered off that form in ActiveCampaign, not here.
 {% endcomment %}
 <!-- No .reveal / data-split here: the first viewport must be readable
      instantly, so entrance animations are skipped. -->
@@ -90,23 +89,19 @@
              state. Hidden u/f/s/c/m/act/v/or fields identify the form;
              fields map firstname/lastname/email + field[14]=Deal timeline
              (AC custom field "deal_timeline").
-
-             >>> NOT LIVE YET: replace the three __DSCR_FORM_*__ placeholders
-             below with the new AC form's u, f and or values (from its embed
-             code). Until then the POST will not reach a real form. <<<
              ============================================================ -->
         <form class="form" id="dscrForm"
               action="https://fullstacklending.activehosted.com/proc.php"
               method="post" target="dscr_ac_target">
-          <!-- AC form identity — fill from the new form's embed code -->
-          <input type="hidden" name="u" value="__DSCR_FORM_ID__">
-          <input type="hidden" name="f" value="__DSCR_FORM_ID__">
+          <!-- AC form identity: hosted form id 8, "DSCR Readiness Checklist" -->
+          <input type="hidden" name="u" value="8">
+          <input type="hidden" name="f" value="8">
           <input type="hidden" name="s">
           <input type="hidden" name="c" value="0">
           <input type="hidden" name="m" value="0">
           <input type="hidden" name="act" value="sub">
           <input type="hidden" name="v" value="2">
-          <input type="hidden" name="or" value="__DSCR_FORM_HASH__">
+          <input type="hidden" name="or" value="c0bd237f-92b2-442e-a499-84f968aa9030">
 
           <!-- First-party UTM attribution. Populated from the arrival utm_*
                (stored session set / current URL) at submit — see the script
