@@ -1741,6 +1741,110 @@ a { color: inherit; }
   box-shadow: 0 1px 3px rgba(23, 24, 27, 0.12);
 }
 
+/* ---------- DSCR checklist preview ---------- */
+/* Document-screenshot preview of the DSCR lead magnet, above the form — the
+   checklist twin of .sheet-shot on the Deal Analyzer page. The file-window
+   chrome (.sheet-chrome / .sheet-dot / .sheet-filename) is shared with that
+   preview; below it, one numbered section opened mid-document, checkbox rows
+   (a couple ticked, to read as "readiness"), and a highlighted pro-tip
+   callout — so it reads unmistakably as the checklist PDF. Decorative;
+   aria-hidden in the markup. */
+.doc-shot {
+  margin: 2.2rem 0 0.5rem;
+  max-width: 460px;
+  background: var(--white);
+  border: 1px solid rgba(23, 24, 27, 0.14);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 18px 40px rgba(23, 24, 27, 0.1);
+}
+
+.doc-page { padding: 1.15rem 1.25rem 1.3rem; }
+
+.doc-eyebrow {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--olive);
+}
+
+.doc-heading {
+  margin-top: 0.15rem;
+  font-size: 1.02rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--text-on-paper);
+}
+
+/* Olive underline rule, echoing the section rules in the PDF. */
+.doc-rule {
+  height: 2px;
+  margin: 0.5rem 0 0.85rem;
+  background: var(--olive);
+  opacity: 0.85;
+}
+
+.doc-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.doc-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  font-size: 0.82rem;
+  line-height: 1.3;
+  color: var(--muted-on-paper);
+}
+
+/* Empty checkbox: a square outline. */
+.doc-box {
+  flex: none;
+  width: 14px;
+  height: 14px;
+  margin-top: 0.08rem;
+  border: 1.5px solid rgba(23, 24, 27, 0.4);
+  border-radius: 3px;
+}
+
+/* Ticked checkbox: olive fill + a CSS checkmark, for the "done" rows. */
+.doc-box--done {
+  position: relative;
+  border-color: var(--olive);
+  background: var(--olive);
+}
+.doc-box--done::after {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 1px;
+  width: 4px;
+  height: 8px;
+  border: solid var(--white);
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+/* A ticked row's text reads as complete: stepped up to full ink. */
+.doc-item--done { color: var(--text-on-paper); }
+
+/* Pro-tip callout: lime-tinted band with a moss left border, matching the
+   highlighted tips in the PDF. */
+.doc-tip {
+  margin-top: 0.95rem;
+  padding: 0.6rem 0.75rem;
+  font-size: 0.78rem;
+  line-height: 1.35;
+  color: var(--text-on-paper);
+  background: rgba(143, 166, 55, 0.16);
+  border-left: 3px solid var(--moss);
+  border-radius: 0 5px 5px 0;
+}
+.doc-tip strong { color: var(--olive); }
+
 /* ---------- Legal pages ---------- */
 
 .legal-head {
