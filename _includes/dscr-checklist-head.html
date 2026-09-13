@@ -1,0 +1,35 @@
+{% comment %}
+  Shared <head> for the DSCR Readiness Checklist pages. Included by both the
+  indexable page at /dscr-checklist/ and the paid landing page at
+  /lp/dscr-checklist/, so the two stay identical except for one thing:
+
+    noindex — when true, add <meta name="robots" content="noindex">.
+              The /lp/ variant passes this; its canonical already points
+              at /dscr-checklist/, so the two URLs don't compete in search.
+{% endcomment %}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Analytics: GA4 + Meta Pixel, loaded only for US visitors (see js/analytics.js) -->
+  <script src="/js/analytics.js" defer></script>
+  <title>The DSCR Readiness Checklist — Fullstack Lending</title>
+  <meta name="description" content="Free download: the DSCR Readiness Checklist — every document a DSCR lender actually reviews, so your rental loan closes on schedule instead of stalling in underwriting.">
+  <link rel="canonical" href="https://fullstacklending.com/dscr-checklist/">
+{% if include.noindex %}  <meta name="robots" content="noindex">
+{% endif %}  <meta property="og:type" content="website">
+  <meta property="og:title" content="The DSCR Readiness Checklist — free download">
+  <meta property="og:description" content="Every document a DSCR lender reviews, ready before you apply. Free checklist from Fullstack Lending.">
+  <meta property="og:url" content="https://fullstacklending.com/dscr-checklist/">
+  <meta property="og:image" content="https://fullstacklending.com/assets/og-card.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:alt" content="Fullstack Lending">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://fullstacklending.com/assets/og-card.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicons/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicons/favicon-16.png">
+  <link rel="apple-touch-icon" href="/assets/favicons/favicon-180.png">
+  <meta name="theme-color" content="#0B0C0E">
+  <link rel="preload" href="/assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/css/styles.css">
+  <script>document.documentElement.classList.add('js');</script>

@@ -1,0 +1,20 @@
+---
+# Front matter (intentionally empty) tells Jekyll to process the {% include %}
+# tags below. Without it, Jekyll would copy this file verbatim.
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+{% include dscr-checklist-head.html %}
+</head>
+<body class="page-paper">
+
+<!-- Indexable, navbar-linked entry point: full nav so organic and direct
+     visitors can explore the rest of the site. Paid campaigns point at the
+     stripped-down twin at /lp/dscr-checklist/ instead. -->
+{% include nav.html scrolled=true %}
+
+{% include dscr-checklist.html %}
+
+</body>
+</html>

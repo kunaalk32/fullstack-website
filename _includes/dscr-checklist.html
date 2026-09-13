@@ -1,0 +1,420 @@
+{% comment %}
+  Shared body for the DSCR Readiness Checklist pages — the pitch, the lead
+  form, and the funnel/analytics scripts. Included by both /dscr-checklist/
+  (full nav, organic + navbar traffic) and /lp/dscr-checklist/ (minimal nav,
+  paid traffic). Modelled on the Deal Analyzer lead magnet.
+
+  Params:
+    lp — when true, this is the paid landing variant: render the slim
+         footer (a near dead-end) and emit the nav_leak exit-tracking
+         event. Omit it on the organic page, which gets the full footer
+         for onward exploration and no leak tracking (nav clicks there are
+         intended navigation, not leakage). Should match the nav include's
+         `minimal` flag on the same page.
+
+  NOTE — ActiveCampaign form not wired yet. The hidden u / f / or values
+  below are placeholders (__DSCR_FORM_ID__ / __DSCR_FORM_HASH__). Once the
+  new AC form exists, copy its u, f and or values out of the embed code into
+  the three inputs marked "AC form identity" and the form goes live. Field
+  mappings (firstname/lastname/email, field[14] Deal Timeline, field[8–12]
+  UTMs) already match the Fullstack AC account.
+{% endcomment %}
+<!-- No .reveal / data-split here: the first viewport must be readable
+     instantly, so entrance animations are skipped. -->
+<main class="subpage subpage--paper subpage--lp">
+  <div class="container lp-grid">
+
+    <h1 class="display-2 lp-title">Most DSCR delays aren't the property. They're the paperwork.</h1>
+    <p class="subpage-intro lp-sub">The free checklist of everything a DSCR lender reviews — so you walk in ready and close on schedule.</p>
+
+    <!-- Tablet/mobile only: a CTA button that stands in for the inline form
+         and opens it in a modal, so the ask is visible without scrolling.
+         Hidden on desktop (the form shows inline there). -->
+    <button type="button" class="btn btn--lime btn--lg lp-form-open" id="lpFormOpen"
+            aria-haspopup="dialog" aria-controls="lpForm">Get the free checklist</button>
+
+    <div class="lp-body">
+      <!-- Preview of the lead magnet, inline beside the form on desktop.
+           Decorative, so aria-hidden. Mirrors the real PDF, opened to the
+           first section ("1. Your entity"): a couple of rows ticked to read
+           as readiness, then the section's pro-tip callout. -->
+      <figure class="doc-shot" aria-hidden="true">
+        <div class="sheet-chrome">
+          <span class="sheet-dot"></span>
+          <span class="sheet-dot"></span>
+          <span class="sheet-dot"></span>
+          <span class="sheet-filename">DSCR&nbsp;Readiness&nbsp;Checklist.pdf</span>
+        </div>
+        <div class="doc-page">
+          <div class="doc-eyebrow">DSCR Readiness Checklist</div>
+          <div class="doc-heading">1. Your entity</div>
+          <div class="doc-rule"></div>
+          <div class="doc-list">
+            <div class="doc-item doc-item--done">
+              <span class="doc-box doc-box--done"></span>
+              <span>Entity formed (LLC, corporation, or revocable trust)</span>
+            </div>
+            <div class="doc-item doc-item--done">
+              <span class="doc-box doc-box--done"></span>
+              <span>Articles of Organization, stamped by the Secretary of State</span>
+            </div>
+            <div class="doc-item">
+              <span class="doc-box"></span>
+              <span>Signed Operating Agreement showing all owners</span>
+            </div>
+            <div class="doc-item">
+              <span class="doc-box"></span>
+              <span>Certificate of Good Standing, dated within 90 days of closing</span>
+            </div>
+            <div class="doc-item">
+              <span class="doc-box"></span>
+              <span>Signed W-9 with the entity's tax ID</span>
+            </div>
+          </div>
+          <p class="doc-tip"><strong>Pro tip:</strong> Forming a new LLC for the
+          purchase? Do it before you go under contract — waiting on the state to
+          process formation documents is one of the most common avoidable delays.</p>
+        </div>
+      </figure>
+    </div>
+
+    <aside class="lp-form" id="lpForm" aria-labelledby="formCardTitle">
+      <div class="form-card">
+        <button type="button" class="lp-form-close" id="lpFormClose" aria-label="Close">&times;</button>
+        <h2 class="form-card-title" id="formCardTitle">Get the free checklist</h2>
+        <p class="form-card-sub">Sent straight to your inbox.</p>
+
+        <!-- ============================================================
+             Posts directly to ActiveCampaign (hosted form) via a hidden
+             iframe, so the visitor stays on-page and sees our own success
+             state. Hidden u/f/s/c/m/act/v/or fields identify the form;
+             fields map firstname/lastname/email + field[14]=Deal timeline
+             (AC custom field "deal_timeline").
+
+             >>> NOT LIVE YET: replace the three __DSCR_FORM_*__ placeholders
+             below with the new AC form's u, f and or values (from its embed
+             code). Until then the POST will not reach a real form. <<<
+             ============================================================ -->
+        <form class="form" id="dscrForm"
+              action="https://fullstacklending.activehosted.com/proc.php"
+              method="post" target="dscr_ac_target">
+          <!-- AC form identity — fill from the new form's embed code -->
+          <input type="hidden" name="u" value="__DSCR_FORM_ID__">
+          <input type="hidden" name="f" value="__DSCR_FORM_ID__">
+          <input type="hidden" name="s">
+          <input type="hidden" name="c" value="0">
+          <input type="hidden" name="m" value="0">
+          <input type="hidden" name="act" value="sub">
+          <input type="hidden" name="v" value="2">
+          <input type="hidden" name="or" value="__DSCR_FORM_HASH__">
+
+          <!-- First-party UTM attribution. Populated from the arrival utm_*
+               (stored session set / current URL) at submit — see the script
+               below. AC custom-field ids: 8 source, 9 medium, 10 campaign,
+               11 term, 12 content. -->
+          <input type="hidden" name="field[8]"  data-utm="utm_source">
+          <input type="hidden" name="field[9]"  data-utm="utm_medium">
+          <input type="hidden" name="field[10]" data-utm="utm_campaign">
+          <input type="hidden" name="field[11]" data-utm="utm_term">
+          <input type="hidden" name="field[12]" data-utm="utm_content">
+
+          <div class="field">
+            <label for="dc-first">First name</label>
+            <input id="dc-first" name="firstname" type="text" autocomplete="given-name" required>
+          </div>
+          <div class="field">
+            <label for="dc-last">Last name</label>
+            <input id="dc-last" name="lastname" type="text" autocomplete="family-name" required>
+          </div>
+          <div class="field field--full">
+            <label for="dc-email">Email</label>
+            <input id="dc-email" name="email" type="email" autocomplete="email" required>
+          </div>
+          <div class="field field--full">
+            <label for="dc-timeline">Where are you right now?</label>
+            <select id="dc-timeline" name="field[14]" required>
+              <option value="">Select…</option>
+              <option value="Deal in hand">Deal in hand</option>
+              <option value="Deal in next 6 months">Deal in the next 6 months</option>
+              <option value="Building toward first deal">Building toward my first deal</option>
+            </select>
+          </div>
+          <div class="form-actions">
+            <button class="btn btn--lime btn--lg" type="submit">Send me the checklist</button>
+          </div>
+          <p class="form-note">Free. No spam, unsubscribe anytime.</p>
+        </form>
+
+        <!-- Hidden target so the AC POST doesn't navigate the visitor away -->
+        <iframe name="dscr_ac_target" id="dscr_ac_target" title="Form submission" style="display:none" aria-hidden="true" tabindex="-1"></iframe>
+
+        <div class="form-success" id="dscrSuccess" hidden>
+          <h2>Check your email — it's on the way.</h2>
+          <p>The DSCR Readiness Checklist is headed to your inbox right now. If it
+          hasn't landed in a few minutes, check your spam or promotions folder.
+          Questions about a deal in the meantime?
+          Email <a href="mailto:loans@fullstacklending.com">loans@fullstacklending.com</a>.</p>
+        </div>
+      </div>
+    </aside>
+
+    <div class="lp-detail">
+      <ul class="check-list">
+        <li><strong>Entity, guarantor, and cash</strong> — the exact documents a
+          lender pulls for each, and what quietly disqualifies a file before the
+          property is ever looked at.</li>
+        <li><strong>The property and its leases</strong> — what's required for a
+          refinance versus a purchase, plus the lease types that kill eligibility.</li>
+        <li><strong>Short-term rentals</strong> — how Airbnb/VRBO income actually
+          gets underwritten, and why your best month doesn't set the number.</li>
+        <li><strong>The five things that stall closings</strong> — insurance,
+          entity-name mismatches, ACH setup, and the two more that send files back.</li>
+      </ul>
+    </div>
+
+  </div>
+</main>
+
+{% include footer.html slim=include.lp %}
+
+<script src="/js/main.js" defer></script>
+<script>
+  // Tablet/mobile only: the form is presented as a modal opened by the CTA
+  // button, so the ask is visible without scrolling. On desktop the button
+  // is hidden and the form is inline, so none of this runs visibly. Dialog
+  // semantics are added only while open (the element is inline on desktop).
+  (function () {
+    var openBtn = document.getElementById("lpFormOpen");
+    var modal = document.getElementById("lpForm");
+    var closeBtn = document.getElementById("lpFormClose");
+    if (!openBtn || !modal) return;
+
+    var lastFocus = null;
+    var compact = window.matchMedia("(max-width: 1024px)");
+
+    function focusables() {
+      return Array.prototype.filter.call(
+        modal.querySelectorAll('a[href], button:not([disabled]), input, select, textarea, [tabindex]:not([tabindex="-1"])'),
+        function (el) { return el.offsetParent !== null; }
+      );
+    }
+
+    function onKey(e) {
+      if (e.key === "Escape") { closeModal(); return; }
+      if (e.key !== "Tab") return;
+      var f = focusables();
+      if (!f.length) return;
+      var first = f[0], last = f[f.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    }
+
+    function openModal() {
+      lastFocus = document.activeElement;
+      modal.classList.add("is-open");
+      modal.setAttribute("role", "dialog");
+      modal.setAttribute("aria-modal", "true");
+      document.body.style.overflow = "hidden";
+      document.addEventListener("keydown", onKey);
+      var first = modal.querySelector("input, select, button:not(.lp-form-close)");
+      if (first) first.focus();
+    }
+
+    function closeModal() {
+      modal.classList.remove("is-open");
+      modal.removeAttribute("role");
+      modal.removeAttribute("aria-modal");
+      document.body.style.overflow = "";
+      document.removeEventListener("keydown", onKey);
+      if (lastFocus && lastFocus.focus) lastFocus.focus();
+    }
+
+    openBtn.addEventListener("click", openModal);
+    if (closeBtn) closeBtn.addEventListener("click", closeModal);
+    // Click on the dimmed backdrop (outside the card) closes.
+    modal.addEventListener("click", function (e) { if (e.target === modal) closeModal(); });
+    // Resizing up to desktop while open: close so the inline form shows cleanly.
+    compact.addEventListener("change", function (e) {
+      if (!e.matches && modal.classList.contains("is-open")) closeModal();
+    });
+  })();
+</script>
+<script>
+  // The form POSTs natively to ActiveCampaign's proc.php, targeting a
+  // hidden iframe so the page doesn't navigate away. HTML5 validation
+  // still gates submit, so submit fires only once the fields are valid.
+  //
+  // GA4 events go through window.fslTrack (analytics.js), which buffers
+  // until the geo-gated GA loads. Funnel, in page order:
+  //   lead_form_view → lead_form_start → timeline_selected →
+  //   lead_magnet_submit | lead_form_abandon, plus scroll_depth, and
+  //   nav_leak on the /lp/ variant only. Deliberately no name/email in
+  //   any event — PII never goes to analytics.
+  (function () {
+    var form = document.getElementById("dscrForm");
+    var frame = document.getElementById("dscr_ac_target");
+    var success = document.getElementById("dscrSuccess");
+    var submitted = false;
+    var leadMeta = null;
+
+    function track(name, params) {
+      if (window.fslTrack) window.fslTrack(name, params);
+    }
+
+    // --- First-party UTM attribution ---
+    // Copy the arrival utm_* into AC's hidden fields so a checklist lead
+    // carries the same source attribution as the visitor's eventual portal
+    // signup. Source of truth is the session set analytics.js stashes in
+    // sessionStorage (so a visitor who landed with UTMs elsewhere and
+    // navigated here is still attributed), falling back to the current URL.
+    // Untagged visits default to website/direct, matching the portal-link
+    // tagging in main.js. Filled at submit — analytics.js's capture is a
+    // deferred script, so the store is reliably populated by then.
+    var UTM_KEYS = ["utm_source", "utm_medium", "utm_campaign", "utm_term", "utm_content"];
+    function fillUtms() {
+      var utms = {};
+      try {
+        var stored = sessionStorage.getItem("fsl_utm");
+        if (stored) utms = JSON.parse(stored) || {};
+      } catch (e) { /* private mode / bad JSON — fall back to the URL below */ }
+      var url = new URLSearchParams(window.location.search);
+      UTM_KEYS.forEach(function (key) {
+        var val = typeof utms[key] === "string" ? utms[key] : url.get(key);
+        var input = form.querySelector('input[data-utm="' + key + '"]');
+        if (input && val != null) input.value = val;
+      });
+      var src = form.querySelector('input[data-utm="utm_source"]');
+      var med = form.querySelector('input[data-utm="utm_medium"]');
+      if (src && !src.value) src.value = "website";
+      if (med && !med.value) med.value = "direct";
+    }
+    fillUtms();
+
+    // --- Pre-fill email from a DM referral (#e=) ---
+    // Instagram DM referrals arrive with the email we already collected in the
+    // DM. analytics.js pulls it off the #e= fragment, stashes it, and strips it
+    // from the URL before GA/Meta load; here we drop it into the email field so
+    // the visitor doesn't retype it. Prefer the stashed value (survives to the
+    // modal / later navigation); fall back to reading the fragment directly,
+    // since this inline script runs at parse time — before the deferred
+    // analytics.js has had a chance to stash it on the very first load. Parsed
+    // with decodeURIComponent (not URLSearchParams) so a '+' in the address
+    // survives. Assigning to .value is injection-safe.
+    (function prefillEmail() {
+      var email = null;
+      try { email = sessionStorage.getItem("fsl_lead_email"); } catch (e) { /* private mode */ }
+      if (!email) {
+        var frag = window.location.hash.slice(1);
+        if (frag) {
+          frag.split("&").forEach(function (pair) {
+            var eq = pair.indexOf("=");
+            if (eq !== -1 && pair.slice(0, eq) === "e") {
+              try { email = decodeURIComponent(pair.slice(eq + 1)); } catch (e) { email = pair.slice(eq + 1); }
+            }
+          });
+        }
+      }
+      var field = form.querySelector("#dc-email");
+      if (email && field && !field.value) field.value = email.trim();
+    })();
+
+    // --- Funnel: form entered the viewport ---
+    if ("IntersectionObserver" in window) {
+      var viewIO = new IntersectionObserver(function (entries, io) {
+        if (entries.some(function (e) { return e.isIntersecting; })) {
+          track("lead_form_view");
+          io.disconnect();
+        }
+      }, { threshold: 0.4 });
+      viewIO.observe(form);
+    }
+
+    // --- Funnel: first field focused; remember the last field touched
+    // so abandonment reports where people stall ---
+    var startedAt = null;
+    var lastField = null;
+    form.addEventListener("focusin", function (e) {
+      if (!e.target.name || e.target.type === "hidden") return;
+      lastField = e.target.id || e.target.name;
+      if (startedAt === null) {
+        startedAt = Date.now();
+        track("lead_form_start");
+      }
+    });
+
+    document.getElementById("dc-timeline").addEventListener("change", function () {
+      if (this.value) track("timeline_selected", { deal_timeline: this.value });
+    });
+
+    // --- Funnel: left the page after starting but before submitting.
+    // pagehide (not beforeunload) so bfcache navigations count too. ---
+    window.addEventListener("pagehide", function () {
+      if (startedAt !== null && !submitted) {
+        track("lead_form_abandon", { last_field: lastField, transport_type: "beacon" });
+      }
+    });
+
+    // --- Scroll depth tiers (GA4's built-in scroll event only fires
+    // at 90%). Each tier fires once; listener detaches after 90%. ---
+    var tiers = [25, 50, 75, 90];
+    function onScrollDepth() {
+      var max = document.documentElement.scrollHeight - window.innerHeight;
+      if (max <= 0) return;
+      var pct = (window.scrollY / max) * 100;
+      while (tiers.length && pct >= tiers[0]) {
+        track("scroll_depth", { scroll_percent: tiers.shift() });
+      }
+      if (!tiers.length) window.removeEventListener("scroll", onScrollDepth);
+    }
+    window.addEventListener("scroll", onScrollDepth, { passive: true });
+    onScrollDepth();
+
+{% if include.lp %}
+    // --- Exits: on the paid lander the logo + footer legal links are the
+    // only ways off the page; measure the leak before deciding they matter.
+    // Emitted only on /lp/ (include.lp) — on the full-nav /dscr-checklist/
+    // page, nav clicks are intended exploration, not leakage, and firing
+    // the same event there would contaminate the LP's leak numbers. ---
+    document.querySelectorAll(".nav-logo, .footer-legal-links a").forEach(function (a) {
+      a.addEventListener("click", function () {
+        track("nav_leak", {
+          exit_destination: a.getAttribute("href"),
+          transport_type: "beacon"
+        });
+      });
+    });
+{% endif %}
+
+    form.addEventListener("submit", function () {
+      submitted = true;
+      fillUtms(); // refresh from the (now definitely-populated) session store
+      leadMeta = {
+        deal_timeline: form.querySelector("#dc-timeline").value,
+        seconds_to_submit: startedAt === null
+          ? undefined
+          : Math.round((Date.now() - startedAt) / 1000)
+      };
+      var btn = form.querySelector('button[type="submit"]');
+      if (btn) {
+        btn.disabled = true;
+        btn.textContent = "Sending…";
+      }
+    });
+
+    // The iframe fires "load" once on initial render and again after the
+    // POST response comes back — the flag ensures we only react to the latter.
+    // Note: a cross-origin iframe load says the POST completed, not that AC
+    // accepted it — reconcile GA counts against ActiveCampaign periodically.
+    frame.addEventListener("load", function () {
+      if (!submitted) return;
+      form.hidden = true;
+      success.hidden = false;
+      success.scrollIntoView({ behavior: "smooth", block: "center" });
+      track("lead_magnet_submit", leadMeta || {});
+      if (typeof fbq === "function") fbq("track", "Lead", {
+        content_name: "DSCR Readiness Checklist",
+        deal_timeline: leadMeta ? leadMeta.deal_timeline : undefined
+      });
+    });
+  })();
+</script>
