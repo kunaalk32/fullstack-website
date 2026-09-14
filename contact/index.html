@@ -137,6 +137,15 @@
 
     var captchaError = document.getElementById("captchaError");
 
+    // Uppercase the first letter of each word; never lowercases, so existing
+    // casing (McDonald, O'Brien, all-caps) is preserved.
+    function capitalizeNameField(el) {
+      if (!el) return;
+      el.value = el.value.trim().replace(/(^|[\s'-])([a-z])/g, function (m, sep, ch) {
+        return sep + ch.toUpperCase();
+      });
+    }
+
     form.addEventListener("submit", function (e) {
       // HTML5 validation has already passed by the time this fires. Gate on the
       // reCAPTCHA token so we never show a false success for a POST that AC will
@@ -147,6 +156,11 @@
         return;
       }
       if (captchaError) captchaError.hidden = true;
+      // Tidy up name casing before the native POST to AC. Uppercases the first
+      // letter of each word without touching the rest, so "john" -> "John" and
+      // "mary-jane" -> "Mary-Jane", while "McDonald"/"O'Brien" survive intact.
+      capitalizeNameField(form.querySelector("#cf-first"));
+      capitalizeNameField(form.querySelector("#cf-last"));
       submitted = true;
       // Captured for the GA4 event; deliberately no name/email — PII
       // never goes to analytics.
