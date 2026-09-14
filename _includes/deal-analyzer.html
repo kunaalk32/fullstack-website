@@ -269,6 +269,15 @@
       if (window.fslTrack) window.fslTrack(name, params);
     }
 
+    // Uppercase the first letter of each word; never lowercases, so existing
+    // casing (McDonald, O'Brien, all-caps) is preserved.
+    function capitalizeNameField(el) {
+      if (!el) return;
+      el.value = el.value.trim().replace(/(^|[\s'-])([a-z])/g, function (m, sep, ch) {
+        return sep + ch.toUpperCase();
+      });
+    }
+
     // --- First-party UTM attribution ---
     // Copy the arrival utm_* into AC's hidden fields so a Deal Analyzer lead
     // carries the same source attribution as the visitor's eventual portal
@@ -395,6 +404,9 @@
 
     form.addEventListener("submit", function () {
       submitted = true;
+      // Tidy up name casing before the native POST to AC.
+      capitalizeNameField(form.querySelector("#da-first"));
+      capitalizeNameField(form.querySelector("#da-last"));
       fillUtms(); // refresh from the (now definitely-populated) session store
       leadMeta = {
         deal_timeline: form.querySelector("#da-timeline").value,
