@@ -318,13 +318,13 @@ a { color: inherit; }
 
 /* Mid widths: tighten the bar so every link stays on one line until the
    burger takes over, rather than collapsing to the burger early. */
-@media (max-width: 1240px) {
+@media (max-width: 1180px) {
   .nav-inner { gap: 1.75rem; }
   .nav-links { gap: 1.2rem; }
   .nav-links a { font-size: 0.86rem; }
 }
 
-@media (max-width: 1120px) {
+@media (max-width: 1020px) {
   .nav-links, .nav-actions { display: none; }
   .nav-burger { display: flex; }
   .nav-inner { justify-content: space-between; }
