@@ -324,9 +324,16 @@ a { color: inherit; }
   .nav-links a { font-size: 0.86rem; }
 }
 
+/* Tablet widths: keep the priority links (Programs + lead magnets) and
+   Log in in the bar; everything, including those, is in the burger menu. */
 @media (max-width: 1020px) {
-  .nav-links, .nav-actions { display: none; }
+  .nav-links a:not(.nav-link--priority) { display: none; }
   .nav-burger { display: flex; }
+}
+
+/* Phones: logo + burger only. */
+@media (max-width: 760px) {
+  .nav-links, .nav-actions { display: none; }
   .nav-inner { justify-content: space-between; }
 }
 

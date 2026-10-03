@@ -596,7 +596,9 @@
       menu.hidden = open;
       document.body.style.overflow = open ? "" : "hidden";
     });
-    menu.querySelectorAll("a").forEach(function (a) {
+    // Bar links count too: at tablet widths they're visible beside the open
+    // menu, and a same-page link (/#programs) wouldn't otherwise close it.
+    document.querySelectorAll("#mobileMenu a, .nav-links a").forEach(function (a) {
       a.addEventListener("click", function () {
         burger.setAttribute("aria-expanded", "false");
         menu.hidden = true;
