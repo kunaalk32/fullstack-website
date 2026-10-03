@@ -270,6 +270,10 @@ a { color: inherit; }
   color: color-mix(in srgb, var(--moss) 65%, var(--white));
 }
 
+/* Investor link: lime, to set it apart from the borrower lead magnets. */
+.nav-links a.nav-link--invest { color: var(--lime); }
+.nav-links a.nav-link--invest:hover { color: #E2FB78; }
+
 .nav-actions { display: flex; gap: 0.8rem; align-items: center; }
 
 .nav-burger {
@@ -309,6 +313,7 @@ a { color: inherit; }
   color: var(--text-on-ink);
 }
 .mobile-menu a.nav-link--magnet { color: var(--moss); }
+.mobile-menu a.nav-link--invest { color: var(--lime); }
 .mobile-menu-actions { display: flex; gap: 1rem; margin-top: 1.5rem; }
 .mobile-menu-actions .btn { font-size: 0.8rem; }
 
