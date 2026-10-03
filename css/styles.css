@@ -1154,6 +1154,20 @@ a { color: inherit; }
 .bio p + p { margin-top: 0.9rem; }
 .bio > p:not(.bio-role) { font-size: 0.97rem; color: var(--muted-on-paper); }
 
+/* ---------- Invest ---------- */
+
+/* Disclosure sits directly under the body copy: smaller, but kept at
+   --muted-on-paper (~5.8:1 on paper) so it stays legible. */
+.invest-disclosure {
+  max-width: 68ch;
+  margin-top: 1.2rem;
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: var(--muted-on-paper);
+}
+
+.invest-cta { margin-top: 2.2rem; }
+
 /* ---------- FAQ ---------- */
 
 .faq-list { margin-top: 3rem; }
