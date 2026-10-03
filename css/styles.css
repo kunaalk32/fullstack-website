@@ -254,25 +254,24 @@ a { color: inherit; }
 
 .nav-links a {
   font-size: 0.92rem;
+  white-space: nowrap;
   text-decoration: none;
   color: var(--muted-on-ink);
   transition: color 0.25s ease;
 }
 .nav-links a:hover { color: var(--text-on-ink); }
 
-/* Lead-magnet links (Deal Analyzer, DSCR checklist) — moss picks them out
-   from the plain nav links (accent use on the ink bar, not body text).
+/* Lead-magnet links (Deal Analyzer, DSCR checklist) and the investor link —
+   moss picks them out from the plain nav links (accent use on the ink bar, not body text).
    Hover lightens the moss rather than going lime, to keep the
    one-lime-per-composition rule intact. Same treatment in the mobile
    menu below. */
-.nav-links a.nav-link--magnet { color: var(--moss); }
-.nav-links a.nav-link--magnet:hover {
+.nav-links a.nav-link--magnet,
+.nav-links a.nav-link--invest { color: var(--moss); }
+.nav-links a.nav-link--magnet:hover,
+.nav-links a.nav-link--invest:hover {
   color: color-mix(in srgb, var(--moss) 65%, var(--white));
 }
-
-/* Investor link: lime, to set it apart from the borrower lead magnets. */
-.nav-links a.nav-link--invest { color: var(--lime); }
-.nav-links a.nav-link--invest:hover { color: #E2FB78; }
 
 .nav-actions { display: flex; gap: 0.8rem; align-items: center; }
 
@@ -312,12 +311,20 @@ a { color: inherit; }
   text-decoration: none;
   color: var(--text-on-ink);
 }
-.mobile-menu a.nav-link--magnet { color: var(--moss); }
-.mobile-menu a.nav-link--invest { color: var(--lime); }
+.mobile-menu a.nav-link--magnet,
+.mobile-menu a.nav-link--invest { color: var(--moss); }
 .mobile-menu-actions { display: flex; gap: 1rem; margin-top: 1.5rem; }
 .mobile-menu-actions .btn { font-size: 0.8rem; }
 
-@media (max-width: 960px) {
+/* Mid widths: tighten the bar so every link stays on one line until the
+   burger takes over, rather than collapsing to the burger early. */
+@media (max-width: 1240px) {
+  .nav-inner { gap: 1.75rem; }
+  .nav-links { gap: 1.2rem; }
+  .nav-links a { font-size: 0.86rem; }
+}
+
+@media (max-width: 1120px) {
   .nav-links, .nav-actions { display: none; }
   .nav-burger { display: flex; }
   .nav-inner { justify-content: space-between; }
