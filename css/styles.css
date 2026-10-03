@@ -1154,6 +1154,22 @@ a { color: inherit; }
 .bio p + p { margin-top: 0.9rem; }
 .bio > p:not(.bio-role) { font-size: 0.97rem; color: var(--muted-on-paper); }
 
+/* ---------- Invest ---------- */
+
+/* Body and disclosure span the full container width. */
+.invest .section-intro { max-width: none; }
+
+.invest-cta { margin-top: 2.2rem; }
+
+/* Disclosure sits under the CTA: smaller and lighter than --muted-on-paper,
+   but 0.62 is the floor that keeps it at AA contrast (~4.8:1 on paper). */
+.invest-disclosure {
+  margin-top: 1.8rem;
+  font-size: 0.78rem;
+  line-height: 1.6;
+  color: rgba(23, 24, 27, 0.62);
+}
+
 /* ---------- FAQ ---------- */
 
 .faq-list { margin-top: 3rem; }
